@@ -9,8 +9,10 @@ discovered, classified, risk-scored, and put under one policy.
 
 Full spec: [`.scratch/ai-data-security/spec.md`](.scratch/ai-data-security/spec.md) (Indonesian; English translation in
 [`.scratch/ai-data-security/en/spec.md`](.scratch/ai-data-security/en/spec.md)). New here? Start with
-[Why WANTIMPRES-26](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/why) and
-[How to Use](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/how-to-use). Documentation site (guides, spec,
+[Why WANTIMPRES-26](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/why),
+[Installation](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/install),
+[How to Use](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/how-to-use) and the
+[FAQ](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/faq). Documentation site (guides, spec,
 tickets, vision & mission, Indonesian/English), live at <https://sivi-shahab.github.io/WANTIMPRES-26/>,
 built from `docs/` with VitePress (`npm ci && npm run docs:dev`). Interactive architecture diagram, live at
 <https://sivi-shahab.github.io/WANTIMPRES-26/architecture/> (search, focus, route probe, Live trace; deployed from
@@ -153,10 +155,19 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
   [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/why) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/why) (source: [`docs/en/guide/why.md`](docs/en/guide/why.md),
   [`docs/guide/why.md`](docs/guide/why.md))
+- Installation — development setup, and production on Kubernetes (dependencies, cluster setup, signed images,
+  Secrets/ConfigMaps, Kustomize overlay):
+  [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/install) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/install) (source:
+  [`docs/en/guide/install.md`](docs/en/guide/install.md), [`docs/guide/install.md`](docs/guide/install.md))
 - How to Use — local quickstart, connecting apps and agents, policy release cycle, SOC/compliance operations:
   [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/how-to-use) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/how-to-use) (source:
   [`docs/en/guide/how-to-use.md`](docs/en/guide/how-to-use.md), [`docs/guide/how-to-use.md`](docs/guide/how-to-use.md))
+- FAQ — privacy and data residency, integration, policy and operations, compliance, project status:
+  [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/faq) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/faq) (source: [`docs/en/guide/faq.md`](docs/en/guide/faq.md),
+  [`docs/guide/faq.md`](docs/guide/faq.md))
 - [Threat model](docs/threat-model.md) — STRIDE, OWASP LLM Top 10, OWASP Agentic
 - [ADRs](docs/adr/) — hosting/residency, identity, PostgreSQL RLS
 - [M1 NFR report](docs/nfr/m1-report.md) — latency, throughput, chaos, DR results against spec §13
