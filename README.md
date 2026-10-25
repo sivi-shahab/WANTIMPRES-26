@@ -168,6 +168,10 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
   [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/faq) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/faq) (source: [`docs/en/guide/faq.md`](docs/en/guide/faq.md),
   [`docs/guide/faq.md`](docs/guide/faq.md))
+- Glossary — platform, detection, threat, policy, data protection, agent/MCP, infrastructure and regulatory terms:
+  [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/glossary) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/glossary) (source:
+  [`docs/en/guide/glossary.md`](docs/en/guide/glossary.md), [`docs/guide/glossary.md`](docs/guide/glossary.md))
 - Changelog — every change, newest first, generated from git history on each site build with links to commits and
   tickets: [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/changelog) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/changelog)
