@@ -27,9 +27,17 @@ Choose a reading path. The documentation covers the company profile, the technic
     <h3>Why WANTIMPRES-26</h3>
     <p>The problems it solves, how it differs from DLP and LLM gateways, measured evidence, and current limits.</p>
   </a>
+  <a class="card" href="./guide/install">
+    <h3>Installation</h3>
+    <p>Build from source, run the local stack, and deploy to Kubernetes in your own data center.</p>
+  </a>
   <a class="card" href="./guide/how-to-use">
     <h3>How to Use</h3>
     <p>Try it locally, connect apps and agents, manage policies, and run SOC operations.</p>
+  </a>
+  <a class="card" href="./guide/faq">
+    <h3>FAQ</h3>
+    <p>Short answers on privacy, data location, integration, policies, compliance, and project status.</p>
   </a>
   <a class="card" href="./about/vision-mission">
     <h3>Vision & Mission</h3>
@@ -80,7 +88,9 @@ Policy decisions are deliberately separated from enforcement. Every enforcement 
 
 ## Next steps
 
+- [Installation](./guide/install): build from source or deploy to Kubernetes.
 - [How to Use](./guide/how-to-use): connect your first app to the gateway.
+- [FAQ](./guide/faq): short answers to common questions.
 - [Vision & Mission](./about/vision-mission): start with what the platform is for.
 - [Full Specification](./spec): read the architecture and requirements end to end.
 - [Ticket Overview](./tickets/): see what is in progress and what comes next.

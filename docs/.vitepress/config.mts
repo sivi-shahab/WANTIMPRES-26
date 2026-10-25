@@ -60,7 +60,9 @@ const id: DefaultTheme.Config = {
       text: 'Panduan',
       items: [
         { text: 'Mengapa WANTIMPRES-26', link: '/guide/why' },
+        { text: 'Cara Instalasi', link: '/guide/install' },
         { text: 'Cara Menggunakan', link: '/guide/how-to-use' },
+        { text: 'FAQ', link: '/guide/faq' },
       ],
     },
     { text: 'Spesifikasi', items: [{ text: 'Spesifikasi Lengkap', link: '/spec' }, records('Catatan Engineering')] },
@@ -98,7 +100,9 @@ const en: DefaultTheme.Config = {
       text: 'Guide',
       items: [
         { text: 'Why WANTIMPRES-26', link: '/en/guide/why' },
+        { text: 'Installation', link: '/en/guide/install' },
         { text: 'How to Use', link: '/en/guide/how-to-use' },
+        { text: 'FAQ', link: '/en/guide/faq' },
       ],
     },
     { text: 'Specification', items: [{ text: 'Full Specification', link: '/en/spec' }, records('Engineering Records (ID)')] },
@@ -133,6 +137,7 @@ export default withMermaid(
     },
     themeConfig: {
       logo: '/logo.svg',
+      socialLinks: [{ icon: 'github', link: 'https://github.com/sivi-shahab/WANTIMPRES-26' }],
       search: {
         provider: 'local',
         options: {

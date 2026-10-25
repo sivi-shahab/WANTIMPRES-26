@@ -27,9 +27,17 @@ Pilih jalur bacaan. Dokumentasi terbagi menjadi profil perusahaan, spesifikasi t
     <h3>Mengapa WANTIMPRES-26</h3>
     <p>Masalah yang dijawab, pembeda dari DLP dan gateway LLM biasa, bukti terukur, dan batasan saat ini.</p>
   </a>
+  <a class="card" href="./guide/install">
+    <h3>Cara Instalasi</h3>
+    <p>Build dari source, jalankan stack lokal, dan deploy ke Kubernetes di data center sendiri.</p>
+  </a>
   <a class="card" href="./guide/how-to-use">
     <h3>Cara Menggunakan</h3>
     <p>Coba di lokal, hubungkan aplikasi dan agent, kelola kebijakan, dan jalankan operasional SOC.</p>
+  </a>
+  <a class="card" href="./guide/faq">
+    <h3>FAQ</h3>
+    <p>Jawaban singkat soal privasi, lokasi data, integrasi, kebijakan, kepatuhan, dan status proyek.</p>
   </a>
   <a class="card" href="./about/vision-mission">
     <h3>Visi & Misi</h3>
@@ -80,7 +88,9 @@ Keputusan kebijakan sengaja dipisahkan dari penegakannya. Semua titik jaga berta
 
 ## Langkah Berikutnya
 
+- [Cara Instalasi](./guide/install): build dari source atau deploy ke Kubernetes.
 - [Cara Menggunakan](./guide/how-to-use): hubungkan aplikasi pertama Anda ke gateway.
+- [FAQ](./guide/faq): jawaban singkat untuk pertanyaan yang sering muncul.
 - [Visi & Misi](./about/vision-mission): mulai dari tujuan platform.
 - [Spesifikasi Lengkap](./spec): baca arsitektur dan requirement secara utuh.
 - [Ringkasan Tiket](./tickets/): lihat apa yang sedang dan akan dikerjakan.
