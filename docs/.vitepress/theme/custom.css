@@ -90,3 +90,19 @@
   color: var(--vp-c-text-3);
   text-decoration: none;
 }
+
+/* roadmap */
+.roadmap .ms { margin: 28px 0; }
+.roadmap .scope { margin: 4px 0; color: var(--vp-c-text-2); }
+.roadmap .meta { margin: 4px 0 10px; font-size: 14px; }
+.roadmap .bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--vp-c-default-soft); }
+.roadmap .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 0; margin: 8px 0; list-style: none; font-size: 13px; }
+.roadmap .legend li { margin: 0; }
+.roadmap .dot { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 50%; vertical-align: -1px; }
+.roadmap .done { background: #2f8f5b; }
+.roadmap .needs-gitlab-run { background: #6fbf8f; }
+.roadmap .needs-signoff { background: #f2b544; }
+.roadmap .needs-triage { background: var(--vp-c-brand-1); }
+.roadmap .deferred { background: var(--vp-c-text-3); }
+.roadmap details { font-size: 14px; }
+.roadmap summary { cursor: pointer; color: var(--vp-c-text-2); }

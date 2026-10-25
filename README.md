@@ -172,6 +172,9 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
   [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/glossary) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/glossary) (source:
   [`docs/en/guide/glossary.md`](docs/en/guide/glossary.md), [`docs/guide/glossary.md`](docs/guide/glossary.md))
+- Roadmap — milestones M0–M4 with progress computed from ticket status on each build, pending decisions and next
+  work: [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/roadmap) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/roadmap)
 - Changelog — every change, newest first, generated from git history on each site build with links to commits and
   tickets: [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/changelog) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/changelog)
