@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="t">
+  <title id="t">Wantimpres-26: penjaga keamanan dalam perisai</title>
+  <defs>
+    <clipPath id="shield">
+      <path d="M32 3 L55 11 V30 C55 45.5 45 55.5 32 61 C19 55.5 9 45.5 9 30 V11 Z"/>
+    </clipPath>
+  </defs>
+  <!-- perisai -->
+  <path d="M32 3 L55 11 V30 C55 45.5 45 55.5 32 61 C19 55.5 9 45.5 9 30 V11 Z" fill="#1B2A41"/>
+  <g clip-path="url(#shield)">
+    <!-- seragam -->
+    <path d="M14 64 C14 50 21 43.5 32 43.5 C43 43.5 50 50 50 64 Z" fill="#D95C41"/>
+    <!-- kerah -->
+    <path d="M27 43.8 L32 50 L37 43.8 Z" fill="#F7EFE6"/>
+    <!-- lencana dada -->
+    <path d="M40 49 L44 50.2 V53 C44 55 42.4 56.4 40 57.2 C37.6 56.4 36 55 36 53 V50.2 Z" fill="#F2B544"/>
+  </g>
+  <!-- leher + wajah -->
+  <rect x="29" y="38" width="6" height="6" rx="2" fill="#E9C6A6"/>
+  <circle cx="32" cy="32" r="7.5" fill="#F1D3B6"/>
+  <!-- topi jaga -->
+  <path d="M20.5 25 C20.5 15.5 43.5 15.5 43.5 25 Z" fill="#D95C41"/>
+  <path d="M19 25 H45 L41.5 29 H22.5 Z" fill="#9E3B27"/>
+  <circle cx="32" cy="20.5" r="2.4" fill="#F2B544"/>
+</svg>

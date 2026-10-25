@@ -7,9 +7,11 @@ A platform that controls sensitive data moving to, from, and through AI: public 
 AI agents. Every channel (prompts, file uploads, responses, agent tool calls, data at rest that AI can reach) is
 discovered, classified, risk-scored, and put under one policy.
 
-Full spec: [`.scratch/ai-data-security/spec.md`](.scratch/ai-data-security/spec.md) (Indonesian). Interactive
-architecture diagram, live at <https://sivi-shahab.github.io/AI-Security/> (search, focus, route probe, Live
-trace; deployed from `.archify/` by `.github/workflows/pages.yml`):
+Full spec: [`.scratch/ai-data-security/spec.md`](.scratch/ai-data-security/spec.md) (Indonesian). Documentation
+site (spec, tickets, vision & mission, Indonesian/English), live at <https://sivi-shahab.github.io/AI-Security/>,
+built from `docs/` with VitePress (`npm ci && npm run docs:dev`). Interactive architecture diagram, live at
+<https://sivi-shahab.github.io/AI-Security/architecture/> (search, focus, route probe, Live trace; deployed from
+`.archify/` by `.github/workflows/pages.yml`):
 [`.archify/architecture-wantimpres26-platform-20261017-133119/wantimpres26-platform.html`](.archify/architecture-wantimpres26-platform-20261017-133119/wantimpres26-platform.html).
 
 ## Architecture
@@ -62,7 +64,7 @@ deploy/base/    Kustomize manifests (namespace wantimpres26, NetworkPolicy, OPA 
 deploy/cluster/ cluster-wide policy: signed-image admission, alerts, workload identity
 deploy/nfr/     NFR harness (load, chaos, soak, DR) and recorded results
 build/          Dockerfiles (one shared Go image, OPA, Tika)
-docs/           ADRs, threat model, DPIA, labeling guideline, runbooks, NFR report
+docs/           VitePress docs site; ADRs, threat model, DPIA, labeling guideline, runbooks, NFR report
 .scratch/       spec and issue tickets
 ```
 
