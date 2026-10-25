@@ -132,7 +132,7 @@ Keputusan yang sulit diubah kembali, misalnya soal hosting, identitas, atau mode
 
 ## Melaporkan kerentanan
 
-Jangan laporkan kerentanan keamanan lewat tiket atau issue publik. Hubungi tim keamanan secara langsung melalui kanal internal, sertakan langkah reproduksi dan dampaknya, lalu tunggu perbaikan sebelum membagikan detailnya.
+Jangan laporkan kerentanan keamanan lewat tiket atau issue publik. Gunakan *private vulnerability reporting* GitHub seperti dijelaskan di [Kebijakan Keamanan](./security).
 
 ## Butuh bantuan?
 

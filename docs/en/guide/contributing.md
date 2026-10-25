@@ -132,7 +132,7 @@ Decisions that are hard to reverse, such as hosting, identity, or the data model
 
 ## Reporting vulnerabilities
 
-Do not report security vulnerabilities through a ticket or a public issue. Contact the security team directly through internal channels, include reproduction steps and the impact, and wait for a fix before sharing details.
+Do not report security vulnerabilities through a ticket or a public issue. Use GitHub's *private vulnerability reporting* as described in the [Security Policy](./security).
 
 ## Need help?
 
