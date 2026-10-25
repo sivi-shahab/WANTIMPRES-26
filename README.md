@@ -168,6 +168,9 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
   [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/faq) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/faq) (source: [`docs/en/guide/faq.md`](docs/en/guide/faq.md),
   [`docs/guide/faq.md`](docs/guide/faq.md))
+- Changelog — every change, newest first, generated from git history on each site build with links to commits and
+  tickets: [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/changelog) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/changelog)
 - [Threat model](docs/threat-model.md) — STRIDE, OWASP LLM Top 10, OWASP Agentic
 - [ADRs](docs/adr/) — hosting/residency, identity, PostgreSQL RLS
 - [M1 NFR report](docs/nfr/m1-report.md) — latency, throughput, chaos, DR results against spec §13
