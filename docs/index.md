@@ -75,4 +75,4 @@ Keputusan kebijakan sengaja dipisahkan dari penegakannya. Semua titik jaga berta
 - [Visi & Misi](./about/vision-mission): mulai dari tujuan platform.
 - [Spesifikasi Lengkap](./spec): baca arsitektur dan requirement secara utuh.
 - [Ringkasan Tiket](./tickets/): lihat apa yang sedang dan akan dikerjakan.
-- [Arsitektur Interaktif](https://sivi-shahab.github.io/AI-Security/architecture/): jelajahi diagram platform yang bisa dicari dan ditelusuri.
+- [Arsitektur Interaktif](https://sivi-shahab.github.io/WANTIMPRES-26/architecture/): jelajahi diagram platform yang bisa dicari dan ditelusuri.

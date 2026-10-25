@@ -75,4 +75,4 @@ Policy decisions are deliberately separated from enforcement. Every enforcement 
 - [Vision & Mission](./about/vision-mission): start with what the platform is for.
 - [Full Specification](./spec): read the architecture and requirements end to end.
 - [Ticket Overview](./tickets/): see what is in progress and what comes next.
-- [Interactive Architecture](https://sivi-shahab.github.io/AI-Security/architecture/): explore the searchable, traceable platform diagram.
+- [Interactive Architecture](https://sivi-shahab.github.io/WANTIMPRES-26/architecture/): explore the searchable, traceable platform diagram.

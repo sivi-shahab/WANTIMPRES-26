@@ -8,9 +8,9 @@ AI agents. Every channel (prompts, file uploads, responses, agent tool calls, da
 discovered, classified, risk-scored, and put under one policy.
 
 Full spec: [`.scratch/ai-data-security/spec.md`](.scratch/ai-data-security/spec.md) (Indonesian). Documentation
-site (spec, tickets, vision & mission, Indonesian/English), live at <https://sivi-shahab.github.io/AI-Security/>,
+site (spec, tickets, vision & mission, Indonesian/English), live at <https://sivi-shahab.github.io/WANTIMPRES-26/>,
 built from `docs/` with VitePress (`npm ci && npm run docs:dev`). Interactive architecture diagram, live at
-<https://sivi-shahab.github.io/AI-Security/architecture/> (search, focus, route probe, Live trace; deployed from
+<https://sivi-shahab.github.io/WANTIMPRES-26/architecture/> (search, focus, route probe, Live trace; deployed from
 `.archify/` by `.github/workflows/pages.yml`):
 [`.archify/architecture-wantimpres26-platform-20261017-133119/wantimpres26-platform.html`](.archify/architecture-wantimpres26-platform-20261017-133119/wantimpres26-platform.html).
 

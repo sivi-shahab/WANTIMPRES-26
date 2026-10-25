@@ -15,7 +15,7 @@ function ticketSidebar(prefix: string, lang: 'id' | 'en'): DefaultTheme.SidebarI
 }
 
 const base = process.env.DOCS_BASE ?? '/'
-const ARCH_URL = 'https://sivi-shahab.github.io/AI-Security/architecture/'
+const ARCH_URL = 'https://sivi-shahab.github.io/WANTIMPRES-26/architecture/'
 
 // Catatan engineering yang sudah ada di docs/ (berbahasa Indonesia, dipakai kedua locale).
 const records = (label: string): DefaultTheme.SidebarItem => ({
