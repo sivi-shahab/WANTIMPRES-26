@@ -1,4 +1,4 @@
-<!-- source-sha256: 96837ab321a3e5d3 -->
+<!-- source-sha256: 4d11c41face02b44 -->
 # Spec: Enterprise AI Data Security & AI Security Posture Management (AI-SPM)
 
 Status: draft-1
@@ -1007,20 +1007,6 @@ Notes:
 - Sources, quotations, and verdicts per cell are in `internal/compliance/library/mappings.json` and in the export report. **This check is research, not sign-off**: the compliance team MUST verify every mapping (`POST /compliance/mappings/verify`) before it is used as evidence.
 - ISO/IEC 42001 cannot be verified from free sources (paid): all ISO cells must be confirmed against a licensed copy. The ASI01–ASI10 titles come from secondary sources (the OWASP PDF is behind a paid form).
 - The EU AI Act is relevant only if there are services/recipients in the EU (Annex III postponed to 2 Dec 2027 by the Digital Omnibus). Whether the bank is in scope is `unspecified`.
-
----|---|---|---|---|
-| AI app inventory & shadow AI | LLM03 | GOVERN 1.6 (inventory), MAP 1 | A.4, A.6, A.10 | OJK AI Guide for Banking (inventory, accountability) |
-| Classification & DLP prompt/response | LLM02, LLM05 | MEASURE 2.10 (privacy), MANAGE 2 | A.7 (data), A.9 | UU PDP Articles 35–39 (data security), POJK 11 (information security) |
-| Prompt-injection detection | LLM01, LLM07, ASI01, ASI06 | MEASURE 2.7 (security & resilience) | A.6.2 | POJK 11 / SEOJK cyber resilience |
-| Agent registry, least privilege, HITL, kill switch | LLM06, ASI02, ASI03, ASI08, ASI09, ASI10 | GOVERN 3.2 (human oversight), MANAGE 2.4 | A.9, A.6 | OJK AI Guide for Banking (human oversight) |
-| MCP gateway + tool description scan | ASI04, ASI07, LLM03 | MANAGE 3 (third-party) | A.10 | POJK 11 (IT service providers) |
-| Rate limit / quota | LLM10 | MANAGE 2 | A.6 | – |
-| Data residency & transfer control per app | – | GOVERN 6 (third-party) | A.10 | POJK 11 Article 35 (DC/DRC in Indonesia), UU PDP Article 56 |
-| Incident + breach timer | – | MANAGE 4 (incident response) | A.6.2.8 | UU PDP Article 46 (72 hours) |
-| Audit log hash-chain & evidence | – | GOVERN 4, MEASURE 4 | A.6.2.8 (event logs) | POJK 11 (audit trail) |
-| Posture report & control history | – | GOVERN 1, MEASURE 3 | Clause 9 | Internal reporting / OJK audit |
-
-Notes: the NIST subcategory numbers and Annex A clauses above are the initial mapping. The compliance team MUST verify them against the official texts before they are used as evidence. The EU AI Act is relevant only if there are services/recipients in the EU (Annex III postponed to 2 Dec 2027 by the Digital Omnibus). Whether the bank is in scope is `unspecified`.
 
 ---
 

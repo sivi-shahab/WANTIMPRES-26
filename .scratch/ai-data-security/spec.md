@@ -1007,20 +1007,6 @@ Catatan:
 - ISO/IEC 42001 tidak bisa diverifikasi dari sumber bebas (berbayar): semua sel ISO harus dikonfirmasi terhadap salinan berlisensi. Judul ASI01–ASI10 berasal dari sumber sekunder (PDF OWASP berbayar formulir).
 - EU AI Act hanya relevan jika ada layanan/penerima di UE (Annex III ditunda ke 2 Des 2027 oleh Digital Omnibus). `unspecified` apakah bank berada dalam cakupan.
 
----|---|---|---|---|
-| AI app inventory & shadow AI | LLM03 | GOVERN 1.6 (inventory), MAP 1 | A.4, A.6, A.10 | Panduan AI Perbankan OJK (inventaris, akuntabilitas) |
-| Classification & DLP prompt/response | LLM02, LLM05 | MEASURE 2.10 (privacy), MANAGE 2 | A.7 (data), A.9 | UU PDP Pasal 35–39 (keamanan data), POJK 11 (keamanan informasi) |
-| Prompt-injection detection | LLM01, LLM07, ASI01, ASI06 | MEASURE 2.7 (security & resilience) | A.6.2 | POJK 11 / SEOJK ketahanan siber |
-| Agent registry, least privilege, HITL, kill switch | LLM06, ASI02, ASI03, ASI08, ASI09, ASI10 | GOVERN 3.2 (human oversight), MANAGE 2.4 | A.9, A.6 | Panduan AI Perbankan OJK (human oversight) |
-| MCP gateway + tool description scan | ASI04, ASI07, LLM03 | MANAGE 3 (third-party) | A.10 | POJK 11 (penyedia jasa TI) |
-| Rate limit / quota | LLM10 | MANAGE 2 | A.6 | – |
-| Data residency & transfer control per app | – | GOVERN 6 (third-party) | A.10 | POJK 11 Pasal 35 (DC/DRC di Indonesia), UU PDP Pasal 56 |
-| Incident + breach timer | – | MANAGE 4 (incident response) | A.6.2.8 | UU PDP Pasal 46 (3×24 jam) |
-| Audit log hash-chain & evidence | – | GOVERN 4, MEASURE 4 | A.6.2.8 (event logs) | POJK 11 (jejak audit) |
-| Posture report & control history | – | GOVERN 1, MEASURE 3 | Klausul 9 | Pelaporan internal / audit OJK |
-
-Catatan: nomor subkategori NIST dan klausul Annex A di atas adalah mapping awal. Tim compliance MUST memverifikasinya terhadap teks resmi sebelum digunakan sebagai bukti. EU AI Act hanya relevan jika ada layanan/penerima di UE (Annex III ditunda ke 2 Des 2027 oleh Digital Omnibus). `unspecified` apakah bank berada dalam cakupan.
-
 ---
 
 ## 15. Testing Strategy
