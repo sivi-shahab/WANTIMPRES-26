@@ -7,8 +7,11 @@ A platform that controls sensitive data moving to, from, and through AI: public 
 AI agents. Every channel (prompts, file uploads, responses, agent tool calls, data at rest that AI can reach) is
 discovered, classified, risk-scored, and put under one policy.
 
-Full spec: [`.scratch/ai-data-security/spec.md`](.scratch/ai-data-security/spec.md) (Indonesian). Documentation
-site (spec, tickets, vision & mission, Indonesian/English), live at <https://sivi-shahab.github.io/WANTIMPRES-26/>,
+Full spec: [`.scratch/ai-data-security/spec.md`](.scratch/ai-data-security/spec.md) (Indonesian; English translation in
+[`.scratch/ai-data-security/en/spec.md`](.scratch/ai-data-security/en/spec.md)). New here? Start with
+[Why WANTIMPRES-26](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/why) and
+[How to Use](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/how-to-use). Documentation site (guides, spec,
+tickets, vision & mission, Indonesian/English), live at <https://sivi-shahab.github.io/WANTIMPRES-26/>,
 built from `docs/` with VitePress (`npm ci && npm run docs:dev`). Interactive architecture diagram, live at
 <https://sivi-shahab.github.io/WANTIMPRES-26/architecture/> (search, focus, route probe, Live trace; deployed from
 `.archify/` by `.github/workflows/pages.yml`):
@@ -146,6 +149,14 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
 
 ## Documentation
 
+- Why WANTIMPRES-26 — problems solved, comparison with DLP/LLM gateways, measured results, current limits:
+  [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/why) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/why) (source: [`docs/en/guide/why.md`](docs/en/guide/why.md),
+  [`docs/guide/why.md`](docs/guide/why.md))
+- How to Use — local quickstart, connecting apps and agents, policy release cycle, SOC/compliance operations:
+  [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/how-to-use) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/how-to-use) (source:
+  [`docs/en/guide/how-to-use.md`](docs/en/guide/how-to-use.md), [`docs/guide/how-to-use.md`](docs/guide/how-to-use.md))
 - [Threat model](docs/threat-model.md) — STRIDE, OWASP LLM Top 10, OWASP Agentic
 - [ADRs](docs/adr/) — hosting/residency, identity, PostgreSQL RLS
 - [M1 NFR report](docs/nfr/m1-report.md) — latency, throughput, chaos, DR results against spec §13
