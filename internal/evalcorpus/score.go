@@ -8,7 +8,7 @@ import (
 	"slices"
 	"strings"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 // Detector is what is scored: detect.Scan for L1, or a wrapper that adds L2 later.

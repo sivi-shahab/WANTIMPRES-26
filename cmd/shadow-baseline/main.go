@@ -24,8 +24,8 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/catalog"
-	"aisec/internal/shadow"
+	"wantimpres26/internal/catalog"
+	"wantimpres26/internal/shadow"
 )
 
 func main() {

@@ -9,11 +9,11 @@ import (
 	"net/url"
 	"strings"
 
-	"aisec/internal/connector"
+	"wantimpres26/internal/connector"
 )
 
 // QuarantineFolder is created at the root of the user's My Drive or the shared drive.
-const QuarantineFolder = "AISec Quarantine"
+const QuarantineFolder = "WANTIMPRES-26 Quarantine"
 
 type drivePerm struct {
 	ID        string `json:"id"`

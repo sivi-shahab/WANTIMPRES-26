@@ -1,4 +1,4 @@
-module aisec
+module wantimpres26
 
 go 1.25.0
 

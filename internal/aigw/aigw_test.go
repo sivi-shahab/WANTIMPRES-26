@@ -26,10 +26,10 @@ import (
 	"github.com/open-policy-agent/opa/v1/rego"
 	"github.com/santhosh-tekuri/jsonschema/v6"
 
-	"aisec/internal/events"
-	"aisec/internal/mcpgw"
-	"aisec/internal/policysvc"
-	"aisec/policy"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/mcpgw"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/policy"
 )
 
 // --- fakes ---
@@ -144,9 +144,9 @@ func newEnv(t *testing.T, extraRules ...map[string]any) *env {
 		"claude":  map[string]any{"sanction": "sanctioned", "region": "US"},
 		"gemini":  map[string]any{"sanction": "sanctioned", "region": "US"},
 	}}
-	overrides := policysvc.Overrides{"aisec.catalog": catalog}
+	overrides := policysvc.Overrides{"wantimpres26.catalog": catalog}
 	if len(extraRules) > 0 { // a bank's own rules, published on top of the templates
-		raw, err := fs.ReadFile(policy.Files, "aisec/rules/data.json")
+		raw, err := fs.ReadFile(policy.Files, "wantimpres26/rules/data.json")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -155,9 +155,9 @@ func newEnv(t *testing.T, extraRules ...map[string]any) *env {
 		for _, r := range extraRules {
 			rules["items"] = append(rules["items"].([]any), r)
 		}
-		overrides["aisec.rules"] = rules
+		overrides["wantimpres26.rules"] = rules
 	}
-	pq, err := policysvc.Query(context.Background(), policy.Files, overrides, "data.aisec.decision.result")
+	pq, err := policysvc.Query(context.Background(), policy.Files, overrides, "data.wantimpres26.decision.result")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -310,7 +310,7 @@ func TestContract(t *testing.T) {
 			if c.provider == "anthropic" && got.Header.Get("Anthropic-Version") != "2023-06-01" {
 				t.Error("anthropic-version not forwarded")
 			}
-			if r.header.Get("X-AISec-Action") != "allow" || r.header.Get("X-AISec-Decision-Id") == "" || r.header.Get("X-Request-Id") != "req_upstream_1" || r.header.Get("Set-Cookie") != "" {
+			if r.header.Get("X-Wantimpres26-Action") != "allow" || r.header.Get("X-Wantimpres26-Decision-Id") == "" || r.header.Get("X-Request-Id") != "req_upstream_1" || r.header.Get("Set-Cookie") != "" {
 				t.Errorf("response headers %v", r.header)
 			}
 			evs := e.events.all()[before:]
@@ -341,7 +341,7 @@ func TestBlockInProviderFormat(t *testing.T) {
 		{"openai", "v1/chat/completions", map[string]any{"model": "m", "messages": []any{map[string]any{"role": "user", "content": secret}}},
 			func(b map[string]any) bool {
 				er, _ := b["error"].(map[string]any)
-				return er["type"] == "aisec_policy_violation" && er["code"] == "aisec_policy_block" && strings.Contains(er["message"].(string), "SECRET")
+				return er["type"] == "wantimpres26_policy_violation" && er["code"] == "wantimpres26_policy_block" && strings.Contains(er["message"].(string), "SECRET")
 			}},
 		{"anthropic", "v1/messages", map[string]any{"model": "m", "max_tokens": 10, "messages": []any{map[string]any{"role": "user", "content": secret}}},
 			func(b map[string]any) bool {
@@ -355,7 +355,7 @@ func TestBlockInProviderFormat(t *testing.T) {
 			}},
 	} {
 		r := e.do(c.provider, c.path, keyChat, c.body)
-		if r.status != 403 || !c.check(r.body) || r.header.Get("X-AISec-Action") != "block" || r.header.Get("X-AISec-Decision-Id") == "" {
+		if r.status != 403 || !c.check(r.body) || r.header.Get("X-Wantimpres26-Action") != "block" || r.header.Get("X-Wantimpres26-Decision-Id") == "" {
 			t.Errorf("%s: %d %s %v", c.provider, r.status, r.raw, r.header)
 		}
 		if strings.Contains(string(r.raw), "AKIA") {
@@ -390,7 +390,7 @@ func TestResidency(t *testing.T) {
 		map[string]any{"role": "user", "content": []any{map[string]any{"type": "text", "text": confidential}}},
 	}}
 	r = e.do("openai", "v1/chat/completions", keyChat, body)
-	if r.status != 200 || r.header.Get("X-AISec-Action") != "redact" {
+	if r.status != 200 || r.header.Get("X-Wantimpres26-Action") != "redact" {
 		t.Fatalf("confidential offshore: %d %s", r.status, r.raw)
 	}
 	_, got := e.ups["openai"].last(t)
@@ -404,7 +404,7 @@ func TestResidency(t *testing.T) {
 	e.ups["vllm"].reply = resp
 	r = e.do("vllm", "v1/chat/completions", keyChat, map[string]any{"model": "m", "messages": []any{map[string]any{"role": "user", "content": confidential}}})
 	_, got = e.ups["vllm"].last(t)
-	if r.status != 200 || r.header.Get("X-AISec-Action") != "allow" || !strings.Contains(fmt.Sprint(got["messages"]), "3171012310900001") {
+	if r.status != 200 || r.header.Get("X-Wantimpres26-Action") != "allow" || !strings.Contains(fmt.Sprint(got["messages"]), "3171012310900001") {
 		t.Errorf("onshore: %d %v", r.status, got)
 	}
 }
@@ -415,7 +415,7 @@ func TestResponseInspected(t *testing.T) {
 	e.ups["anthropic"].reply = []byte(`{"id":"msg_2","type":"message","role":"assistant","content":[{"type":"text","text":"Kartu yang terdaftar: 4111 1111 1111 1111."}],"stop_reason":"end_turn","usage":{"input_tokens":5,"output_tokens":9}}`)
 	r := e.do("anthropic", "v1/messages", keyChat, map[string]any{"model": "m", "max_tokens": 50, "messages": []any{map[string]any{"role": "user", "content": "Kartu apa yang terdaftar?"}}})
 	text := r.body["content"].([]any)[0].(map[string]any)["text"].(string)
-	if r.status != 200 || strings.Contains(text, "4111") || !strings.Contains(text, "[REDACTED:PCI.PAN]") || r.header.Get("X-AISec-Action") != "redact" || r.body["type"] != "message" {
+	if r.status != 200 || strings.Contains(text, "4111") || !strings.Contains(text, "[REDACTED:PCI.PAN]") || r.header.Get("X-Wantimpres26-Action") != "redact" || r.body["type"] != "message" {
 		t.Errorf("%d %s", r.status, r.raw)
 	}
 }
@@ -431,7 +431,7 @@ func TestFailMode(t *testing.T) {
 	chat := map[string]any{"model": "m", "messages": []any{map[string]any{"role": "user", "content": "hello"}}}
 
 	r := e.do("openai", "v1/chat/completions", keyStrict, chat)
-	if r.status != 503 || r.header.Get("X-AISec-Action") != "block" || r.body["error"].(map[string]any)["type"] != "server_error" || e.ups["openai"].calls() != 0 {
+	if r.status != 503 || r.header.Get("X-Wantimpres26-Action") != "block" || r.body["error"].(map[string]any)["type"] != "server_error" || e.ups["openai"].calls() != 0 {
 		t.Fatalf("fail closed: %d %s", r.status, r.raw)
 	}
 	r = e.do("openai", "v1/chat/completions", keyChat, chat)

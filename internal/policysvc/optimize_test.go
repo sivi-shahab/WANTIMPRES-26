@@ -8,7 +8,7 @@ import (
 
 	"github.com/open-policy-agent/opa/v1/rego"
 
-	"aisec/policy"
+	"wantimpres26/policy"
 )
 
 // Ticket 47: the sidecars run the partially evaluated bundle, simulation and the tests run the source. They must
@@ -24,8 +24,8 @@ func TestOptimizedBundleDecidesAsSource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	const query = `c := [x | x := data.aisec.decision.checked]; r := [x | x := data.aisec.decision.result]`
-	built, err := rego.New(rego.Query(query), rego.ParsedBundle("aisec", &b)).PrepareForEval(ctx)
+	const query = `c := [x | x := data.wantimpres26.decision.checked]; r := [x | x := data.wantimpres26.decision.result]`
+	built, err := rego.New(rego.Query(query), rego.ParsedBundle("wantimpres26", &b)).PrepareForEval(ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -80,7 +80,7 @@ func TestOptimizedBundleDecidesAsSource(t *testing.T) {
 		t.Errorf("invalid input through the bundle: %v", r)
 	}
 
-	mcp, err := rego.New(rego.Query(`k := data.aisec.kills; a := [x | x := data.aisec.mcp.agent]`), rego.ParsedBundle("aisec", &b),
+	mcp, err := rego.New(rego.Query(`k := data.wantimpres26.kills; a := [x | x := data.wantimpres26.mcp.agent]`), rego.ParsedBundle("wantimpres26", &b),
 		rego.Input(map[string]any{"identity": "nobody"})).Eval(ctx)
 	if err != nil || len(mcp) != 1 {
 		t.Errorf("MCP queries on the bundle: %v %v", mcp, err)

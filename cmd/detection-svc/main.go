@@ -9,13 +9,13 @@ import (
 	"os"
 	"time"
 
-	"aisec/internal/detect"
-	"aisec/internal/l2"
-	"aisec/internal/privacy"
-	"aisec/internal/server"
-	"aisec/internal/similarity"
-	"aisec/internal/tenantdb"
-	"aisec/internal/tuning"
+	"wantimpres26/internal/detect"
+	"wantimpres26/internal/l2"
+	"wantimpres26/internal/privacy"
+	"wantimpres26/internal/server"
+	"wantimpres26/internal/similarity"
+	"wantimpres26/internal/tenantdb"
+	"wantimpres26/internal/tuning"
 )
 
 // maxContent: spec §8.1 caps content at 256 KB.
@@ -72,7 +72,7 @@ func l2Client() *l2.Client {
 		return nil
 	}
 	// model-inference serves mTLS only, to detection-svc (ticket 40).
-	hc, err := server.MTLSClient(0, "spiffe://aisec.bank/ns/aisec/sa/model-inference")
+	hc, err := server.MTLSClient(0, "spiffe://wantimpres26.bank/ns/wantimpres26/sa/model-inference")
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "detection-svc: model-inference client:", err)
 		os.Exit(1)

@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/events"
-	"aisec/internal/l2"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/l2"
 )
 
 // Detection is detection-svc (POST /scan/text over mTLS), asked what the L2 model makes of each inspected text

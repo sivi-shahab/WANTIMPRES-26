@@ -11,10 +11,10 @@ import (
 	"sort"
 	"time"
 
-	"aisec/internal/agents"
-	"aisec/internal/catalog"
-	"aisec/internal/incident"
-	"aisec/internal/lifecycle"
+	"wantimpres26/internal/agents"
+	"wantimpres26/internal/catalog"
+	"wantimpres26/internal/incident"
+	"wantimpres26/internal/lifecycle"
 )
 
 // Domain is one posture score: Numerator/Denominator as a percentage (higher is better). Score is nil when there

@@ -1,10 +1,10 @@
-package aisec.decision_test
+package wantimpres26.decision_test
 
 import rego.v1
 
-import data.aisec.agent
-import data.aisec.decision
-import data.aisec.mcp
+import data.wantimpres26.agent
+import data.wantimpres26.decision
+import data.wantimpres26.mcp
 
 base := {
 	"channel": "ai_gateway",
@@ -32,8 +32,8 @@ test_no_match_allows if {
 }
 
 test_output_matches_schema if {
-	json.match_schema(decide(base), data.aisec.schema.output)[0]
-	json.match_schema(decide({"bogus": true}), data.aisec.schema.output)[0]
+	json.match_schema(decide(base), data.wantimpres26.schema.output)[0]
+	json.match_schema(decide({"bogus": true}), data.wantimpres26.schema.output)[0]
 }
 
 test_strictest_action_wins_for_every_pair if {
@@ -41,7 +41,7 @@ test_strictest_action_wins_for_every_pair if {
 	every i, weaker in order {
 		every stronger in array.slice(order, i + 1, count(order)) {
 			r := decision.result with input as base
-				with data.aisec.rules.items as [rule("a", weaker), rule("b", stronger)]
+				with data.wantimpres26.rules.items as [rule("a", weaker), rule("b", stronger)]
 			r.action == stronger
 		}
 	}
@@ -52,7 +52,7 @@ test_obligations_and_reasons_are_merged if {
 		object.union(rule("a", "redact"), {"obligations": [{"type": "redact", "classes": ["PCI.PAN"]}]}),
 		object.union(rule("b", "redact"), {"obligations": [{"type": "log_evidence"}, {"type": "redact", "classes": ["PCI.PAN"]}]}),
 	]
-	r := decision.result with input as base with data.aisec.rules.items as rules
+	r := decision.result with input as base with data.wantimpres26.rules.items as rules
 	r.action == "redact"
 	r.obligations == [{"classes": ["PCI.PAN"], "type": "redact"}, {"type": "log_evidence"}]
 	r.reason_codes == ["A", "B"]
@@ -61,7 +61,7 @@ test_obligations_and_reasons_are_merged if {
 
 test_monitor_rules_never_change_action if {
 	rules := [object.union(rule("m", "block"), {"mode": "monitor"}), rule("w", "warn")]
-	r := decision.result with input as base with data.aisec.rules.items as rules
+	r := decision.result with input as base with data.wantimpres26.rules.items as rules
 	r.action == "warn"
 	r.monitor_rules == ["m"]
 	r.matched_rules == ["w"]
@@ -85,7 +85,7 @@ ops_input := with_patch({"content": {"sensitivity": "internal", "injection_score
 
 cond(c) if {
 	decision.result.matched_rules == ["x"] with input as ops_input
-		with data.aisec.rules.items as [{"id": "x", "when": [c], "action": "warn", "reason": "X"}]
+		with data.wantimpres26.rules.items as [{"id": "x", "when": [c], "action": "warn", "reason": "X"}]
 }
 
 test_ops if {
@@ -100,7 +100,7 @@ test_ops if {
 	not cond({"field": "content.injection_score", "op": "gte", "value": 0.51})
 	cond({"field": "content.injection_score", "op": "lte", "value": 0.5})
 	not cond({"field": "content.tokens", "op": "gte", "value": 0}) # missing number never compares
-	cond({"field": "risk_score", "op": "gte", "value": 10}) # computed by aisec.risk (~17 here)
+	cond({"field": "risk_score", "op": "gte", "value": 10}) # computed by wantimpres26.risk (~17 here)
 	not cond({"field": "risk_score", "op": "gte", "value": 50})
 	cond({"field": "content.classes", "op": "class_count_gte", "value": {"type": "PII_ID.*", "min": 2}})
 	not cond({"field": "content.classes", "op": "class_count_gte", "value": {"type": "PII_ID.NIK", "min": 3}})
@@ -124,7 +124,7 @@ test_invalid_rules_are_reported if {
 		{"id": "noreason", "when": [{"field": "channel", "op": "eq", "value": "x"}], "action": "block"},
 		object.union(rule("mode", "warn"), {"mode": "shadow"}),
 	]
-	errs := decision.rule_errors with data.aisec.rules.items as bad
+	errs := decision.rule_errors with data.wantimpres26.rules.items as bad
 	errs == {
 		"duplicate id dup",
 		"act: unknown action nuke",
@@ -230,7 +230,7 @@ pii_to_unsanctioned := with_patch({
 })
 
 decide_with(inp, exceptions) := r if {
-	r := decision.result with input as inp with data.aisec.exceptions.items as exceptions
+	r := decision.result with input as inp with data.wantimpres26.exceptions.items as exceptions
 }
 
 test_exception_lifts_rule_in_scope if {
@@ -276,7 +276,7 @@ catalog := {"version": 3, "apps": {
 test_catalog_overrides_pep_destination if {
 	# The PEP thinks deepseek is sanctioned and onshore; the catalog says blocked and offshore.
 	inp := with_patch({"destination": {"app_id": "deepseek", "sanction": "sanctioned", "region": "ID"}, "content": {"sensitivity": "internal", "classes": []}})
-	r := decision.result with input as inp with data.aisec.catalog as catalog
+	r := decision.result with input as inp with data.wantimpres26.catalog as catalog
 	r.action == "block"
 	"res.offshore-unsanctioned" in r.matched_rules
 	r.destination.sanction == "blocked"
@@ -286,17 +286,17 @@ test_catalog_overrides_pep_destination if {
 
 test_catalog_unknown_app_keeps_pep_values if {
 	inp := with_patch({"destination": {"app_id": "new-ai-tool", "sanction": "unsanctioned", "region": "US"}, "content": {"sensitivity": "public", "classes": []}})
-	r := decision.result with input as inp with data.aisec.catalog as catalog
+	r := decision.result with input as inp with data.wantimpres26.catalog as catalog
 	r.destination == {"app_id": "new-ai-tool", "sanction": "unsanctioned", "region": "US"}
 	r.action == "block" # offshore + unsanctioned
 }
 
 test_catalog_change_flips_decision if {
 	inp := with_patch({"destination": {"app_id": "copilot", "sanction": "sanctioned", "region": "ID"}, "content": {"sensitivity": "internal", "classes": []}})
-	before := decision.result with input as inp with data.aisec.catalog as catalog
+	before := decision.result with input as inp with data.wantimpres26.catalog as catalog
 	before.action == "allow"
 	blocked := json.patch(catalog, [{"op": "replace", "path": "/apps/copilot/sanction", "value": "blocked"}])
-	r := decision.result with input as inp with data.aisec.catalog as blocked
+	r := decision.result with input as inp with data.wantimpres26.catalog as blocked
 	r.destination.sanction == "blocked"
 	r.risk_score > before.risk_score
 }
@@ -318,15 +318,15 @@ agent_call(id, claims) := with_patch({
 })
 
 test_registry_decides_registration if {
-	active := decision.result with input as agent_call("invoice-bot", {}) with data.aisec.agents as agents
+	active := decision.result with input as agent_call("invoice-bot", {}) with data.wantimpres26.agents as agents
 	active.action == "allow"
 	not "tpl.agent-not-active" in active.matched_rules
 	# A quarantined agent is blocked even if the PEP claims it is registered.
-	q := decision.result with input as agent_call("orphan-bot", {"registered": true}) with data.aisec.agents as agents
+	q := decision.result with input as agent_call("orphan-bot", {"registered": true}) with data.wantimpres26.agents as agents
 	q.action == "block"
 	q.reason_codes == ["AGENT_NOT_ACTIVE"]
 	# Unknown agents are unregistered (risk floor applies to high tools); with no allow-list they may call no tool.
-	u := decision.result with input as agent_call("shadow-bot", {"registered": true, "tool_risk": "high"}) with data.aisec.agents as agents
+	u := decision.result with input as agent_call("shadow-bot", {"registered": true, "tool_risk": "high"}) with data.wantimpres26.agents as agents
 	u.risk_overrides == ["unregistered-agent-high-tool"]
 	u.risk_score >= 90
 	u.reason_codes == ["TOOL_NOT_ALLOWED"]
@@ -336,14 +336,14 @@ test_registry_decides_registration if {
 
 test_tool_allow_list_and_registry_risk if {
 	# Not on the allow-list: blocked, even for an active agent.
-	r := decision.result with input as agent_call("invoice-bot", {"tool": "hr.export"}) with data.aisec.agents as agents
+	r := decision.result with input as agent_call("invoice-bot", {"tool": "hr.export"}) with data.wantimpres26.agents as agents
 	r.reason_codes == ["TOOL_NOT_ALLOWED"]
 	# The registry's tool risk replaces the PEP's claim: payments.transfer is high whatever the PEP says.
-	h := agent.agent with input as agent_call("invoice-bot", {"tool": "payments.transfer", "tool_risk": "low"}) with data.aisec.agents as agents
+	h := agent.agent with input as agent_call("invoice-bot", {"tool": "payments.transfer", "tool_risk": "low"}) with data.wantimpres26.agents as agents
 	h.tool_risk == "high"
 	h.tool_allowed
 	# Outside tool_call (e.g. an agent's own LLM request) the allow-list does not apply.
-	l := decision.result with input as object.union(agent_call("invoice-bot", {"tool": "hr.export"}), {"direction": "request"}) with data.aisec.agents as agents
+	l := decision.result with input as object.union(agent_call("invoice-bot", {"tool": "hr.export"}), {"direction": "request"}) with data.wantimpres26.agents as agents
 	l.action == "allow"
 }
 
@@ -353,41 +353,41 @@ test_tool_scope_rate_and_depth if {
 		{"rate_exceeded": true}: "TOOL_RATE_LIMITED",
 		{"chain_depth": 4}: "AGENT_CHAIN_TOO_DEEP",
 	} {
-		r := decision.result with input as agent_call("invoice-bot", patch) with data.aisec.agents as agents
+		r := decision.result with input as agent_call("invoice-bot", patch) with data.wantimpres26.agents as agents
 		r.reason_codes == [reason]
 		r.action == "block"
 	}
-	ok := decision.result with input as agent_call("invoice-bot", {"scope_violations": 0, "rate_exceeded": false, "chain_depth": 3}) with data.aisec.agents as agents
+	ok := decision.result with input as agent_call("invoice-bot", {"scope_violations": 0, "rate_exceeded": false, "chain_depth": 3}) with data.wantimpres26.agents as agents
 	ok.action == "allow"
 }
 
 test_indirect_injection_in_tool_result if {
 	inp := object.union(agent_call("invoice-bot", {}), {"direction": "tool_result", "content": {"sensitivity": "internal", "classes": [], "injection_score": 0.72}})
-	r := decision.result with input as inp with data.aisec.agents as agents
+	r := decision.result with input as inp with data.wantimpres26.agents as agents
 	r.action == "block"
 	r.reason_codes == ["INDIRECT_INJECTION"]
 	# The same score in the agent's own request stays under the direct threshold (0.9).
-	q := decision.result with input as object.union(inp, {"direction": "request"}) with data.aisec.agents as agents
+	q := decision.result with input as object.union(inp, {"direction": "request"}) with data.wantimpres26.agents as agents
 	q.action == "allow"
 }
 
 test_injection_tainted_session_needs_approval_for_high_tool if {
 	tainted := {"tool": "payments.transfer", "session_injection_max": 0.6}
-	r := decision.result with input as agent_call("invoice-bot", tainted) with data.aisec.agents as agents
+	r := decision.result with input as agent_call("invoice-bot", tainted) with data.wantimpres26.agents as agents
 	r.action == "require_approval"
 	r.reason_codes == ["INJECTION_THEN_HIGH_TOOL"]
 	# Low tools stay usable in a tainted session; a clean session may use the high tool.
-	low := decision.result with input as agent_call("invoice-bot", {"session_injection_max": 0.6}) with data.aisec.agents as agents
+	low := decision.result with input as agent_call("invoice-bot", {"session_injection_max": 0.6}) with data.wantimpres26.agents as agents
 	low.action == "allow"
-	clean := decision.result with input as agent_call("invoice-bot", {"tool": "payments.transfer", "session_injection_max": 0.1}) with data.aisec.agents as agents
+	clean := decision.result with input as agent_call("invoice-bot", {"tool": "payments.transfer", "session_injection_max": 0.1}) with data.wantimpres26.agents as agents
 	clean.action == "allow"
 }
 
 test_mcp_lookup_by_workload_identity if {
-	a := mcp.agent with input as {"identity": "spiffe://bank.local/invoice-bot"} with data.aisec.agents as agents
+	a := mcp.agent with input as {"identity": "spiffe://bank.local/invoice-bot"} with data.wantimpres26.agents as agents
 	a.agent_id == "invoice-bot"
 	a.tools[1].scopes.amount.max == 25000000
-	not mcp.agent with input as {"identity": "unknown"} with data.aisec.agents as agents
+	not mcp.agent with input as {"identity": "unknown"} with data.wantimpres26.agents as agents
 }
 
 # --- ticket 29: MCP tool definitions pinned and re-approved on change -----------------------------------------
@@ -403,10 +403,10 @@ mcp_tools := {"version": 3, "items": {
 mcp_call(server, tool, hash) := agent_call("invoice-bot", object.union({"tool": tool, "mcp_server": server}, {"tool_hash": hash | hash != ""}))
 
 test_mcp_tool_must_be_approved_and_unchanged if {
-	ok := decision.result with input as mcp_call("erp", "erp.read", pin) with data.aisec.agents as agents with data.aisec.mcp_tools as mcp_tools
+	ok := decision.result with input as mcp_call("erp", "erp.read", pin) with data.wantimpres26.agents as agents with data.wantimpres26.mcp_tools as mcp_tools
 	ok.action == "allow"
 	# The gateway did not see tools/list on this replica: the approved status alone decides.
-	unseen := decision.result with input as mcp_call("erp", "erp.read", "") with data.aisec.agents as agents with data.aisec.mcp_tools as mcp_tools
+	unseen := decision.result with input as mcp_call("erp", "erp.read", "") with data.wantimpres26.agents as agents with data.wantimpres26.mcp_tools as mcp_tools
 	unseen.action == "allow"
 	every inp in [
 		mcp_call("erp", "erp.read", concat("", ["b", substring(pin, 1, -1)])), # rug pull: served definition is not the pin
@@ -414,17 +414,17 @@ test_mcp_tool_must_be_approved_and_unchanged if {
 		mcp_call("hr", "erp.read", ""), # rejected
 		mcp_call("crm", "erp.read", ""), # never seen
 	] {
-		r := decision.result with input as inp with data.aisec.agents as agents with data.aisec.mcp_tools as mcp_tools
+		r := decision.result with input as inp with data.wantimpres26.agents as agents with data.wantimpres26.mcp_tools as mcp_tools
 		r.action == "block"
 		"TOOL_NOT_APPROVED" in r.reason_codes
 	}
 	# Tool calls outside the MCP gateway (no mcp_server) are not subject to definition pins.
-	other := decision.result with input as agent_call("invoice-bot", {}) with data.aisec.agents as agents with data.aisec.mcp_tools as mcp_tools
+	other := decision.result with input as agent_call("invoice-bot", {}) with data.wantimpres26.agents as agents with data.wantimpres26.mcp_tools as mcp_tools
 	other.action == "allow"
 }
 
 test_mcp_tools_for_gateway_fallback if {
-	ts := mcp.tools with input as {"server": "erp"} with data.aisec.mcp_tools as mcp_tools
+	ts := mcp.tools with input as {"server": "erp"} with data.wantimpres26.mcp_tools as mcp_tools
 	ts == {"erp.read": {"status": "approved", "hash": pin}, "payments.transfer": {"status": "under_review", "hash": pin}}
 }
 
@@ -438,26 +438,26 @@ test_kill_switch_scopes if {
 		{"global": false, "agent": {}, "tool": {"erp.read": "rug pull"}, "app": {}},
 		{"global": false, "agent": {}, "tool": {}, "app": {"copilot": "vendor breach"}},
 	] {
-		r := decision.result with input as call with data.aisec.agents as agents with data.aisec.kills as kills
+		r := decision.result with input as call with data.wantimpres26.agents as agents with data.wantimpres26.kills as kills
 		r.action == "block"
 		"KILL_SWITCH" in r.reason_codes
 	}
 	other := {"global": false, "agent": {"other-bot": "x"}, "tool": {"hr.export": "x"}, "app": {"erp": "x"}}
-	ok := decision.result with input as call with data.aisec.agents as agents with data.aisec.kills as other
+	ok := decision.result with input as call with data.wantimpres26.agents as agents with data.wantimpres26.kills as other
 	ok.action == "allow"
 	# An approval never lifts a kill switch.
-	k := decision.result with input as agent_call("invoice-bot", {"approval_granted": true}) with data.aisec.agents as agents
-		with data.aisec.kills as {"global": true, "agent": {}, "tool": {}, "app": {}}
+	k := decision.result with input as agent_call("invoice-bot", {"approval_granted": true}) with data.wantimpres26.agents as agents
+		with data.wantimpres26.kills as {"global": true, "agent": {}, "tool": {}, "app": {}}
 	k.action == "block"
 }
 
 test_approval_lifts_only_require_approval if {
 	tainted := {"tool": "payments.transfer", "session_injection_max": 0.6}
-	r := decision.result with input as agent_call("invoice-bot", object.union(tainted, {"approval_granted": true})) with data.aisec.agents as agents
+	r := decision.result with input as agent_call("invoice-bot", object.union(tainted, {"approval_granted": true})) with data.wantimpres26.agents as agents
 	r.action == "allow"
 	r.exempted_rules == ["tpl.injection-then-high-tool"]
 	# A stricter rule in the same decision still blocks.
-	b := decision.result with input as agent_call("invoice-bot", object.union(tainted, {"approval_granted": true, "scope_violations": 1})) with data.aisec.agents as agents
+	b := decision.result with input as agent_call("invoice-bot", object.union(tainted, {"approval_granted": true, "scope_violations": 1})) with data.wantimpres26.agents as agents
 	b.action == "block"
 }
 
@@ -465,22 +465,22 @@ test_approval_lifts_only_require_approval if {
 
 test_containment_block if {
 	blocks := [{"principal_id": "u-hmac-1", "app_id": "copilot", "expires_at": "2099-01-01T00:00:00Z", "incident": "i1"}]
-	r := decision.result with input as base with data.aisec.containment.blocks as blocks
+	r := decision.result with input as base with data.wantimpres26.containment.blocks as blocks
 	r.action == "block"
 	r.reason_codes == ["CONTAINMENT_BLOCK"]
 	r.matched_rules == ["containment.block"]
 	# Another app, another principal, or an expired block: no effect.
 	other := with_patch({"destination": {"app_id": "chatgpt", "sanction": "sanctioned", "region": "ID"}})
-	r2 := decision.result with input as other with data.aisec.containment.blocks as blocks
+	r2 := decision.result with input as other with data.wantimpres26.containment.blocks as blocks
 	not "CONTAINMENT_BLOCK" in r2.reason_codes
-	r3 := decision.result with input as with_patch({"principal": {"type": "user", "id": "u-hmac-2"}}) with data.aisec.containment.blocks as blocks
+	r3 := decision.result with input as with_patch({"principal": {"type": "user", "id": "u-hmac-2"}}) with data.wantimpres26.containment.blocks as blocks
 	not "CONTAINMENT_BLOCK" in r3.reason_codes
 	expired := [object.union(blocks[0], {"expires_at": "2020-01-01T00:00:00Z"})]
-	r4 := decision.result with input as base with data.aisec.containment.blocks as expired
+	r4 := decision.result with input as base with data.wantimpres26.containment.blocks as expired
 	r4.action == "allow"
 	# An exception for every rule does not lift it.
 	ex := [{"rules": ["containment.block"], "scope": {"principal_id": "u-hmac-1"}, "expires_at": "2099-01-01T00:00:00Z"}]
-	r5 := decision.result with input as base with data.aisec.containment.blocks as blocks with data.aisec.exceptions.items as ex
+	r5 := decision.result with input as base with data.wantimpres26.containment.blocks as blocks with data.wantimpres26.exceptions.items as ex
 	r5.action == "block"
 }
 
@@ -491,15 +491,15 @@ test_registry_decides_writes_memory if {
 	injected := {"sensitivity": "internal", "classes": [], "injection_score": 0.6}
 	# The PEP says "not a memory write"; the registry says it is.
 	w := decision.result with input as object.union(agent_call("invoice-bot", {"tool": "kb.save", "writes_memory": false}), {"content": injected})
-		with data.aisec.agents as mem_agents
+		with data.wantimpres26.agents as mem_agents
 	w.action == "block"
 	"MEMORY_POISONING" in w.reason_codes
 	# The PEP says "memory write" for a tool the registry does not mark: no memory rule.
 	r := decision.result with input as object.union(agent_call("invoice-bot", {"writes_memory": true}), {"content": injected})
-		with data.aisec.agents as mem_agents
+		with data.wantimpres26.agents as mem_agents
 	not "MEMORY_POISONING" in r.reason_codes
 	# A tainted session writing clean content: approval.
-	t := decision.result with input as agent_call("invoice-bot", {"tool": "kb.save", "session_injection_max": 0.6}) with data.aisec.agents as mem_agents
+	t := decision.result with input as agent_call("invoice-bot", {"tool": "kb.save", "session_injection_max": 0.6}) with data.wantimpres26.agents as mem_agents
 	t.action == "require_approval"
 	t.reason_codes == ["MEMORY_WRITE_TAINTED_SESSION"]
 }

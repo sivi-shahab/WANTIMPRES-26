@@ -17,8 +17,8 @@ import (
 
 	"github.com/jackc/pgx/v5"
 
-	"aisec/internal/events"
-	"aisec/internal/policysvc"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/policysvc"
 )
 
 // EventSource returns stored decision events with ts in [from, to), at most limit (the event store, ticket 15).

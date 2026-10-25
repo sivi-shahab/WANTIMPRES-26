@@ -21,7 +21,7 @@ Threat model (tiket 02) G5: belum ada kontrol untuk ASI06 (memory & context pois
 - [x] Skenario poisoning sintetis (tulis → baca ulang di sesi lain) tertangkap. *(Racun yang sudah ada di store, misalnya tertulis sebelum gateway atau lewat jalur lain, dibaca ulang oleh sesi lain lewat `recall_memory`: hasilnya diblok `INDIRECT_INJECTION` tanpa satu byte pun sampai ke agent. Sesi itu menjadi ter-taint, sehingga `send_money` butuh approval dan sesi itu tidak bisa menulis racunnya kembali ke memory tanpa approval.)*
 
 ## Keputusan
-- **Penanda di registry agent**: `agents.Tool.writes_memory` (opsional, default false) ikut di `data.aisec.agents`. `aisec.agent` menimpa `agent.writes_memory` dari input PEP dengan nilai registry, sama seperti `tool_risk`. Tool yang tidak ada di allow-list sudah diblok `tpl.tool-not-allowed`.
+- **Penanda di registry agent**: `agents.Tool.writes_memory` (opsional, default false) ikut di `data.wantimpres26.agents`. `wantimpres26.agent` menimpa `agent.writes_memory` dari input PEP dengan nilai registry, sama seperti `tool_risk`. Tool yang tidak ada di allow-list sudah diblok `tpl.tool-not-allowed`.
 - **Inspeksi**: argumen tool call sudah diinspeksi (DLP + injection) oleh gateway. Yang baru adalah dua template rule:
   - `tpl.memory-write-injection`: tulis memory dengan `injection_score ≥ 0,5` → block. Ambangnya lebih rendah dari `tpl.injection-high` (0,9) karena yang tersimpan akan dibaca ulang sebagai konteks tepercaya.
   - `tpl.memory-write-tainted`: sesi dengan `session_injection_max ≥ 0,5` menulis memory → `require_approval` (tanpa HITL = deny). Approval hanya mengangkat rule ini; block karena isi tetap berlaku.

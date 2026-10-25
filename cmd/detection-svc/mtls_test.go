@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"aisec/internal/server/mtlstest"
+	"wantimpres26/internal/server/mtlstest"
 )
 
 // Ticket 40 AC: detection-svc scans only for the PEP workloads in MTLS_ALLOW (deploy/base/services.yaml); any other

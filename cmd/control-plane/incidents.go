@@ -10,11 +10,11 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/agents"
-	"aisec/internal/authz"
-	"aisec/internal/connector"
-	"aisec/internal/incident"
-	"aisec/internal/remediate"
+	"wantimpres26/internal/agents"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/connector"
+	"wantimpres26/internal/incident"
+	"wantimpres26/internal/remediate"
 )
 
 // wireIncidents adds what ticket 26 needs from outside the incident module: the ITSM, the containment actions

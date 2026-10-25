@@ -6,7 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	"aisec/internal/events"
+	"wantimpres26/internal/events"
 )
 
 var allStates = []State{New, Triaged, Investigating, Contained, Resolved, Closed}

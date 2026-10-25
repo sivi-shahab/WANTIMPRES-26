@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 var key = []byte("test-pepper")

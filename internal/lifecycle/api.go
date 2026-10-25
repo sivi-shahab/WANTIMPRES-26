@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 // Routes mounts the policy lifecycle API (spec §8.3, FR-POL-5..7). Authoring needs policy.write; approving,

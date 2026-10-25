@@ -18,7 +18,7 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
+	"wantimpres26/internal/audit"
 )
 
 const tenant = "00000000-0000-0000-0000-000000000001"
@@ -109,7 +109,7 @@ func TestSCIMAndBindings(t *testing.T) {
 	s, db, al := setup(t)
 	ctx := context.Background()
 	sum := sha256.Sum256([]byte("scim-secret"))
-	srv := httptest.NewServer(s.SCIMHandler(sum[:], "https://aisec.bank.local"))
+	srv := httptest.NewServer(s.SCIMHandler(sum[:], "https://wantimpres26.bank.local"))
 	defer srv.Close()
 	scim := scimClient{t, srv, "scim-secret"}
 
@@ -139,7 +139,7 @@ func TestSCIMAndBindings(t *testing.T) {
 		t.Errorf("unsupported filter: %d", code)
 	}
 
-	code, grp := scim.do("POST", "/scim/v2/Groups", fmt.Sprintf(`{"displayName": "SG-AISEC-SOC", "members": [{"value": %q}]}`, budiID))
+	code, grp := scim.do("POST", "/scim/v2/Groups", fmt.Sprintf(`{"displayName": "SG-WANTIMPRES26-SOC", "members": [{"value": %q}]}`, budiID))
 	if code != 201 {
 		t.Fatalf("create group: %d %v", code, grp)
 	}
@@ -149,7 +149,7 @@ func TestSCIMAndBindings(t *testing.T) {
 	if got := roles(t, s, "budi@bankmega.com"); len(got) != 0 {
 		t.Errorf("roles before binding: %v", got)
 	}
-	soc, err := s.Bind(ctx, "admin1", RoleBinding{Group: "SG-AISEC-SOC", Role: "soc_analyst"})
+	soc, err := s.Bind(ctx, "admin1", RoleBinding{Group: "SG-WANTIMPRES26-SOC", Role: "soc_analyst"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -157,7 +157,7 @@ func TestSCIMAndBindings(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, bad := range []RoleBinding{{User: "ani@bankmega.com", Role: "root"}, {User: "ani@bankmega.com", Role: "break_glass"},
-		{User: "ani@bankmega.com", Group: "SG-AISEC-SOC", Role: "ciso"}, {User: "ghost@bankmega.com", Role: "ciso"}} {
+		{User: "ani@bankmega.com", Group: "SG-WANTIMPRES26-SOC", Role: "ciso"}, {User: "ghost@bankmega.com", Role: "ciso"}} {
 		if _, err := s.Bind(ctx, "admin1", bad); err == nil {
 			t.Errorf("bound %+v", bad)
 		}

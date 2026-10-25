@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/events"
-	sealpkg "aisec/internal/seal"
+	"wantimpres26/internal/events"
+	sealpkg "wantimpres26/internal/seal"
 )
 
 type State string

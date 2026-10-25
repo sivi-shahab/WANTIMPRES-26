@@ -1,6 +1,6 @@
-# Network policy for namespace aisec (ticket 40, threat model G1): nothing in, nothing out, then one allow per flow of
+# Network policy for namespace wantimpres26 (ticket 40, threat model G1): nothing in, nothing out, then one allow per flow of
 # spec §5.2. deploy/netpol_test.go checks every flow below is open and the ones that must stay closed are.
-# Namespaces outside aisec are matched by kubernetes.io/metadata.name: ingress-nginx (admin API, bucket
+# Namespaces outside wantimpres26 are matched by kubernetes.io/metadata.name: ingress-nginx (admin API, bucket
 # notifications), monitoring (Prometheus, Alertmanager), kube-system (DNS); change them in an overlay if the
 # cluster names them otherwise. Kubelet probes are not subject to these policies.
 apiVersion: networking.k8s.io/v1
@@ -28,7 +28,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata: {name: egress-external}
 spec:
-  podSelector: {matchLabels: {aisec.bank/egress: external}}
+  podSelector: {matchLabels: {wantimpres26.bank/egress: external}}
   policyTypes: [Egress]
   egress:
     - to: [{ipBlock: {cidr: 0.0.0.0/0}}]

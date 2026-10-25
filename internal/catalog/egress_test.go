@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/authz"
-	"aisec/internal/authz/authztest"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/authz/authztest"
 )
 
 // Ticket 43 AC: the provider domain export, from the seed catalog.

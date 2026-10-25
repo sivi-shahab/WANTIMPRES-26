@@ -12,9 +12,9 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
-	"aisec/internal/privacy"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/privacy"
 )
 
 // Record is one SIEM message, independent of the wire format.

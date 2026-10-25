@@ -9,7 +9,7 @@ import (
 	"sort"
 	"strings"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 // Content is every string leaf of a JSON value, joined for one detector pass.

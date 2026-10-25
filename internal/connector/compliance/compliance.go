@@ -18,7 +18,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"aisec/internal/connector"
+	"wantimpres26/internal/connector"
 )
 
 // --- Claude Enterprise ---

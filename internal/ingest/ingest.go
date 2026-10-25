@@ -12,7 +12,7 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 	"github.com/twmb/franz-go/pkg/sr"
 
-	"aisec/internal/events"
+	"wantimpres26/internal/events"
 )
 
 const Group = "event-ingest"

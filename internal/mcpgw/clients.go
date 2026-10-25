@@ -18,8 +18,8 @@ import (
 	"github.com/coreos/go-oidc/v3/oidc"
 	"github.com/santhosh-tekuri/jsonschema/v6"
 
-	"aisec/internal/events"
-	"aisec/policy"
+	"wantimpres26/internal/events"
+	"wantimpres26/policy"
 )
 
 // --- access tokens (MCP authorization: OAuth 2.1 bearer tokens, RFC 8707 audience) ---
@@ -192,7 +192,7 @@ type OPA struct {
 	HTTP *http.Client
 }
 
-// RegistryAgent is the registry entry for an authenticated workload identity (policy aisec/mcp).
+// RegistryAgent is the registry entry for an authenticated workload identity (policy wantimpres26/mcp).
 type RegistryAgent struct {
 	ID     string `json:"agent_id"`
 	Status string `json:"status"`
@@ -204,7 +204,7 @@ type RegistryAgent struct {
 	} `json:"tools"`
 }
 
-// Decision is the PDP output (policy/aisec/schema output v1) the gateway acts on.
+// Decision is the PDP output (policy/wantimpres26/schema output v1) the gateway acts on.
 type Decision struct {
 	Action      string `json:"action"`
 	Obligations []struct {
@@ -227,12 +227,12 @@ type Decision struct {
 // Agent returns the registry entry for identity, or nil if the registry does not know it.
 func (o *OPA) Agent(ctx context.Context, identity string) (*RegistryAgent, error) {
 	var a *RegistryAgent
-	return a, o.query(ctx, "aisec/mcp/agent", map[string]any{"identity": identity}, &a)
+	return a, o.query(ctx, "wantimpres26/mcp/agent", map[string]any{"identity": identity}, &a)
 }
 
 // inputSchema is the PDP input schema from the policy this binary was built with, compiled once.
 var inputSchema = sync.OnceValues(func() (*jsonschema.Schema, error) {
-	b, err := policy.Files.ReadFile("aisec/schema/data.json")
+	b, err := policy.Files.ReadFile("wantimpres26/schema/data.json")
 	if err != nil {
 		return nil, err
 	}
@@ -249,16 +249,16 @@ var inputSchema = sync.OnceValues(func() (*jsonschema.Schema, error) {
 // A valid input skips the PDP's own schema check (decision.checked, ticket 47); anything else goes to
 // decision.result, which checks it and answers the fail-closed INPUT_SCHEMA_INVALID block.
 func (o *OPA) Decide(ctx context.Context, input map[string]any) (Decision, error) {
-	path := "aisec/decision/result"
+	path := "wantimpres26/decision/result"
 	if validInput(input) {
-		path = "aisec/decision/checked"
+		path = "wantimpres26/decision/checked"
 	}
 	var d *Decision
 	if err := o.query(ctx, path, input, &d); err != nil {
 		return Decision{}, err
 	}
-	if d == nil && path != "aisec/decision/result" { // a bundle older than checked, during a rollout
-		if err := o.query(ctx, "aisec/decision/result", input, &d); err != nil {
+	if d == nil && path != "wantimpres26/decision/result" { // a bundle older than checked, during a rollout
+		if err := o.query(ctx, "wantimpres26/decision/result", input, &d); err != nil {
 			return Decision{}, err
 		}
 	}
@@ -311,10 +311,10 @@ func (o *OPA) query(ctx context.Context, path string, input any, out any) error 
 	return json.Unmarshal(r.Result, out)
 }
 
-// Pins returns the server's tool statuses and pinned hashes from the bundle (policy aisec/mcp).
+// Pins returns the server's tool statuses and pinned hashes from the bundle (policy wantimpres26/mcp).
 func (o *OPA) Pins(ctx context.Context, server string) (map[string]Pin, error) {
 	var p map[string]Pin
-	return p, o.query(ctx, "aisec/mcp/tools", map[string]any{"server": server}, &p)
+	return p, o.query(ctx, "wantimpres26/mcp/tools", map[string]any{"server": server}, &p)
 }
 
 // --- registry: tool definitions (ticket 29) ---
@@ -336,7 +336,7 @@ func (r *Registry) Observe(ctx context.Context, server string, tools []map[strin
 // Kills reads the active kill switches from the bundle.
 func (o *OPA) Kills(ctx context.Context) (KillSet, error) {
 	var k *KillSet
-	if err := o.query(ctx, "aisec/kills", nil, &k); err != nil {
+	if err := o.query(ctx, "wantimpres26/kills", nil, &k); err != nil {
 		return KillSet{}, err
 	}
 	if k == nil {

@@ -11,8 +11,8 @@ import (
 
 	"github.com/jackc/pgx/v5"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
 )
 
 // FR-INC-6 breach workflow (UU PDP 27/2022 Pasal 46): an incident in which personal data got out starts a 3×24 hour

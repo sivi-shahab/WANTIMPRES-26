@@ -14,8 +14,8 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/connector"
-	"aisec/internal/connector/connectortest"
+	"wantimpres26/internal/connector"
+	"wantimpres26/internal/connector/connectortest"
 )
 
 // fakeClaude follows the documented Compliance API: chats ordered by updated_at with updated_at.gt and

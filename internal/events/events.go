@@ -12,11 +12,11 @@ import (
 
 	"github.com/santhosh-tekuri/jsonschema/v6"
 
-	"aisec/internal/privacy"
+	"wantimpres26/internal/privacy"
 )
 
 const (
-	Topic = "aisec.decision_event.v1"
+	Topic = "wantimpres26.decision_event.v1"
 	// Subject follows the registry's TopicNameStrategy.
 	Subject = Topic + "-value"
 )
@@ -96,7 +96,7 @@ func ClassType(t string) bool { return classType.MatchString(t) }
 
 var classType = regexp.MustCompile(`^(PII_ID|FIN|PCI|PHI|SECRET|CODE|LEGAL_HR|CUSTOM)\.[A-Z0-9_]+$`)
 
-// PDPInput rebuilds the canonical PDP input (policy/aisec/schema) from the event's metadata. ok is false when the
+// PDPInput rebuilds the canonical PDP input (policy/wantimpres26/schema) from the event's metadata. ok is false when the
 // event lacks what every decision needs (sensitivity, sanction, region): such events cannot be replayed.
 func (e Event) PDPInput() (in map[string]any, ok bool) {
 	if e.Sensitivity == "" || e.Sanction == "" || e.Region == "" {

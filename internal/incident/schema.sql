@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS incident.actions (
 );
 CREATE INDEX IF NOT EXISTS actions_incident ON incident.actions (incident_id, at);
 
--- Containment block: this principal may not reach this app until expires_at or lifted (data.aisec.containment).
+-- Containment block: this principal may not reach this app until expires_at or lifted (data.wantimpres26.containment).
 CREATE TABLE IF NOT EXISTS incident.blocks (
   id           bigserial PRIMARY KEY,
   tenant_id    uuid        NOT NULL,

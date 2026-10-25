@@ -20,13 +20,13 @@
 │ histogram_timer_rego_query_eval_ns_max          │ 7708599 │
 │ histogram_timer_rego_query_eval_ns_median       │ 1680506 │
 --- profile (top expressions by time)
-│ 970.604µs │ 26       │ 26       │ 26           │ /aisec/risk/risk.rego:49           │
-│ 312.036µs │ 7        │ 7        │ 7            │ /aisec/risk/risk.rego:16           │
-│ 306.421µs │ 2        │ 2        │ 1            │ /optimized/aisec/decision.rego:194 │
-│ 266.078µs │ 13       │ 1        │ 1            │ /aisec/cond/cond.rego:7            │
-│ 265.618µs │ 22       │ 22       │ 2            │ /aisec/decision.rego:61            │
-│ 193.44µs  │ 11       │ 2        │ 1            │ /aisec/decision.rego:57            │
-│ 134.612µs │ 20       │ 19       │ 5            │ /aisec/risk/risk.rego:30           │
-│ 133.286µs │ 3        │ 3        │ 1            │ /optimized/aisec/decision.rego:255 │
-│ 110.993µs │ 18       │ 5        │ 2            │ /aisec/decision.rego:68            │
-│ 109.239µs │ 12       │ 12       │ 3            │ /aisec/decision.rego:65            │
+│ 970.604µs │ 26       │ 26       │ 26           │ /wantimpres26/risk/risk.rego:49           │
+│ 312.036µs │ 7        │ 7        │ 7            │ /wantimpres26/risk/risk.rego:16           │
+│ 306.421µs │ 2        │ 2        │ 1            │ /optimized/wantimpres26/decision.rego:194 │
+│ 266.078µs │ 13       │ 1        │ 1            │ /wantimpres26/cond/cond.rego:7            │
+│ 265.618µs │ 22       │ 22       │ 2            │ /wantimpres26/decision.rego:61            │
+│ 193.44µs  │ 11       │ 2        │ 1            │ /wantimpres26/decision.rego:57            │
+│ 134.612µs │ 20       │ 19       │ 5            │ /wantimpres26/risk/risk.rego:30           │
+│ 133.286µs │ 3        │ 3        │ 1            │ /optimized/wantimpres26/decision.rego:255 │
+│ 110.993µs │ 18       │ 5        │ 2            │ /wantimpres26/decision.rego:68            │
+│ 109.239µs │ 12       │ 12       │ 3            │ /wantimpres26/decision.rego:65            │

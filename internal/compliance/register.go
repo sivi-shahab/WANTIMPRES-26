@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/agents"
-	"aisec/internal/catalog"
+	"wantimpres26/internal/agents"
+	"wantimpres26/internal/catalog"
 )
 
 // Entry is one AI system in the register (ISO/IEC 42001 A.4/A.6 inventory, OJK AI governance): what it is, who

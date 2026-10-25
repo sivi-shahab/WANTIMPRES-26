@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 // L2Answer is what the L2 model said about one text, and how long the call took.

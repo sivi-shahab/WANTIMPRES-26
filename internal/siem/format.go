@@ -9,7 +9,7 @@ import (
 
 // Vendor/product/version in the CEF header; SIEM parsers key on these.
 const (
-	cefVendor  = "AISec"
+	cefVendor  = "WANTIMPRES-26"
 	cefProduct = "AI-SPM"
 	cefVersion = "1.0"
 )
@@ -49,7 +49,7 @@ const facility = 13
 
 // Syslog frames the CEF line as an RFC 5424 message with RFC 6587 octet counting (as RFC 5425 TLS requires).
 func (r Record) Syslog(hostname string) []byte {
-	msg := fmt.Sprintf("<%d>1 %s %s aisec - %s - %s", facility*8+syslogSeverity(r.Severity),
+	msg := fmt.Sprintf("<%d>1 %s %s wantimpres26 - %s - %s", facility*8+syslogSeverity(r.Severity),
 		r.Time.UTC().Format(time.RFC3339Nano), hostname, r.Source, r.CEF())
 	return []byte(fmt.Sprintf("%d %s", len(msg), msg))
 }
@@ -81,7 +81,7 @@ func (r Record) flat() map[string]any {
 func HEC(recs []Record) []byte {
 	var b strings.Builder
 	for _, r := range recs {
-		ev, _ := json.Marshal(map[string]any{"time": float64(r.Time.UnixMilli()) / 1000, "source": "aisec", "sourcetype": "aisec:" + r.Source, "event": r.flat()})
+		ev, _ := json.Marshal(map[string]any{"time": float64(r.Time.UnixMilli()) / 1000, "source": "wantimpres26", "sourcetype": "wantimpres26:" + r.Source, "event": r.flat()})
 		b.Write(ev)
 		b.WriteByte('\n')
 	}

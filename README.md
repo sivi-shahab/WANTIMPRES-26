@@ -1,4 +1,7 @@
-# aisec — Enterprise AI Data Security & AI-SPM
+# WANTIMPRES-26 — Enterprise AI Data Security & AI-SPM
+
+**W**orkforce **A**I **N**etwork **T**hreat **I**nspection, **M**onitoring, **P**olicy, **R**isk & **E**nforcement
+**S**ystem, 2026 edition. Identifier in code, policy and deploy: `wantimpres26`.
 
 A platform that controls sensitive data moving to, from, and through AI: public GenAI apps, internal LLM apps, and
 AI agents. Every channel (prompts, file uploads, responses, agent tool calls, data at rest that AI can reach) is
@@ -7,7 +10,7 @@ discovered, classified, risk-scored, and put under one policy.
 Full spec: [`.scratch/ai-data-security/spec.md`](.scratch/ai-data-security/spec.md) (Indonesian). Interactive
 architecture diagram, live at <https://sivi-shahab.github.io/AI-Security/> (search, focus, route probe, Live
 trace; deployed from `.archify/` by `.github/workflows/pages.yml`):
-[`.archify/architecture-aisec-platform-20261017-133119/aisec-platform.html`](.archify/architecture-aisec-platform-20261017-133119/aisec-platform.html).
+[`.archify/architecture-wantimpres26-platform-20261017-133119/wantimpres26-platform.html`](.archify/architecture-wantimpres26-platform-20261017-133119/wantimpres26-platform.html).
 
 ## Architecture
 
@@ -52,10 +55,10 @@ by hash in `MODELS.json` and are not committed. See its `MODEL_CARD.md`.
 ```text
 cmd/            service entrypoints (one binary each)
 internal/       domain packages (aigw, mcpgw, detect, l2, policysvc, lifecycle, incident, audit, tokvault, ...)
-policy/         Rego (policy/aisec/decision.rego is the PDP) and default data, embedded into the bundle
+policy/         Rego (policy/wantimpres26/decision.rego is the PDP) and default data, embedded into the bundle
 services/       Python model-inference service and its training pipeline
 data/eval/      frozen detector eval sets, hash-pinned by MANIFEST.json
-deploy/base/    Kustomize manifests (namespace aisec, NetworkPolicy, OPA sidecar config)
+deploy/base/    Kustomize manifests (namespace wantimpres26, NetworkPolicy, OPA sidecar config)
 deploy/cluster/ cluster-wide policy: signed-image admission, alerts, workload identity
 deploy/nfr/     NFR harness (load, chaos, soak, DR) and recorded results
 build/          Dockerfiles (one shared Go image, OPA, Tika)

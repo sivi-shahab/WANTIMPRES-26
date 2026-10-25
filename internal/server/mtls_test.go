@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/server"
-	"aisec/internal/server/mtlstest"
+	"wantimpres26/internal/server"
+	"wantimpres26/internal/server/mtlstest"
 )
 
 // Ticket 40: only workloads with an allowed SPIFFE ID from the trust domain's CA get through the handshake;

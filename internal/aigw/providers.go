@@ -128,7 +128,7 @@ func errorBody(kind string, status int, code, msg string) map[string]any {
 		}
 		return map[string]any{"error": map[string]any{"code": status, "message": msg, "status": st}}
 	}
-	t := map[int]string{400: "invalid_request_error", 401: "invalid_request_error", 403: "aisec_policy_violation", 404: "invalid_request_error",
+	t := map[int]string{400: "invalid_request_error", 401: "invalid_request_error", 403: "wantimpres26_policy_violation", 404: "invalid_request_error",
 		413: "invalid_request_error", 429: "rate_limit_exceeded", 503: "server_error"}[status]
 	return map[string]any{"error": map[string]any{"message": msg, "type": t, "param": nil, "code": code}}
 }
@@ -155,5 +155,5 @@ func usage(kind string, resp map[string]any) int64 {
 }
 
 func blockMessage(what string, reasons []string, decision string) string {
-	return fmt.Sprintf("%s by AISec policy %v. Decision ID: %s. Contact the security team if this is unexpected.", what, reasons, decision)
+	return fmt.Sprintf("%s by WANTIMPRES-26 policy %v. Decision ID: %s. Contact the security team if this is unexpected.", what, reasons, decision)
 }

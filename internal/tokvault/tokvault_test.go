@@ -18,7 +18,7 @@ import (
 	"github.com/capitalone/fpe/ff1"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
+	"wantimpres26/internal/audit"
 )
 
 const tenant = "6f1c1d1e-2a7b-4c3d-9e8f-0a1b2c3d4e5f"

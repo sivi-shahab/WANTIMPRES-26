@@ -12,7 +12,7 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
+	"wantimpres26/internal/audit"
 )
 
 // The audit tail exports every entry once, in order, and reports its lag; a second replica holding the cursor

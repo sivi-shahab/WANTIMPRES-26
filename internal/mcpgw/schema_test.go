@@ -13,15 +13,15 @@ import (
 
 	"github.com/open-policy-agent/opa/v1/rego"
 
-	"aisec/internal/policysvc"
-	"aisec/policy"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/policy"
 )
 
 // Ticket 47: the gateways skip the PDP's schema check when Go says the input is valid, so Go must never accept
 // what the PDP's json.match_schema rejects. And checked must decide exactly like result.
 func TestInputSchemaMatchesPDP(t *testing.T) {
 	ctx := context.Background()
-	q, err := policysvc.Query(ctx, policy.Files, policysvc.Overrides{}, `v := [x | x := data.aisec.decision.valid_input]; c := [x | x := data.aisec.decision.checked]; r := [x | x := data.aisec.decision.result]`)
+	q, err := policysvc.Query(ctx, policy.Files, policysvc.Overrides{}, `v := [x | x := data.wantimpres26.decision.valid_input]; c := [x | x := data.wantimpres26.decision.checked]; r := [x | x := data.wantimpres26.decision.result]`)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -124,7 +124,7 @@ func TestDecideFallsBackToResult(t *testing.T) {
 		"destination": map[string]any{"app_id": "chatgpt", "sanction": "sanctioned", "region": "US"},
 		"content":     map[string]any{"sensitivity": "internal", "classes": []any{}}}
 	d, err := (&OPA{URL: srv.URL, HTTP: srv.Client()}).Decide(context.Background(), in)
-	if err != nil || d.Action != "redact" || !slices.Equal(paths, []string{"/v1/data/aisec/decision/checked", "/v1/data/aisec/decision/result"}) {
+	if err != nil || d.Action != "redact" || !slices.Equal(paths, []string{"/v1/data/wantimpres26/decision/checked", "/v1/data/wantimpres26/decision/result"}) {
 		t.Errorf("%+v %v %v", d, err, paths)
 	}
 }

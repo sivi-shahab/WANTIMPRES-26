@@ -165,7 +165,7 @@ func TestBrokerACLs(t *testing.T) {
 	adm := kadm.NewClient(admin)
 	b := make([]byte, 4)
 	_, _ = rand.Read(b)
-	topic, suffix := "aisec.acl-test."+hex.EncodeToString(b), hex.EncodeToString(b)
+	topic, suffix := "wantimpres26.acl-test."+hex.EncodeToString(b), hex.EncodeToString(b)
 	if _, err := adm.CreateTopic(ctx, 1, 1, nil, topic); err != nil {
 		t.Fatal(err)
 	}

@@ -23,11 +23,11 @@ Semua PEP menulis `decision_event` ke satu pipeline.
 
 ## Keputusan
 - Apache Kafka 3.9 (KRaft) + **Karapace** (Apache-2.0, API Confluent) sebagai schema registry. Confluent SR (lisensi community) dan Redpanda (BSL) tidak memenuhi "OSS standar" ADR-0001.
-- Kontrak `internal/events`: JSON Schema `decision_event.v1.json` (tertutup: `additionalProperties: false`), subject `aisec.decision_event.v1-value`, wire format Confluent. Producer (untuk PEP) mendaftarkan schema, memvalidasi sebelum kirim, key = tenant_id.
+- Kontrak `internal/events`: JSON Schema `decision_event.v1.json` (tertutup: `additionalProperties: false`), subject `wantimpres26.decision_event.v1-value`, wire format Confluent. Producer (untuk PEP) mendaftarkan schema, memvalidasi sebelum kirim, key = tenant_id.
 - Consumer hanya menerima schema id yang terdaftar di subject kita: schema longgar dari subject lain ditolak (`unknown_schema`).
 - Raw content = nama field terlarang di mana pun (daftar yang sama dengan log, `internal/privacy`), atau snippet berisi ≥ 12 digit berurutan (NIK/PAN belum di-redact). Event yang ditolak hanya dihitung dan dicatat partition/offset-nya, tidak disimpan.
 - At-least-once: offset di-commit setelah bulk OpenSearch sukses; `_id` = `event_id` sehingga redelivery tidak menduplikasi. Registry tidak terjangkau → proses restart, tidak menolak event yang valid.
-- Index harian `aisec-events-YYYY.MM.DD` (UTC), satu pola untuk semua tenant (`tenant_id` field), mapping `strict`. ISM: hot 90 hari → read-only + force-merge → hapus di 400 hari, otomatis lewat `ism_template`.
+- Index harian `wantimpres26-events-YYYY.MM.DD` (UTC), satu pola untuk semua tenant (`tenant_id` field), mapping `strict`. ISM: hot 90 hari → read-only + force-merge → hapus di 400 hari, otomatis lewat `ism_template`.
 - `trace_id` (W3C, 32 hex) wajib di event dan di-index; header `traceparent` menunggu OTel (belum ada span id yang sah).
 - franz-go v1.21.7 / kadm v1.18.0: versi terbaru butuh Go 1.26 (sama seperti OPA di ticket 11).
 

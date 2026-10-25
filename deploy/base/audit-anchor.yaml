@@ -14,7 +14,7 @@ spec:
       backoffLimit: 6
       template:
         metadata:
-          labels: {app: audit-anchor, aisec.bank/egress: external}
+          labels: {app: audit-anchor, wantimpres26.bank/egress: external}
         spec:
           restartPolicy: OnFailure
           automountServiceAccountToken: false
@@ -26,7 +26,7 @@ spec:
             seccompProfile: {type: RuntimeDefault}
           containers:
             - name: anchor
-              image: registry.local/aisec/control-plane:dev
+              image: registry.local/wantimpres26/control-plane:dev
               args: [audit, anchor, --day, yesterday]
               envFrom: [{secretRef: {name: audit-anchor}}]
               env:

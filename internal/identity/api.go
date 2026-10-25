@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 // Routes mounts role-binding management and /me on the admin router.

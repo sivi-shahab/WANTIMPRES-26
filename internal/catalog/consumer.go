@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"aisec/internal/events"
+	"wantimpres26/internal/events"
 )
 
 // Handle is the events.Handler that counts decision events into APP_USAGE_DAILY.

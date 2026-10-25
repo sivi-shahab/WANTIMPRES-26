@@ -7,6 +7,6 @@
       {"name": "warm", "actions": [{"read_only": {}}, {"force_merge": {"max_num_segments": 1}}], "transitions": [{"state_name": "delete", "conditions": {"min_index_age": "400d"}}]},
       {"name": "delete", "actions": [{"delete": {}}], "transitions": []}
     ],
-    "ism_template": [{"index_patterns": ["aisec-events-*"], "priority": 100}]
+    "ism_template": [{"index_patterns": ["wantimpres26-events-*"], "priority": 100}]
   }
 }

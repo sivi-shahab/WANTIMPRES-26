@@ -14,13 +14,13 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/open-policy-agent/opa/v1/rego"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
-	"aisec/internal/incident"
-	"aisec/internal/lifecycle"
-	"aisec/internal/policysvc"
-	"aisec/internal/tuning"
-	"aisec/policy"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/incident"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/internal/tuning"
+	"wantimpres26/policy"
 )
 
 const tenant = "6f1c1d1e-2a7b-4c3d-9e8f-0a1b2c3d4e5f"
@@ -180,12 +180,12 @@ func TestCalibration(t *testing.T) {
 		t.Fatal(err)
 	}
 	rel, _ := s.Policies.Latest(ctx)
-	cfg, _ := rel.Data["aisec.risk.config"].(map[string]any)
+	cfg, _ := rel.Data["wantimpres26.risk.config"].(map[string]any)
 	if rel.Number != n || cfg["version"] != "risk-cal-1" {
-		t.Fatalf("release %d: %v", rel.Number, rel.Data["aisec.risk.config"])
+		t.Fatalf("release %d: %v", rel.Number, rel.Data["wantimpres26.risk.config"])
 	}
 	// Decisions now carry the calibrated version; a later release cut by another module keeps it.
-	pq, err := policysvc.Query(ctx, policy.Files, rel.Overrides(), "data.aisec.decision.result.risk_version")
+	pq, err := policysvc.Query(ctx, policy.Files, rel.Overrides(), "data.wantimpres26.decision.result.risk_version")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -197,7 +197,7 @@ func TestCalibration(t *testing.T) {
 	n2, err := s.Policies.CutRelease(ctx, tx, "catalog", "app status change")
 	_ = tx.Commit(ctx)
 	rel, _ = s.Policies.Latest(ctx)
-	if err != nil || rel.Number != n2 || rel.Data["aisec.risk.config"] == nil {
+	if err != nil || rel.Number != n2 || rel.Data["wantimpres26.risk.config"] == nil {
 		t.Errorf("later release lost the weights: %v", err)
 	}
 

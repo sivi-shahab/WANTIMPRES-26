@@ -1,10 +1,10 @@
-# Alerts for aisec (prometheus-operator). OPA keeps serving the last verified bundle, so a rejected
+# Alerts for wantimpres26 (prometheus-operator). OPA keeps serving the last verified bundle, so a rejected
 # bundle is silent for traffic: these make it loud. Scraped from each sidecar's :8282/metrics.
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: aisec-policy-bundle
-  namespace: aisec
+  name: wantimpres26-policy-bundle
+  namespace: wantimpres26
 spec:
   groups:
     - name: policy-bundle
@@ -13,13 +13,13 @@ spec:
         # OPA reports every load error as code=bundle_error, so match the verification messages.
         - alert: PolicyBundleSignatureInvalid
           expr: >-
-            sum by (namespace, pod) (increase(bundle_failed_load_counter{name="aisec",
+            sum by (namespace, pod) (increase(bundle_failed_load_counter{name="wantimpres26",
             message=~".*(signature|digest mismatch|verif|signatures.json).*"}[5m])) > 0
           labels: {severity: critical, category: security}
           annotations:
             summary: OPA in {{ $labels.pod }} rejected a policy bundle that failed signature verification
         - alert: PolicyBundleLoadFailing
-          expr: sum by (namespace, pod) (increase(bundle_failed_load_counter{name="aisec"}[15m])) > 3
+          expr: sum by (namespace, pod) (increase(bundle_failed_load_counter{name="wantimpres26"}[15m])) > 3
           labels: {severity: warning}
           annotations:
             summary: OPA in {{ $labels.pod }} keeps failing to load the policy bundle; still on the last verified one
@@ -27,15 +27,15 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: aisec-audit-anchor
-  namespace: aisec
+  name: wantimpres26-audit-anchor
+  namespace: wantimpres26
 spec:
   groups:
     - name: audit-anchor
       rules:
         # A day without a WORM anchor leaves its tail of the audit chain unprotected (FR-COMP-4). Needs kube-state-metrics.
         - alert: AuditAnchorMissing
-          expr: time() - kube_cronjob_status_last_successful_time{namespace="aisec", cronjob="audit-anchor"} > 26 * 3600
+          expr: time() - kube_cronjob_status_last_successful_time{namespace="wantimpres26", cronjob="audit-anchor"} > 26 * 3600
           labels: {severity: critical, category: security}
           annotations:
             summary: No successful daily audit anchor in the last 26 hours
@@ -43,8 +43,8 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: aisec-event-pipeline
-  namespace: aisec
+  name: wantimpres26-event-pipeline
+  namespace: wantimpres26
 spec:
   groups:
     - name: event-pipeline
@@ -83,8 +83,8 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: aisec-incidents
-  namespace: aisec
+  name: wantimpres26-incidents
+  namespace: wantimpres26
 spec:
   groups:
     - name: incidents
@@ -111,8 +111,8 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: aisec-identity
-  namespace: aisec
+  name: wantimpres26-identity
+  namespace: wantimpres26
 spec:
   groups:
     - name: identity
@@ -127,8 +127,8 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: aisec-policy-lifecycle
-  namespace: aisec
+  name: wantimpres26-policy-lifecycle
+  namespace: wantimpres26
 spec:
   groups:
     - name: policy-lifecycle
@@ -151,13 +151,13 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: aisec-siem-export
-  namespace: aisec
+  name: wantimpres26-siem-export
+  namespace: wantimpres26
 spec:
   groups:
     - name: siem-export
       rules:
-        # Records the SIEM never got: replay from topic aisec.siem.dlq.v1 once the cause is fixed.
+        # Records the SIEM never got: replay from topic wantimpres26.siem.dlq.v1 once the cause is fixed.
         - alert: SIEMRecordsDeadLettered
           expr: sum by (sink) (increase(siem_records_dead_lettered_total[15m])) > 0
           labels: {severity: warning}
@@ -174,8 +174,8 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: aisec-ai-gateway
-  namespace: aisec
+  name: wantimpres26-ai-gateway
+  namespace: wantimpres26
 spec:
   groups:
     - name: ai-gateway

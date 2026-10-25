@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "aisec/decision_event/v1",
+  "$id": "wantimpres26/decision_event/v1",
   "title": "decision_event v1 (spec §6 DECISION_EVENT, §10.2). Metadata, HMAC hashes and a redacted snippet only: never raw content. The optional flat fields are the PDP input metadata, so policy simulation (ticket 12) can replay the decision.",
   "type": "object",
   "additionalProperties": false,

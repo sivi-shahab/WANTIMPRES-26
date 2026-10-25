@@ -22,12 +22,12 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/open-policy-agent/opa/v1/rego"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
-	"aisec/internal/incident"
-	"aisec/internal/lifecycle"
-	"aisec/internal/policysvc"
-	"aisec/internal/tenantdb"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/incident"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/internal/tenantdb"
 )
 
 //go:embed schema.sql
@@ -55,7 +55,7 @@ type Store struct {
 	DB       *pgxpool.Pool
 	Tenant   string
 	Policies *lifecycle.Store
-	FS       fs.FS                 // the policy engine (aisec/policy), for the built-in config and simulation
+	FS       fs.FS                 // the policy engine (wantimpres26/policy), for the built-in config and simulation
 	Source   lifecycle.EventSource // recent decision events for the severity distribution; nil = labelled only
 }
 
@@ -73,7 +73,7 @@ func Open(ctx context.Context, s *Store) error {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, nil // the built-in config
 		}
-		return policysvc.Overrides{"aisec.risk.config": cfg}, err
+		return policysvc.Overrides{"wantimpres26.risk.config": cfg}, err
 	})
 	return nil
 }
@@ -126,7 +126,7 @@ func (s *Store) Current(ctx context.Context) (map[string]any, error) {
 	if !errors.Is(err, pgx.ErrNoRows) {
 		return cfg, err
 	}
-	raw, err := fs.ReadFile(s.FS, "aisec/risk/config/data.json")
+	raw, err := fs.ReadFile(s.FS, "wantimpres26/risk/config/data.json")
 	if err == nil {
 		err = json.Unmarshal(raw, &cfg)
 	}
@@ -175,7 +175,7 @@ func (s *Store) Labels(ctx context.Context, from, to time.Time) ([]Labelled, err
 	return out, rows.Err()
 }
 
-// risk evaluates data.aisec.risk with the latest release, its risk config optionally replaced.
+// risk evaluates data.wantimpres26.risk with the latest release, its risk config optionally replaced.
 func (s *Store) risk(ctx context.Context, cfg map[string]any) (rego.PreparedEvalQuery, error) {
 	rel, err := s.Policies.Latest(ctx)
 	if err != nil {
@@ -183,9 +183,9 @@ func (s *Store) risk(ctx context.Context, cfg map[string]any) (rego.PreparedEval
 	}
 	ov := rel.Overrides()
 	if cfg != nil {
-		ov["aisec.risk.config"] = cfg
+		ov["wantimpres26.risk.config"] = cfg
 	}
-	return policysvc.Query(ctx, s.FS, ov, "data.aisec.risk")
+	return policysvc.Query(ctx, s.FS, ov, "data.wantimpres26.risk")
 }
 
 type scored struct {
@@ -294,7 +294,7 @@ func (s *Store) create(ctx context.Context, actor, action string, cfg, basis map
 
 // validate refuses a config the bundle builder would refuse (risk.config_errors).
 func (s *Store) validate(ctx context.Context, cfg map[string]any) error {
-	pq, err := policysvc.Query(ctx, s.FS, policysvc.Overrides{"aisec.risk.config": cfg}, "data.aisec.risk.config_errors")
+	pq, err := policysvc.Query(ctx, s.FS, policysvc.Overrides{"wantimpres26.risk.config": cfg}, "data.wantimpres26.risk.config_errors")
 	if err != nil {
 		return fmt.Errorf("%w: %v", ErrInvalid, err)
 	}

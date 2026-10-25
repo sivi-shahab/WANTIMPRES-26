@@ -16,9 +16,9 @@ import (
 
 	"github.com/jackc/pgx/v5"
 
-	"aisec/internal/audit"
-	"aisec/internal/authz"
-	"aisec/internal/policysvc"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/policysvc"
 )
 
 // FR-INC-5 containment actions. Each is a named Action; the incident module brings block_access (this principal to
@@ -94,7 +94,7 @@ func (s *Store) ActionsOf(ctx context.Context, id string) ([]ActionRecord, error
 // MaxBlock caps a containment block; longer means a policy change (with its approval), not containment.
 const MaxBlock = 30 * 24 * time.Hour
 
-// Block is a containment block (data.aisec.containment.blocks).
+// Block is a containment block (data.wantimpres26.containment.blocks).
 type Block struct {
 	ID          int64      `json:"id"`
 	PrincipalID string     `json:"principal_id"`
@@ -183,7 +183,7 @@ func (s *Store) BlocksOf(ctx context.Context, id string) ([]Block, error) {
 	return pgx.CollectRows(rows, pgx.RowToStructByPos[Block])
 }
 
-// ContainmentDoc is data.aisec.containment for lifecycle.AddExtra: the tenant's blocks that are neither lifted nor
+// ContainmentDoc is data.wantimpres26.containment for lifecycle.AddExtra: the tenant's blocks that are neither lifted nor
 // expired. The PDP checks expires_at itself, so a block ends on time without another release.
 func ContainmentDoc(tenant string) func(ctx context.Context, tx pgx.Tx) (policysvc.Overrides, error) {
 	return func(ctx context.Context, tx pgx.Tx) (policysvc.Overrides, error) {
@@ -201,7 +201,7 @@ func ContainmentDoc(tenant string) func(ctx context.Context, tx pgx.Tx) (policys
 			}
 			blocks = append(blocks, map[string]any{"principal_id": principal, "app_id": app, "expires_at": exp.UTC().Format(time.RFC3339), "incident": incident})
 		}
-		return policysvc.Overrides{"aisec.containment": map[string]any{"blocks": blocks}}, rows.Err()
+		return policysvc.Overrides{"wantimpres26.containment": map[string]any{"blocks": blocks}}, rows.Err()
 	}
 }
 
@@ -251,7 +251,7 @@ func (s *Store) openTicket(ctx context.Context, _ string, inc Incident, p map[st
 		if n := strings.TrimSpace(p["note"]); n != "" {
 			desc += "\n" + n + "\n"
 		}
-		ref, url, err := s.ITSM.Open(ctx, Ticket{IncidentID: inc.ID, Title: "[AISec] " + inc.Title, Severity: inc.Severity, Description: desc})
+		ref, url, err := s.ITSM.Open(ctx, Ticket{IncidentID: inc.ID, Title: "[WANTIMPRES-26] " + inc.Title, Severity: inc.Severity, Description: desc})
 		if err != nil {
 			return err
 		}
@@ -292,7 +292,7 @@ func (sn *ServiceNow) Open(ctx context.Context, t Ticket) (string, string, error
 	}
 	err := postJSON(ctx, sn.Client, strings.TrimRight(sn.URL, "/")+"/api/now/table/incident?sysparm_fields=sys_id,number", sn.Auth, map[string]any{
 		"short_description": t.Title, "description": t.Description, "urgency": level, "impact": level,
-		"correlation_id": t.IncidentID, "correlation_display": "aisec",
+		"correlation_id": t.IncidentID, "correlation_display": "wantimpres26",
 	}, &out)
 	if err == nil && out.Result.Number == "" {
 		err = errors.New("servicenow: no incident number in the response")

@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/authz"
-	"aisec/internal/authz/authztest"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/authz/authztest"
 )
 
 var noop = http.HandlerFunc(func(http.ResponseWriter, *http.Request) {})

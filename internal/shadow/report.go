@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/catalog"
+	"wantimpres26/internal/catalog"
 )
 
 // Report is the shadow AI baseline. Users appear only as HMAC pseudonyms; units are organisational, not personal.

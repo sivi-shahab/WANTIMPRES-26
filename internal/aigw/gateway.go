@@ -22,18 +22,18 @@ import (
 
 	"github.com/google/uuid"
 
-	"aisec/internal/detect"
-	"aisec/internal/events"
-	"aisec/internal/inspect"
-	"aisec/internal/mcpgw"
-	"aisec/internal/tokvault"
+	"wantimpres26/internal/detect"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/inspect"
+	"wantimpres26/internal/mcpgw"
+	"wantimpres26/internal/tokvault"
 )
 
 const (
 	maxRequest  = 4 << 20
 	maxResponse = 16 << 20
 	// UserHeader carries the end user an app acts for; it is HMAC'd before it is used or stored.
-	UserHeader = "X-AISec-User"
+	UserHeader = "X-Wantimpres26-User"
 )
 
 // Gateway serves /<provider>/<api path>.
@@ -71,7 +71,7 @@ type call struct {
 	ep       endpoint
 	user     string // HMAC of the end user, "" when the app sent none
 	trace    string
-	decision string // last decision id, for X-AISec-Decision-Id
+	decision string // last decision id, for X-Wantimpres26-Decision-Id
 	action   string // strictest action applied
 	leak     leakCheck
 	tokens   map[string]issued // FPE tokens put in this request, by their digits
@@ -87,12 +87,12 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	c := &call{g: g, w: w, p: p, trace: traceID(r), action: "allow", tokens: map[string]issued{}}
 	ep, ok := findEndpoint(p.Kind, r.Method, rest)
 	if !ok {
-		c.refuse(http.StatusNotFound, "unsupported_endpoint", "This API is not available through the AISec gateway.")
+		c.refuse(http.StatusNotFound, "unsupported_endpoint", "This API is not available through the WANTIMPRES-26 gateway.")
 		return
 	}
 	c.ep = ep
 	if c.app = lookup(g.Apps, appKey(r)); c.app == nil {
-		c.refuse(http.StatusUnauthorized, "invalid_gateway_key", "Invalid or missing AISec gateway key.")
+		c.refuse(http.StatusUnauthorized, "invalid_gateway_key", "Invalid or missing WANTIMPRES-26 gateway key.")
 		return
 	}
 	if !slices.Contains(c.app.Providers, p.Name) {
@@ -115,10 +115,10 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	switch {
 	case stream && !ep.streamable:
-		c.refuse(http.StatusBadRequest, "streaming_unavailable", "Streaming is not available for this API through the AISec gateway; send the request without stream.")
+		c.refuse(http.StatusBadRequest, "streaming_unavailable", "Streaming is not available for this API through the WANTIMPRES-26 gateway; send the request without stream.")
 		return
 	case stream && p.Kind == KindGemini && r.URL.Query().Get("alt") != "sse":
-		c.refuse(http.StatusBadRequest, "streaming_unavailable", "Stream with alt=sse through the AISec gateway.")
+		c.refuse(http.StatusBadRequest, "streaming_unavailable", "Stream with alt=sse through the WANTIMPRES-26 gateway.")
 		return
 	}
 	if u := r.Header.Get(UserHeader); u != "" {
@@ -269,13 +269,13 @@ func (c *call) enforce(ctx context.Context, direction string, body map[string]an
 		}) {
 			c.g.Log.Warn("redaction incomplete, blocking", "decision", eid)
 			c.action = "block"
-			c.refuse(http.StatusForbidden, "aisec_redaction_failed", blockMessage(what, []string{"REDACTION_FAILED"}, eid))
+			c.refuse(http.StatusForbidden, "wantimpres26_redaction_failed", blockMessage(what, []string{"REDACTION_FAILED"}, eid))
 			return false
 		}
 		return true
 	}
 	c.action = "block" // block, quarantine, require_approval: no human approval loop on this channel
-	c.refuse(http.StatusForbidden, "aisec_policy_block", blockMessage(what, d.ReasonCodes, eid))
+	c.refuse(http.StatusForbidden, "wantimpres26_policy_block", blockMessage(what, d.ReasonCodes, eid))
 	return false
 }
 
@@ -284,7 +284,7 @@ func (c *call) failMode(ctx context.Context, direction string, sc scan) bool {
 	open := c.failOpen(ctx, direction, sc)
 	if !open {
 		c.action = "block"
-		c.refuse(http.StatusServiceUnavailable, "aisec_policy_unavailable", "The AISec policy service is unavailable and this app fails closed. Retry later. Decision ID: "+c.decision+".")
+		c.refuse(http.StatusServiceUnavailable, "wantimpres26_policy_unavailable", "The WANTIMPRES-26 policy service is unavailable and this app fails closed. Retry later. Decision ID: "+c.decision+".")
 	}
 	return open
 }
@@ -429,7 +429,7 @@ func (c *call) withinLimits(ctx context.Context) bool {
 		if n > l.limit {
 			c.g.count("rate_limited_total", c.app.ID)
 			c.w.Header().Set("Retry-After", "60")
-			c.refuse(http.StatusTooManyRequests, "rate_limit_exceeded", "AISec gateway rate limit reached for this app or user.")
+			c.refuse(http.StatusTooManyRequests, "rate_limit_exceeded", "WANTIMPRES-26 gateway rate limit reached for this app or user.")
 			return false
 		}
 	}
@@ -467,7 +467,7 @@ func (c *call) withinQuota(ctx context.Context, tokens int64) bool {
 		}
 		if used+tokens > q.limit {
 			c.g.count("quota_exceeded_total", c.app.ID)
-			c.refuse(http.StatusTooManyRequests, "token_quota_exceeded", "Daily AISec token quota reached for this app or user.")
+			c.refuse(http.StatusTooManyRequests, "token_quota_exceeded", "Daily WANTIMPRES-26 token quota reached for this app or user.")
 			return false
 		}
 	}
@@ -489,9 +489,9 @@ func (c *call) charge(ctx context.Context, tokens int64) {
 
 func (c *call) headers() {
 	if c.decision != "" {
-		c.w.Header().Set("X-AISec-Decision-Id", c.decision)
+		c.w.Header().Set("X-Wantimpres26-Decision-Id", c.decision)
 	}
-	c.w.Header().Set("X-AISec-Action", c.action)
+	c.w.Header().Set("X-Wantimpres26-Action", c.action)
 }
 
 // refuse answers in the provider's error format.

@@ -15,12 +15,12 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
-	"aisec/internal/connector"
-	"aisec/internal/connector/m365"
-	"aisec/internal/connector/m365/m365test"
-	"aisec/internal/datascan"
-	"aisec/internal/identity"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/connector"
+	"wantimpres26/internal/connector/m365"
+	"wantimpres26/internal/connector/m365/m365test"
+	"wantimpres26/internal/datascan"
+	"wantimpres26/internal/identity"
 )
 
 const tenant = "00000000-0000-0000-0000-000000000001"
@@ -235,7 +235,7 @@ func TestUndo(t *testing.T) {
 	e.run(t)
 	_, _ = e.store.Decide(ctx, "budi@bankmega.com", r.ID, true, "", e.now)
 	e.run(t)
-	if r = e.get(t, r.ID); r.State != "done" || !r.Undoable || e.fake.Item("lib-1", "z").Parent != "folder-aisec-quarantine" {
+	if r = e.get(t, r.ID); r.State != "done" || !r.Undoable || e.fake.Item("lib-1", "z").Parent != "folder-wantimpres26-quarantine" {
 		t.Fatalf("quarantine: %+v", r)
 	}
 	u, err := e.store.RequestUndo(ctx, "ani@bankmega.com", r.ID, "false positive", e.now)
@@ -246,7 +246,7 @@ func TestUndo(t *testing.T) {
 		t.Errorf("second undo: %v", err)
 	}
 	e.run(t)
-	if u = e.get(t, u.ID); u.State != "planned" || e.fake.Item("lib-1", "z").Parent != "folder-aisec-quarantine" {
+	if u = e.get(t, u.ID); u.State != "planned" || e.fake.Item("lib-1", "z").Parent != "folder-wantimpres26-quarantine" {
 		t.Fatalf("undo planned: %+v", u)
 	}
 	_, _ = e.store.Decide(ctx, "budi@bankmega.com", u.ID, true, "", e.now)

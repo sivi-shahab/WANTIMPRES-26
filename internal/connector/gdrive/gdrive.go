@@ -19,7 +19,7 @@ import (
 
 	"golang.org/x/oauth2/jwt"
 
-	"aisec/internal/connector"
+	"wantimpres26/internal/connector"
 )
 
 // Scopes the delegation grants (Admin console → Security → API controls → Domain-wide delegation).

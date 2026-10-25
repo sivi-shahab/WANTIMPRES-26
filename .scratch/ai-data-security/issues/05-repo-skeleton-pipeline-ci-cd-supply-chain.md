@@ -24,7 +24,7 @@ Fondasi build untuk semua service. Control plane berupa modular monolith; PEP da
 ## Keputusan
 - CI: **GitLab self-managed** (runner + registry on-prem).
 - Bahasa: **Go** untuk control-plane, ai-gateway, detection-svc; **Python** untuk model-inference. Rust tidak dipakai sampai ada bukti kebutuhan latensi.
-- Satu Go module (`aisec`) dengan `cmd/<service>`; satu `build/go.Dockerfile` untuk semua service Go.
+- Satu Go module (`wantimpres26`) dengan `cmd/<service>`; satu `build/go.Dockerfile` untuk semua service Go.
 - Trivy menggantikan Checkov/tfsec (SCA + lisensi + IaC + image scan dalam satu tool).
 - cosign key-based, `--tlog-upload=false`, format `.sig/.att` legacy (Kyverno 1.19 belum membaca bundle cosign v3).
 

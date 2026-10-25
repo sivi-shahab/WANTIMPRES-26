@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS policy.policies (
   created_at  timestamptz NOT NULL DEFAULT now()
 );
 
--- A version's rules are the engine's rule DSL (policy/aisec/decision.rego), never raw Rego.
+-- A version's rules are the engine's rule DSL (policy/wantimpres26/decision.rego), never raw Rego.
 CREATE TABLE IF NOT EXISTS policy.versions (
   id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   policy_id     uuid        NOT NULL REFERENCES policy.policies(id),
@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS policy.exceptions (
 -- Every publish, rollback, retire and exception change is a release: the full snapshot sidecars run.
 CREATE TABLE IF NOT EXISTS policy.releases (
   number      bigserial   PRIMARY KEY,
-  rules       jsonb       NOT NULL,  -- data.aisec.rules
-  exceptions  jsonb       NOT NULL,  -- data.aisec.exceptions
-  data        jsonb       NOT NULL DEFAULT '{}',  -- other documents by dotted path, e.g. aisec.catalog (ticket 16)
+  rules       jsonb       NOT NULL,  -- data.wantimpres26.rules
+  exceptions  jsonb       NOT NULL,  -- data.wantimpres26.exceptions
+  data        jsonb       NOT NULL DEFAULT '{}',  -- other documents by dotted path, e.g. wantimpres26.catalog (ticket 16)
   reason      text        NOT NULL,
   created_by  text        NOT NULL,
   created_at  timestamptz NOT NULL DEFAULT now()

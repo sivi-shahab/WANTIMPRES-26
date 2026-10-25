@@ -43,7 +43,7 @@ services:
     cpus: 2
     volumes: ["./config:/config:ro", "./.bundle:/keys:ro", "opa-cache:/var/opa"]
     command: [run, --server, --addr=127.0.0.1:8181, --diagnostic-addr=:8282, --config-file=/config/opa.yaml,
-      "--set-file=keys.aisec-policy-a.key=/keys/aisec-policy-a.pub", --optimize-store-for-read-speed]
+      "--set-file=keys.wantimpres26-policy-a.key=/keys/wantimpres26-policy-a.pub", --optimize-store-for-read-speed]
   detection-svc:
     container_name: t21-detection-svc
     image: t21-detection-svc

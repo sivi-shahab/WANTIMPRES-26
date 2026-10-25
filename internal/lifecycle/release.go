@@ -7,7 +7,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"aisec/internal/policysvc"
+	"wantimpres26/internal/policysvc"
 )
 
 // Releaser keeps this replica's bundle server on the latest release. Every replica runs one: a release cut on any

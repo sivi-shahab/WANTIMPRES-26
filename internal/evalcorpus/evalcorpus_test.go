@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 const holdout = "../../data/eval/v1"

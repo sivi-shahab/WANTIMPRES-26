@@ -22,10 +22,10 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/connector"
-	"aisec/internal/detect"
-	"aisec/internal/extract"
-	"aisec/internal/similarity"
+	"wantimpres26/internal/connector"
+	"wantimpres26/internal/detect"
+	"wantimpres26/internal/extract"
+	"wantimpres26/internal/similarity"
 )
 
 //go:embed schema.sql

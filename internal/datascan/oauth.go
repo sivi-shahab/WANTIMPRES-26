@@ -10,7 +10,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/connector"
+	"wantimpres26/internal/connector"
 )
 
 // aiWords: app names that say "AI" (FR-AGT-1 shadow agents via OAuth). The AI app catalog (ticket 16) adds its

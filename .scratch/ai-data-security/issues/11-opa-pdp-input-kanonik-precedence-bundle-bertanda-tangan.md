@@ -24,8 +24,8 @@ Satu PDP untuk semua PEP (prinsip P2).
 - [x] `opa test` untuk template residency di setiap kombinasi sensitivity × `hosting_region` × status sanction. *(80 kombinasi.)*
 
 ## Keputusan
-- Rule = data (`policy/aisec/rules/data.json`), engine generik `policy/aisec/decision.rego`. Input tidak valid terhadap JSON Schema → `block` + `INPUT_SCHEMA_INVALID` (fail closed).
-- Policy Service = control-plane (`internal/policysvc`): build + sign bundle (ES256, key id `aisec-policy`) saat start, serve `GET /bundles/aisec.tar.gz` dengan ETag + long-poll. Menolak publish bila `rule_errors` tidak kosong. Tanpa signing key, control-plane tidak start.
+- Rule = data (`policy/wantimpres26/rules/data.json`), engine generik `policy/wantimpres26/decision.rego`. Input tidak valid terhadap JSON Schema → `block` + `INPUT_SCHEMA_INVALID` (fail closed).
+- Policy Service = control-plane (`internal/policysvc`): build + sign bundle (ES256, key id `wantimpres26-policy`) saat start, serve `GET /bundles/wantimpres26.tar.gz` dengan ETag + long-poll. Menolak publish bila `rule_errors` tidak kosong. Tanpa signing key, control-plane tidak start.
 - Library OPA v1.19.0 (v1.20+ butuh Go 1.26); sidecar OPA 1.21.1, image di-build ulang lewat `build/opa.Dockerfile` agar ikut SBOM + cosign (Kyverno).
 - Sidecar: `persist: true` (bundle terverifikasi terakhir bertahan saat restart), readiness `/health?bundles`, decision log di-mask oleh `system/log/mask.rego` dengan daftar `internal/privacy/forbidden_fields.txt` yang diinjeksi builder.
 - `json.match_schema` mengompilasi ulang schema tiap eval (~0,9 ms). Validator Rego native dicoba dan lebih lambat (~2 ms), jadi tidak dipakai.

@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/connector"
-	"aisec/internal/connector/connectortest"
-	"aisec/internal/connector/m365/m365test"
+	"wantimpres26/internal/connector"
+	"wantimpres26/internal/connector/connectortest"
+	"wantimpres26/internal/connector/m365/m365test"
 )
 
 func setup(t *testing.T) (*m365test.Graph, *Graph, *[]time.Duration) {
@@ -218,12 +218,12 @@ func TestRemediation(t *testing.T) {
 	// the owner; undo moves it back and re-invites users.
 	put(m365test.UserPerm("budi@bankmega.com", "owner"), m365test.LinkPerm("anonymous"), m365test.UserPerm("ani@bankmega.com", "read"))
 	plan, err = g.Remediate(ctx, it, connector.Action{Kind: connector.Quarantine}, true)
-	if err != nil || len(plan.Steps) != 3 || plan.Steps[0] != "move to /AISec Quarantine" || len(fake.Writes) != 0 {
+	if err != nil || len(plan.Steps) != 3 || plan.Steps[0] != "move to /WANTIMPRES-26 Quarantine" || len(fake.Writes) != 0 {
 		t.Fatalf("quarantine dry run: %+v %v %v", plan, err, fake.Writes)
 	}
 	done, err = g.Remediate(ctx, it, connector.Action{Kind: connector.Quarantine}, false)
 	x := fake.Item("lib-1", "x")
-	if err != nil || x.Parent != "folder-aisec-quarantine" || len(x.Perms) != 1 || !slices.Equal(done.Steps, plan.Steps) {
+	if err != nil || x.Parent != "folder-wantimpres-26-quarantine" || len(x.Perms) != 1 || !slices.Equal(done.Steps, plan.Steps) {
 		t.Fatalf("quarantine: %+v %v; parent %s perms %v", done, err, x.Parent, refs())
 	}
 	if _, err := g.Remediate(ctx, it, connector.Action{Kind: connector.Quarantine}, true); !errors.Is(err, connector.ErrNothingToDo) {

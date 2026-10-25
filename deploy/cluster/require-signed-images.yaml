@@ -1,4 +1,4 @@
-# Admission (Kyverno ≥ 1.16): only images signed by the CI key may run in namespace `aisec`.
+# Admission (Kyverno ≥ 1.16): only images signed by the CI key may run in namespace `wantimpres26`.
 # Key-based, no public Rekor/CT log: ADR-0001 forbids offshore dependencies.
 # Production: replace `key.data` with `key.kms: <bank KMS/HSM URI>` (same key the `sign` CI job uses).
 apiVersion: policies.kyverno.io/v1
@@ -13,7 +13,7 @@ spec:
   matchConstraints:
     namespaceSelector:
       matchLabels:
-        kubernetes.io/metadata.name: aisec
+        kubernetes.io/metadata.name: wantimpres26
     resourceRules:
       - apiGroups: [""]
         apiVersions: [v1]

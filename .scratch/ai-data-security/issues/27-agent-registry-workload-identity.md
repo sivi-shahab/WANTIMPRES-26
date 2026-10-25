@@ -22,7 +22,7 @@ Fondasi governance agent.
 
 ## Keputusan
 - Modul `internal/agents` di control-plane, schema `agents`. Field FR-AGT-1 + `business_unit` untuk ABAC: agent owner hanya bisa mengubah/mendaftarkan/memindahkan agent di unit binding-nya (dites lewat API).
-- **Registry = sumber kebenaran PDP**: setiap perubahan memotong policy release berisi `data.aisec.agents`; `aisec/agent` menghitung `registered` (= ada di registry dan `active`) dan `status`, klaim `registered` dari PEP diabaikan. Template baru `tpl.agent-not-active`: agent quarantined/suspended = block.
+- **Registry = sumber kebenaran PDP**: setiap perubahan memotong policy release berisi `data.wantimpres26.agents`; `wantimpres26/agent` menghitung `registered` (= ada di registry dan `active`) dan `status`, klaim `registered` dari PEP diabaikan. Template baru `tpl.agent-not-active`: agent quarantined/suspended = block.
 - Tanpa owner aktif (tidak ada, belum di-provision, atau dinonaktifkan via SCIM) → `quarantined` dengan alasan `no active owner`, saat register/update/status dan lewat reconcile per jam; aktivasi ditolak sampai ada owner.
 - Workload identity wajib (`spiffe` | `oidc_client` | `managed_identity`, format divalidasi), satu identity satu agent (unique). Ditolak: tipe lain, identity berbentuk email (kecuali service account GCP), dan identity yang sama dengan user di IdP (kredensial user bersama).
 - Antrean shadow agent: event keputusan dengan `agent_id` yang tidak terdaftar (consumer bersama control-plane); register menutup entrinya, dismiss butuh catatan. Hitungan `events` perkiraan (redelivery dihitung lagi).

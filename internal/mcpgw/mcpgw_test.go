@@ -26,13 +26,13 @@ import (
 	"github.com/open-policy-agent/opa/v1/rego"
 	"github.com/santhosh-tekuri/jsonschema/v6"
 
-	"aisec/internal/events"
-	"aisec/internal/mcptools"
-	"aisec/internal/policysvc"
-	"aisec/policy"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/mcptools"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/policy"
 )
 
-const issuer = "https://idp.bank.test/realms/aisec"
+const issuer = "https://idp.bank.test/realms/wantimpres26"
 
 var (
 	keyOnce  sync.Once
@@ -52,7 +52,7 @@ func keys(t *testing.T) {
 	})
 }
 
-// registry is data.aisec.agents as the agent registry (ticket 27) releases it.
+// registry is data.wantimpres26.agents as the agent registry (ticket 27) releases it.
 func registry() map[string]any {
 	tool := func(name, risk string, scopes map[string]any) map[string]any {
 		t := map[string]any{"name": name, "risk": risk}
@@ -256,22 +256,22 @@ type env struct {
 
 	mu      sync.Mutex
 	queries map[string]rego.PreparedEvalQuery
-	pins    map[string]any // data.aisec.mcp_tools.items as the last release carried it
-	kills   map[string]any // data.aisec.kills
+	pins    map[string]any // data.wantimpres26.mcp_tools.items as the last release carried it
+	kills   map[string]any // data.wantimpres26.kills
 	apr     *fakeApprovals
 	reg     *fakeRegistry
 }
 
-// setPins swaps data.aisec.mcp_tools in the PDP, as a new bundle release would.
+// setPins swaps data.wantimpres26.mcp_tools in the PDP, as a new bundle release would.
 func (e *env) setPins(items map[string]any) {
 	e.t.Helper()
-	overrides := policysvc.Overrides{"aisec.agents": registry(), "aisec.mcp_tools": map[string]any{"version": 1, "items": items}}
+	overrides := policysvc.Overrides{"wantimpres26.agents": registry(), "wantimpres26.mcp_tools": map[string]any{"version": 1, "items": items}}
 	if e.kills != nil {
-		overrides["aisec.kills"] = e.kills
+		overrides["wantimpres26.kills"] = e.kills
 	}
 	qs := map[string]rego.PreparedEvalQuery{}
-	for path, q := range map[string]string{"aisec/decision/result": "data.aisec.decision.result", "aisec/decision/checked": "data.aisec.decision.checked", "aisec/mcp/agent": "data.aisec.mcp.agent",
-		"aisec/mcp/tools": "data.aisec.mcp.tools", "aisec/kills": "data.aisec.kills"} {
+	for path, q := range map[string]string{"wantimpres26/decision/result": "data.wantimpres26.decision.result", "wantimpres26/decision/checked": "data.wantimpres26.decision.checked", "wantimpres26/mcp/agent": "data.wantimpres26.mcp.agent",
+		"wantimpres26/mcp/tools": "data.wantimpres26.mcp.tools", "wantimpres26/kills": "data.wantimpres26.kills"} {
 		pq, err := policysvc.Query(context.Background(), policy.Files, overrides, q)
 		if err != nil {
 			e.t.Fatal(err)

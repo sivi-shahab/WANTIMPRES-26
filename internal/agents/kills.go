@@ -108,7 +108,7 @@ func (s *Store) Kills(ctx context.Context, activeOnly bool) ([]Kill, error) {
 	return listKills(ctx, s.db, "")
 }
 
-// killsDoc is data.aisec.kills: {global, agent: {id: reason}, tool: {…}, app: {…}} (aisec/agent).
+// killsDoc is data.wantimpres26.kills: {global, agent: {id: reason}, tool: {…}, app: {…}} (wantimpres26/agent).
 func killsDoc(ctx context.Context, tx pgx.Tx) (map[string]any, error) {
 	ks, err := listKills(ctx, tx, "WHERE lifted_at IS NULL")
 	if err != nil {

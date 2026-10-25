@@ -2,8 +2,8 @@
  "schema_version": 1,
  "diagram_type": "architecture",
  "meta": {
-  "title": "Arsitektur Platform AI-SPM (aisec)",
-  "output": ".archify/architecture-aisec-platform/aisec-platform.html",
+  "title": "Arsitektur Platform AI-SPM (wantimpres26)",
+  "output": ".archify/architecture-wantimpres26-platform/wantimpres26-platform.html",
   "quality_profile": "showcase",
   "repository": {
    "url": "https://localhost/ai-security.git",
@@ -119,7 +119,7 @@
      "label": "OPA_URL"
     },
     {
-     "path": "policy/aisec/decision.rego",
+     "path": "policy/wantimpres26/decision.rego",
      "line": 1
     }
    ]
@@ -527,7 +527,7 @@
  "boundaries": [
   {
    "kind": "region",
-   "label": "DC/DRC bank · Kubernetes namespace aisec (NetworkPolicy default-deny)",
+   "label": "DC/DRC bank · Kubernetes namespace wantimpres26 (NetworkPolicy default-deny)",
    "wraps": [
     "aigw",
     "tokvault",

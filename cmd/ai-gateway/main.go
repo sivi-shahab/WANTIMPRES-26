@@ -11,12 +11,12 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	"aisec/internal/aigw"
-	"aisec/internal/events"
-	"aisec/internal/mcpgw"
-	"aisec/internal/privacy"
-	"aisec/internal/server"
-	"aisec/internal/tokvault"
+	"wantimpres26/internal/aigw"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/mcpgw"
+	"wantimpres26/internal/privacy"
+	"wantimpres26/internal/server"
+	"wantimpres26/internal/tokvault"
 )
 
 // Env: AIGW_CONFIG_FILE (aigw.Config: apps with gateway key hashes and limits, providers with vault key files),
@@ -90,7 +90,7 @@ func main() {
 	opa := &mcpgw.OPA{URL: opaURL, HTTP: &http.Client{Timeout: 2 * time.Second}}
 	var detection *aigw.Detection
 	if u := os.Getenv("DETECTION_URL"); u != "" {
-		hc, err := server.MTLSClient(0, "spiffe://aisec.bank/ns/aisec/sa/detection-svc")
+		hc, err := server.MTLSClient(0, "spiffe://wantimpres26.bank/ns/wantimpres26/sa/detection-svc")
 		if err != nil {
 			fail("detection-svc client", err)
 		}

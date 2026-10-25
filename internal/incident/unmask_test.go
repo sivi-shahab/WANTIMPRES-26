@@ -14,9 +14,9 @@ import (
 
 	"sigs.k8s.io/yaml"
 
-	"aisec/internal/authz"
-	"aisec/internal/authz/authztest"
-	"aisec/internal/events"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/authz/authztest"
+	"wantimpres26/internal/events"
 )
 
 // Ticket 45: unmask is limited to analysts whose unit/region/clearance cover the incident, restricted evidence needs

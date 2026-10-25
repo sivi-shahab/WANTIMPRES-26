@@ -15,8 +15,8 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/connector"
-	"aisec/internal/connector/connectortest"
+	"wantimpres26/internal/connector"
+	"wantimpres26/internal/connector/connectortest"
 )
 
 // fakeDrive is the Drive v3, Directory and Reports APIs as far as the connector uses them.
@@ -97,10 +97,10 @@ func (f *fakeDrive) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		f.version++
 	}
 	switch {
-	case r.URL.Path == "/drive/v3/files" && strings.Contains(q.Get("q"), "AISec Quarantine"):
+	case r.URL.Path == "/drive/v3/files" && strings.Contains(q.Get("q"), "WANTIMPRES-26 Quarantine"):
 		var out []any
 		for id, fl := range f.files {
-			if fl.name == "AISec Quarantine" && fl.mime == folderMime && !fl.removed {
+			if fl.name == "WANTIMPRES-26 Quarantine" && fl.mime == folderMime && !fl.removed {
 				out = append(out, map[string]any{"id": id})
 			}
 		}
@@ -343,7 +343,7 @@ func TestRemediation(t *testing.T) {
 	// Quarantine: moved into a new quarantine folder, everything but the owner (and inherited) stripped; undo.
 	f.writes = nil
 	plan, _ = d.Remediate(ctx, it, connector.Action{Kind: connector.Quarantine}, true)
-	if len(f.writes) != 0 || plan.Steps[0] != "move to /AISec Quarantine" {
+	if len(f.writes) != 0 || plan.Steps[0] != "move to /WANTIMPRES-26 Quarantine" {
 		t.Fatalf("quarantine dry run: %v %v", plan.Steps, f.writes)
 	}
 	done, err = d.Remediate(ctx, it, connector.Action{Kind: connector.Quarantine}, false)

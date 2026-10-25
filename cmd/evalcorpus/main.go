@@ -21,9 +21,9 @@ import (
 	"slices"
 	"time"
 
-	"aisec/internal/detect"
-	"aisec/internal/evalcorpus"
-	"aisec/internal/l2"
+	"wantimpres26/internal/detect"
+	"wantimpres26/internal/evalcorpus"
+	"wantimpres26/internal/l2"
 )
 
 // MinKappa is the inter-annotator agreement the spec requires (§9.3).

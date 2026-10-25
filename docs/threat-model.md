@@ -3,7 +3,7 @@
 Tiket 02. Baseline threat model untuk seluruh platform. Threat model per fitur (DoD §3.2 #4) merujuk ke dokumen ini dan hanya menambahkan hal yang spesifik untuk fitur tersebut.
 
 - **Cakupan:** komponen §5.2 sebagaimana ada di repo per 2026-10-10 (commit `ff6af37`), ditambah komponen yang belum dibangun bila sudah ada tiketnya.
-- **Asumsi deployment (ADR-0001):** single-tenant tenant-aware, on-prem di DC/DRC bank, tanpa komponen offshore. Kubernetes, satu namespace `aisec`.
+- **Asumsi deployment (ADR-0001):** single-tenant tenant-aware, on-prem di DC/DRC bank, tanpa komponen offshore. Kubernetes, satu namespace `wantimpres26`.
 - **Rating:** *High* = kebocoran data nasabah/rahasia dalam skala besar, enforcement bisa dilewati, atau integritas audit/policy rusak. *Medium* = dampak terbatas atau butuh akses orang dalam yang sudah berhak. *Low* = lainnya.
 - **Status kontrol:** ✅ ada di kode (dengan rujukan), 🎫 ada tiket terbuka, ❌ gap (tiket baru di §6).
 
@@ -63,7 +63,7 @@ Trust boundary:
 | T | Policy jahat dipublikasikan oleh orang dalam | High | ✅ 4-eyes (author ≠ approver), simulasi diff, step-up untuk `policy.publish`, audit, rollback (tiket 12); alert `PolicyReleaseDiverged`. |
 | T | Exception dipakai sebagai backdoor permanen | Medium | ✅ Wajib kedaluwarsa (≤ 90 hari), notifikasi H-7, alert `PolicyExceptionsExpiring` (tiket 12). |
 | R | Siapa mengubah policy dan kapan | Medium | ✅ Audit log hash chain + WORM anchor (tiket 07); ekspor ke SIEM (tiket 19). |
-| I | Bundle berisi data katalog, registry agent, dan exception dapat diunduh siapa saja di jaringan (`GET /bundles/aisec.tar.gz` public) | Medium | ✅ G1 (tiket 40): `/bundles` hanya di port mTLS control-plane untuk identitas pod yang punya sidecar OPA; tidak ada di admin API. |
+| I | Bundle berisi data katalog, registry agent, dan exception dapat diunduh siapa saja di jaringan (`GET /bundles/wantimpres26.tar.gz` public) | Medium | ✅ G1 (tiket 40): `/bundles` hanya di port mTLS control-plane untuk identitas pod yang punya sidecar OPA; tidak ada di admin API. |
 | I | Decision log OPA memuat konten | High | ✅ `mask_decision` dengan daftar field terlarang yang sama (`policy/system/log/mask.rego`, ada test). |
 | D | Policy Service mati → bundle tidak diperbarui | Medium | ✅ OPA memakai cache terakhir. 🎫 fail-mode bila bundle kedaluwarsa > 24 jam (13, §13.3). |
 

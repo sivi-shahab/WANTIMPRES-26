@@ -15,7 +15,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 
-	"aisec/internal/audit"
+	"wantimpres26/internal/audit"
 )
 
 // --- HITL approvals (FR-AGT-6, ticket 30) -------------------------------------------------------------------
@@ -217,7 +217,7 @@ func (s *Store) GetApproval(ctx context.Context, id string) (Approval, error) {
 // The message names the agent, tool and deadline and links to the request; arguments stay in the console.
 func WebhookNotifier(url, publicURL string, client *http.Client, log *slog.Logger) func(Approval) {
 	return func(a Approval) {
-		text := fmt.Sprintf("AISec: agent %s asks to call %s on %s (%s). Approve or reject before %s: %s/approvals/%s",
+		text := fmt.Sprintf("WANTIMPRES-26: agent %s asks to call %s on %s (%s). Approve or reject before %s: %s/approvals/%s",
 			a.AgentID, a.Tool, a.Server, strings.Join(a.ReasonCodes, ", "), a.ExpiresAt.Format(time.RFC3339), strings.TrimSuffix(publicURL, "/"), a.ID)
 		body, _ := json.Marshal(map[string]string{"text": text})
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)

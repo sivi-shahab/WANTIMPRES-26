@@ -13,7 +13,7 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
+	"wantimpres26/internal/audit"
 )
 
 const tenant = "00000000-0000-0000-0000-000000000037"

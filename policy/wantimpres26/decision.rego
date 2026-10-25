@@ -1,17 +1,17 @@
 # METADATA
 # title: AI-SPM policy decision point
 # description: |
-#   Generic engine: rules are data (data.aisec.rules.items), evaluated against the canonical input
-#   (data.aisec.schema.input). The strictest matching action wins (DEC-2) and obligations are merged.
+#   Generic engine: rules are data (data.wantimpres26.rules.items), evaluated against the canonical input
+#   (data.wantimpres26.schema.input). The strictest matching action wins (DEC-2) and obligations are merged.
 #   Rule shape: {id, when: [{field, op, value}], action, obligations?, reason, mode?: enforce|monitor}.
-package aisec.decision
+package wantimpres26.decision
 
 import rego.v1
 
-import data.aisec.agent
-import data.aisec.cond
-import data.aisec.dest
-import data.aisec.risk
+import data.wantimpres26.agent
+import data.wantimpres26.cond
+import data.wantimpres26.dest
+import data.wantimpres26.risk
 
 # DEC-2 precedence, strictest last.
 rank := {
@@ -24,7 +24,7 @@ rank := {
 	"block": 6,
 }
 
-valid_input if json.match_schema(input, data.aisec.schema.input)[0]
+valid_input if json.match_schema(input, data.wantimpres26.schema.input)[0]
 
 # Malformed input fails closed: a PEP bug must show up as blocks, never as silent allows.
 result := {
@@ -35,12 +35,12 @@ result := {
 	"monitor_rules": [],
 	"exempted_rules": [],
 	"destination": object.get(input, "destination", {}),
-	"policy_id": "aisec.decision",
-	"policy_version": data.aisec.rules.version,
+	"policy_id": "wantimpres26.decision",
+	"policy_version": data.wantimpres26.rules.version,
 	# A malformed input is a PEP bug, not user risk: alert on INPUT_SCHEMA_INVALID, do not page the SOC.
 	"risk_score": 0,
 	"risk_overrides": [],
-	"risk_version": data.aisec.risk.config.version,
+	"risk_version": data.wantimpres26.risk.config.version,
 } if not valid_input
 
 # The gateways validate their input in Go against this same schema, compiled once, and ask for checked; any input
@@ -54,17 +54,17 @@ checked := {
 	"monitor_rules": sort({r.id | some r in monitored}),
 	"exempted_rules": sort({r.id | some r in exempted}),
 	"destination": dest.destination,
-	"policy_id": "aisec.decision",
-	"policy_version": data.aisec.rules.version,
+	"policy_id": "wantimpres26.decision",
+	"policy_version": data.wantimpres26.rules.version,
 	"risk_score": risk.score,
 	"risk_overrides": risk.applied,
-	"risk_version": data.aisec.risk.config.version,
+	"risk_version": data.wantimpres26.risk.config.version,
 }
 
 result := checked if valid_input
 
 matched contains rule if {
-	some rule in data.aisec.rules.items
+	some rule in data.wantimpres26.rules.items
 	every c in rule.when {
 		cond.holds(c.op, value(c.field), c.value)
 	}
@@ -81,7 +81,7 @@ enforced contains r if {
 exempted contains r if {
 	some r in matched
 	object.get(r, "mode", "enforce") == "enforce"
-	some ex in data.aisec.exceptions.items
+	some ex in data.wantimpres26.exceptions.items
 	r.id in ex.rules
 	time.now_ns() < time.parse_rfc3339_ns(ex.expires_at)
 	count(ex.scope) > 0
@@ -98,10 +98,10 @@ exempted contains r if {
 	input.agent.approval_granted == true
 }
 
-# FR-INC-5 containment: the SOC blocked this principal from this app (data.aisec.containment, released by the
+# FR-INC-5 containment: the SOC blocked this principal from this app (data.wantimpres26.containment, released by the
 # incident module). Not a rule in the rule set, so no policy edit or exception can lift it; only the SOC.
 enforced contains {"id": "containment.block", "action": "block", "reason": "CONTAINMENT_BLOCK"} if {
-	some b in data.aisec.containment.blocks
+	some b in data.wantimpres26.containment.blocks
 	b.principal_id == input.principal.id
 	b.app_id == dest.destination.app_id
 	time.now_ns() < time.parse_rfc3339_ns(b.expires_at)
@@ -132,17 +132,17 @@ obligations contains o if {
 	some o in object.get(r, "obligations", [])
 }
 
-# risk_score is computed by aisec.risk, never supplied by the PEP.
+# risk_score is computed by wantimpres26.risk, never supplied by the PEP.
 value("risk_score") := risk.score
 
-# destination.* comes from the catalog-corrected destination (aisec.dest).
+# destination.* comes from the catalog-corrected destination (wantimpres26.dest).
 value(field) := object.get(dest.destination, array.slice(path, 1, count(path)), null) if {
 	field != "risk_score"
 	path := split(field, ".")
 	path[0] == "destination"
 }
 
-# agent.* comes from the registry-corrected agent (aisec.agent).
+# agent.* comes from the registry-corrected agent (wantimpres26.agent).
 value(field) := object.get(agent.agent, array.slice(path, 1, count(path)), null) if {
 	path := split(field, ".")
 	path[0] == "agent"
@@ -157,33 +157,33 @@ value(field) := object.get(input, split(field, "."), null) if {
 # Rule-set validation. The bundle builder refuses to publish while this is non-empty, so a typo in a
 # rule can never turn into a rule that silently never matches.
 rule_errors contains sprintf("duplicate id %s", [id]) if {
-	some id in {r.id | some r in data.aisec.rules.items}
-	count([r | some r in data.aisec.rules.items; r.id == id]) > 1
+	some id in {r.id | some r in data.wantimpres26.rules.items}
+	count([r | some r in data.wantimpres26.rules.items; r.id == id]) > 1
 }
 
 rule_errors contains sprintf("%v: unknown action %v", [r.id, r.action]) if {
-	some r in data.aisec.rules.items
+	some r in data.wantimpres26.rules.items
 	not r.action in object.keys(rank)
 }
 
 rule_errors contains sprintf("%v: unknown op %v", [r.id, c.op]) if {
-	some r in data.aisec.rules.items
+	some r in data.wantimpres26.rules.items
 	some c in r.when
 	not c.op in cond.ops
 }
 
 rule_errors contains sprintf("%v: empty when", [r.id]) if {
-	some r in data.aisec.rules.items
+	some r in data.wantimpres26.rules.items
 	count(object.get(r, "when", [])) == 0
 }
 
 rule_errors contains sprintf("%v: missing reason", [r.id]) if {
-	some r in data.aisec.rules.items
+	some r in data.wantimpres26.rules.items
 	not r.reason
 }
 
 rule_errors contains sprintf("%v: unknown mode %v", [r.id, r.mode]) if {
-	some r in data.aisec.rules.items
+	some r in data.wantimpres26.rules.items
 	not r.mode in {"enforce", "monitor"}
 	r.mode
 }

@@ -14,12 +14,12 @@ import (
 
 	"github.com/open-policy-agent/opa/v1/rego"
 
-	"aisec/internal/authz"
-	"aisec/internal/authz/authztest"
-	"aisec/internal/events"
-	"aisec/internal/lifecycle"
-	"aisec/internal/policysvc"
-	"aisec/policy"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/authz/authztest"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/policy"
 )
 
 // ev is event() with changes: action, trace, …
@@ -241,7 +241,7 @@ func TestContainmentBlock(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		pq, err := policysvc.Query(ctx, policy.Files, rel.Overrides(), "data.aisec.decision.result")
+		pq, err := policysvc.Query(ctx, policy.Files, rel.Overrides(), "data.wantimpres26.decision.result")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -369,7 +369,7 @@ func TestITSM(t *testing.T) {
 	c := calls[0]
 	desc, _ := c.body["description"].(string)
 	if c.path != "/api/now/table/incident?sysparm_fields=sys_id,number" || c.auth != "Basic c3ZjOnB3" || c.body["urgency"] != "1" || c.body["impact"] != "1" ||
-		c.body["correlation_id"] != sn || !strings.HasPrefix(c.body["short_description"].(string), "[AISec] allow PII_ID.NIK to chatgpt") ||
+		c.body["correlation_id"] != sn || !strings.HasPrefix(c.body["short_description"].(string), "[WANTIMPRES-26] allow PII_ID.NIK to chatgpt") ||
 		!strings.Contains(desc, "UU PDP breach timer") || !strings.Contains(desc, "Mohon reset kredensial p1") || strings.Contains(fmt.Sprint(c.body), "3171") {
 		t.Errorf("servicenow request %+v", c)
 	}

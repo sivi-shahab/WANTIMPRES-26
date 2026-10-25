@@ -15,14 +15,14 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/agents"
-	"aisec/internal/audit"
-	"aisec/internal/catalog"
-	"aisec/internal/incident"
-	"aisec/internal/lifecycle"
-	"aisec/internal/posture"
-	"aisec/internal/remediate"
-	"aisec/policy"
+	"wantimpres26/internal/agents"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/catalog"
+	"wantimpres26/internal/incident"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/posture"
+	"wantimpres26/internal/remediate"
+	"wantimpres26/policy"
 )
 
 const tenant = "00000000-0000-0000-0000-000000000001"
@@ -132,7 +132,7 @@ func setup(t *testing.T) *env {
 	var rules struct {
 		Items []map[string]any `json:"items"`
 	}
-	b, _ := policy.Files.ReadFile("aisec/rules/data.json")
+	b, _ := policy.Files.ReadFile("wantimpres26/rules/data.json")
 	_ = json.Unmarshal(b, &rules)
 	e.rules = rules.Items
 	e.src = Sources{DB: db,

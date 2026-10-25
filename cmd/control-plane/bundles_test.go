@@ -17,9 +17,9 @@ import (
 	"github.com/open-policy-agent/opa/v1/sdk"
 	"sigs.k8s.io/yaml"
 
-	"aisec/internal/policysvc"
-	"aisec/internal/server/mtlstest"
-	"aisec/policy"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/internal/server/mtlstest"
+	"wantimpres26/policy"
 )
 
 // Ticket 40 AC: the bundle reaches an OPA sidecar configured exactly as deploy/base/opa/opa.yaml (mTLS with the
@@ -42,13 +42,13 @@ func TestBundleOnlyForSidecarsAndKeyRotation(t *testing.T) {
 	}
 	publish := func(s policysvc.Signer, version string) {
 		t.Helper()
-		tarball, rev, err := policysvc.Build(ctx, policy.Files, s, policysvc.Overrides{"aisec.rules": map[string]any{"version": version, "items": []any{}}})
+		tarball, rev, err := policysvc.Build(ctx, policy.Files, s, policysvc.Overrides{"wantimpres26.rules": map[string]any{"version": version, "items": []any{}}})
 		if err != nil {
 			t.Fatal(err)
 		}
 		bundles.Publish(tarball, rev)
 	}
-	publish(signers["aisec-policy-a"], "signed-a")
+	publish(signers["wantimpres26-policy-a"], "signed-a")
 
 	// The deployed sidecar config, with this test's paths, server and key material.
 	raw, err := os.ReadFile("../../deploy/base/opa/opa.yaml")
@@ -69,7 +69,7 @@ func TestBundleOnlyForSidecarsAndKeyRotation(t *testing.T) {
 		svc["tls"].(map[string]any)["ca_cert"] = filepath.Join(dir, "ca.crt")
 		tlsAuth := svc["credentials"].(map[string]any)["client_tls"].(map[string]any)
 		tlsAuth["cert"], tlsAuth["private_key"] = filepath.Join(dir, "tls.crt"), filepath.Join(dir, "tls.key")
-		c["bundles"].(map[string]any)["aisec"].(map[string]any)["polling"] = map[string]any{"long_polling_timeout_seconds": 5}
+		c["bundles"].(map[string]any)["wantimpres26"].(map[string]any)["polling"] = map[string]any{"long_polling_timeout_seconds": 5}
 		for slot := range c["keys"].(map[string]any) {
 			c["keys"].(map[string]any)[slot] = keys[slot]
 		}
@@ -92,7 +92,7 @@ func TestBundleOnlyForSidecarsAndKeyRotation(t *testing.T) {
 		return opa, err
 	}
 	version := func(opa *sdk.OPA) string {
-		res, err := opa.Decision(ctx, sdk.DecisionOptions{Path: "/aisec/rules/version"})
+		res, err := opa.Decision(ctx, sdk.DecisionOptions{Path: "/wantimpres26/rules/version"})
 		if err != nil {
 			return ""
 		}
@@ -117,13 +117,13 @@ func TestBundleOnlyForSidecarsAndKeyRotation(t *testing.T) {
 	}
 
 	// Rotation: sidecars already trust slot b; the control-plane switches to it and the next release activates.
-	publish(signers["aisec-policy-b"], "signed-b")
+	publish(signers["wantimpres26-policy-b"], "signed-b")
 	if !wait(gw, "signed-b", 30*time.Second) {
 		t.Errorf("release signed with slot b not activated: %q", version(gw))
 	}
 	// A key outside the trusted slots is never activated, even under a trusted kid.
 	rogue, _ := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-	publish(policysvc.Signer{KeyID: "aisec-policy-a", Key: rogue}, "rogue")
+	publish(policysvc.Signer{KeyID: "wantimpres26-policy-a", Key: rogue}, "rogue")
 	time.Sleep(2 * time.Second)
 	if v := version(gw); v != "signed-b" {
 		t.Errorf("after a rogue bundle the sidecar runs %q, want the last verified signed-b", v)

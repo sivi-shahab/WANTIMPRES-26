@@ -12,7 +12,7 @@ import (
 	"sort"
 	"strings"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 // Hash is the pin of a tool definition: SHA-256 of its canonical JSON (sorted keys), so any change to name,

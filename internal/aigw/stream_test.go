@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 // sseOf builds a provider stream that carries deltas as the model's text.
@@ -236,7 +236,7 @@ func TestStreamBlockMidStream(t *testing.T) {
 			}
 			text := textOf(c.kind, evs)
 			if status != 200 || strings.Contains(text, canary) || strings.Contains(text, canary[:8]) || strings.Contains(text, "Sisa jawaban") ||
-				!strings.HasPrefix(text, "Jam layanan cabang") || !strings.Contains(text, "[AISec: response stopped by policy [SYSTEM_PROMPT_LEAK]") {
+				!strings.HasPrefix(text, "Jam layanan cabang") || !strings.Contains(text, "[WANTIMPRES-26: response stopped by policy [SYSTEM_PROMPT_LEAK]") {
 				t.Fatalf("status %d text %q", status, text)
 			}
 			switch c.kind {

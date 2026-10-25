@@ -15,10 +15,10 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
-	"aisec/internal/lifecycle"
-	"aisec/internal/policysvc"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/policysvc"
 )
 
 //go:embed schema.sql
@@ -224,7 +224,7 @@ func flags(a App, reviewAt *time.Time, today time.Time) []string {
 	return f
 }
 
-// releaseDoc is data.aisec.catalog for policy releases: what the PDP needs per app (aisec/dest/dest.rego).
+// releaseDoc is data.wantimpres26.catalog for policy releases: what the PDP needs per app (wantimpres26/dest/dest.rego).
 func (s *Store) releaseDoc(ctx context.Context, tx pgx.Tx) (policysvc.Overrides, error) {
 	views, version, err := effective(ctx, tx, time.Now())
 	if err != nil {
@@ -241,7 +241,7 @@ func (s *Store) releaseDoc(ctx context.Context, tx pgx.Tx) (policysvc.Overrides,
 		}
 		apps[id] = a
 	}
-	return policysvc.Overrides{"aisec.catalog": map[string]any{"version": version, "apps": apps}}, nil
+	return policysvc.Overrides{"wantimpres26.catalog": map[string]any{"version": version, "apps": apps}}, nil
 }
 
 // --- changes -----------------------------------------------------------------------------------------------

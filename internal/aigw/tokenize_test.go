@@ -8,7 +8,7 @@ import (
 	"sync"
 	"testing"
 
-	"aisec/internal/tokvault"
+	"wantimpres26/internal/tokvault"
 )
 
 // fakeVault speaks the vault API with a reversible digit shift (the real FF1 vault is tested in tokvault): it
@@ -107,7 +107,7 @@ func TestTokenize(t *testing.T) {
 		t.Errorf("provider got %q", got)
 	}
 	text := r.body["choices"].([]any)[0].(map[string]any)["message"].(map[string]any)["content"].(string)
-	if r.status != 200 || r.header.Get("X-AISec-Action") != "tokenize" || text != "Konfirmasi untuk NIK 3171012310900001 dan rekening 1234567890 sudah disiapkan." {
+	if r.status != 200 || r.header.Get("X-Wantimpres26-Action") != "tokenize" || text != "Konfirmasi untuk NIK 3171012310900001 dan rekening 1234567890 sudah disiapkan." {
 		t.Errorf("entitled app: %d %q", r.status, text)
 	}
 	if fv.detoks != 2 || fv.ttlSeen != 1800 {

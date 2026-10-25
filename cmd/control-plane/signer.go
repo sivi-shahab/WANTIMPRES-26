@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"aisec/internal/policysvc"
+	"wantimpres26/internal/policysvc"
 )
 
 // bundleSigner is the policy bundle key (ticket 40). Production: BUNDLE_TRANSIT_URL (Vault transit sign endpoint of

@@ -12,10 +12,10 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/lifecycle"
-	"aisec/internal/mcptools"
-	"aisec/internal/policysvc"
-	"aisec/policy"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/mcptools"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/policy"
 )
 
 func toolDef(name, desc string) map[string]any {

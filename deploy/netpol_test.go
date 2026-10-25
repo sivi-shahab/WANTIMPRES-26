@@ -77,7 +77,7 @@ func (p peer) matches(e endpoint) bool {
 	if e.ip != "" {
 		return false
 	}
-	nsOK := e.ns == "aisec"
+	nsOK := e.ns == "wantimpres26"
 	if p.NamespaceSelector != nil {
 		nsOK = p.NamespaceSelector.matches(map[string]string{"kubernetes.io/metadata.name": e.ns})
 	}
@@ -191,10 +191,10 @@ type podTemplate struct {
 	} `json:"spec"`
 }
 
-// allowed: src may send (its egress) and dst may receive (its ingress); only namespace aisec has policies here.
+// allowed: src may send (its egress) and dst may receive (its ingress); only namespace wantimpres26 has policies here.
 func (m manifests) allowed(src, dst endpoint, port int, proto string) bool {
 	side := func(e endpoint, typ string, pick func(netpol) ([]rule, func(rule) []peer), other endpoint) bool {
-		if e.ns != "aisec" {
+		if e.ns != "wantimpres26" {
 			return true
 		}
 		isolated := false
@@ -221,7 +221,7 @@ func (m manifests) allowed(src, dst endpoint, port int, proto string) bool {
 	return side(src, "Egress", egress, dst) && side(dst, "Ingress", ingress, src)
 }
 
-// Ticket 40 AC: default-deny in namespace aisec, every §5.2 flow still open, the oracle paths (G1) closed.
+// Ticket 40 AC: default-deny in namespace wantimpres26, every §5.2 flow still open, the oracle paths (G1) closed.
 func TestNetworkPolicy(t *testing.T) {
 	m := load(t)
 	defaultDeny := slices.ContainsFunc(m.policies, func(np netpol) bool {
@@ -236,7 +236,7 @@ func TestNetworkPolicy(t *testing.T) {
 		if !ok {
 			t.Fatalf("no workload %s", app)
 		}
-		return pod("aisec", w.labels)
+		return pod("wantimpres26", w.labels)
 	}
 	ext := func(ns, app string) endpoint { return pod(ns, map[string]string{"app": app}) }
 	dns := pod("kube-system", map[string]string{"k8s-app": "kube-dns"})
@@ -298,7 +298,7 @@ func TestNetworkPolicy(t *testing.T) {
 			t.Errorf("%s runs as service account %q (want its own, declared in serviceaccounts.yaml)", app, w.serviceAccount)
 		}
 		for _, id := range w.mtlsAllow {
-			sa, ok := strings.CutPrefix(id, "spiffe://aisec.bank/ns/aisec/sa/")
+			sa, ok := strings.CutPrefix(id, "spiffe://wantimpres26.bank/ns/wantimpres26/sa/")
 			if _, exists := m.pods[sa]; !ok || !exists {
 				t.Errorf("%s MTLS_ALLOW %q: no such workload", app, id)
 				continue
@@ -308,7 +308,7 @@ func TestNetworkPolicy(t *testing.T) {
 			}
 		}
 	}
-	if fmt.Sprint(m.pods["model-inference"].mtlsAllow) != "[spiffe://aisec.bank/ns/aisec/sa/detection-svc]" {
+	if fmt.Sprint(m.pods["model-inference"].mtlsAllow) != "[spiffe://wantimpres26.bank/ns/wantimpres26/sa/detection-svc]" {
 		t.Errorf("model-inference MTLS_ALLOW %v", m.pods["model-inference"].mtlsAllow)
 	}
 }

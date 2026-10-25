@@ -2,7 +2,7 @@
 # over TLS and/or HTTP (HEC/JSON). Replicas share the event partitions; only one holds the audit cursor at a time.
 # Secret siem-export (out of band): KAFKA_BROKERS, SCHEMA_REGISTRY_URL, DATABASE_URL, SIEM_SYSLOG_ADDR and/or
 # SIEM_HTTP_URL + SIEM_HTTP_FORMAT, ALERTMANAGER_TOKEN_SHA256. Files: /siem/ca.crt (SIEM CA), /siem/http-auth.
-# Alertmanager receiver: webhook_configs: [{url: http://siem-export.aisec/alertmanager,
+# Alertmanager receiver: webhook_configs: [{url: http://siem-export.wantimpres26/alertmanager,
 #   http_config: {authorization: {credentials_file: <token>}}, send_resolved: true}]
 apiVersion: apps/v1
 kind: Deployment
@@ -15,7 +15,7 @@ spec:
     matchLabels: {app: siem-export}
   template:
     metadata:
-      labels: {app: siem-export, aisec.bank/egress: external}
+      labels: {app: siem-export, wantimpres26.bank/egress: external}
     spec:
       automountServiceAccountToken: false
       serviceAccountName: siem-export
@@ -26,7 +26,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: siem-export
-          image: registry.local/aisec/siem-export:dev
+          image: registry.local/wantimpres26/siem-export:dev
           imagePullPolicy: Always
           envFrom: [{secretRef: {name: siem-export}}]
           env:

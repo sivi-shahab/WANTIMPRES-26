@@ -18,7 +18,7 @@ import (
 
 	"golang.org/x/oauth2/clientcredentials"
 
-	"aisec/internal/connector"
+	"wantimpres26/internal/connector"
 )
 
 // Graph is the connector. Fields are exported so tests can point it at a fake Graph.

@@ -1,5 +1,5 @@
 {
-  "index_patterns": ["aisec-events-*"],
+  "index_patterns": ["wantimpres26-events-*"],
   "template": {
     "settings": {"index": {"refresh_interval": "5s"}},
     "mappings": {

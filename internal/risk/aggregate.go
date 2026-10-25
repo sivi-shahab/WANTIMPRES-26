@@ -1,5 +1,5 @@
 // Package risk aggregates event risk scores per user, app, agent or data asset (spec FR-RISK-4). Event scores
-// themselves come from the PDP (policy/aisec/risk).
+// themselves come from the PDP (policy/wantimpres26/risk).
 package risk
 
 import (

@@ -31,10 +31,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"aisec/internal/events"
-	"aisec/internal/inspect"
-	"aisec/internal/mcptools"
-	"aisec/internal/toolscope"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/inspect"
+	"wantimpres26/internal/mcptools"
+	"wantimpres26/internal/toolscope"
 )
 
 // Server is one MCP tool server behind the gateway, reached at /mcp/{name}.
@@ -514,7 +514,7 @@ func (c *call) inspectPayload(ctx context.Context, b []byte, pend *pending) []by
 	}
 	// A tool execution error the model can read (MCP isError), carrying no byte of the blocked content.
 	msg.Result = mustJSON(map[string]any{"isError": true, "content": []any{map[string]any{
-		"type": "text", "text": fmt.Sprintf("[AISec] tool result blocked by policy %v (decision %s)", d.ReasonCodes, eid)}}})
+		"type": "text", "text": fmt.Sprintf("[WANTIMPRES-26] tool result blocked by policy %v (decision %s)", d.ReasonCodes, eid)}}})
 	return mustJSON(msg)
 }
 
@@ -703,7 +703,7 @@ func digest(args map[string]any) string {
 
 // --- kill switch (ticket 30) ---
 
-// KillSet is data.aisec.kills: active switches by scope (target → reason).
+// KillSet is data.wantimpres26.kills: active switches by scope (target → reason).
 type KillSet struct {
 	Global bool              `json:"global"`
 	Agent  map[string]string `json:"agent"`

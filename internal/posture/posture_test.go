@@ -15,14 +15,14 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/agents"
-	"aisec/internal/audit"
-	"aisec/internal/catalog"
-	"aisec/internal/events"
-	"aisec/internal/incident"
-	"aisec/internal/ingest"
-	"aisec/internal/lifecycle"
-	"aisec/policy"
+	"wantimpres26/internal/agents"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/catalog"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/incident"
+	"wantimpres26/internal/ingest"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/policy"
 )
 
 const tenant = "00000000-0000-0000-0000-000000000001"

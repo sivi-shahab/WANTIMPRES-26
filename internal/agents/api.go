@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 var errScope = errors.New("outside your business unit")

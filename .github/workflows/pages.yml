@@ -1,4 +1,4 @@
-# Publishes the newest interactive architecture diagram (.archify/architecture-aisec-platform-*) to GitHub Pages.
+# Publishes the newest interactive architecture diagram (.archify/architecture-wantimpres26-platform-*) to GitHub Pages.
 name: pages
 
 on:
@@ -26,9 +26,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       # Folder names end in a timestamp, so the last one in sort order is the newest.
       - run: |
-          dir=$(find .archify -maxdepth 1 -type d -name 'architecture-aisec-platform-*' | sort | tail -n 1)
+          dir=$(find .archify -maxdepth 1 -type d -name 'architecture-wantimpres26-platform-*' | sort | tail -n 1)
           mkdir site
-          cp "$dir/aisec-platform.html" site/index.html
+          cp "$dir/wantimpres26-platform.html" site/index.html
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  # v6.0.0
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
         with: {path: site}

@@ -15,7 +15,7 @@ import (
 	"slices"
 	"time"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 const (

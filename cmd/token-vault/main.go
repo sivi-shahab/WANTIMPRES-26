@@ -9,11 +9,11 @@ import (
 	"syscall"
 	"time"
 
-	"aisec/internal/audit"
-	"aisec/internal/privacy"
-	"aisec/internal/server"
-	"aisec/internal/tenantdb"
-	"aisec/internal/tokvault"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/privacy"
+	"wantimpres26/internal/server"
+	"wantimpres26/internal/tenantdb"
+	"wantimpres26/internal/tokvault"
 )
 
 // Env: DATABASE_URL, TENANT_ID, VAULT_KEK_FILE (32 raw bytes, from Vault/HSM), VAULT_CLIENT_TOKEN_SHA256 (hex; the

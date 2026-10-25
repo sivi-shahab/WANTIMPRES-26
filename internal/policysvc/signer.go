@@ -32,7 +32,7 @@ import (
 
 // KeyIDs are the slots every sidecar trusts (deploy/base/opa/opa.yaml, --set-file keys.<slot>.key). KeyID is the
 // default slot.
-var KeyIDs = []string{"aisec-policy-a", "aisec-policy-b"}
+var KeyIDs = []string{"wantimpres26-policy-a", "wantimpres26-policy-b"}
 
 // Signer signs bundles with an EC P-256 key it may never hand out, under KeyID (a slot of KeyIDs).
 type Signer struct {
@@ -69,7 +69,7 @@ func (s Signer) Check() error {
 	if !ok || pub.Curve.Params().Name != "P-256" {
 		return errors.New("bundle signing key: want EC P-256")
 	}
-	d := sha256.Sum256([]byte("aisec bundle signer check"))
+	d := sha256.Sum256([]byte("wantimpres26 bundle signer check"))
 	sig, err := s.Key.Sign(rand.Reader, d[:], crypto.SHA256)
 	if err != nil {
 		return fmt.Errorf("bundle signing key: %w", err)
@@ -83,7 +83,7 @@ func (s Signer) Check() error {
 // signers holds the crypto.Signer of each Build in flight, by the SigningConfig.Key handed to OPA's signer plugin.
 var signers sync.Map
 
-const signerPlugin = "aisec-crypto-signer"
+const signerPlugin = "wantimpres26-crypto-signer"
 
 func init() {
 	_ = bundle.RegisterSigner(signerPlugin, cryptoSigner{})

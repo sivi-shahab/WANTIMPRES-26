@@ -6,19 +6,19 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/agents"
-	"aisec/internal/authz"
-	"aisec/internal/catalog"
-	"aisec/internal/compliance"
-	"aisec/internal/datascan"
-	"aisec/internal/identity"
-	"aisec/internal/incident"
-	"aisec/internal/lifecycle"
-	"aisec/internal/posture"
-	"aisec/internal/remediate"
-	"aisec/internal/riskcal"
-	"aisec/internal/similarity"
-	"aisec/internal/tuning"
+	"wantimpres26/internal/agents"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/catalog"
+	"wantimpres26/internal/compliance"
+	"wantimpres26/internal/datascan"
+	"wantimpres26/internal/identity"
+	"wantimpres26/internal/incident"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/posture"
+	"wantimpres26/internal/remediate"
+	"wantimpres26/internal/riskcal"
+	"wantimpres26/internal/similarity"
+	"wantimpres26/internal/tuning"
 )
 
 // deps are the handlers and stores routes need. Nil stores are fine for the route matrix test: it never calls a
@@ -49,7 +49,7 @@ type deps struct {
 // exceptions) is not for anyone on the network.
 func workloadRoutes(bundles http.Handler) *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.Handle("GET /bundles/aisec.tar.gz", bundles)
+	mux.Handle("GET /bundles/wantimpres26.tar.gz", bundles)
 	return mux
 }
 

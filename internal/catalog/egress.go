@@ -10,7 +10,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 
-	"aisec/internal/audit"
+	"wantimpres26/internal/audit"
 )
 
 // Ticket 43 (threat model G4): LLM traffic must go through the AI gateway. The network team allows the provider

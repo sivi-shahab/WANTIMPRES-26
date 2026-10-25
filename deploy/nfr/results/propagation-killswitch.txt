@@ -1,9 +1,9 @@
     lifecycle_test.go:411: publish→PEP over 22 releases: p50 180.530221ms, p99 15.221854863s, max 15.221854863s
 --- PASS: TestPropagation (34.80s)
-ok  	aisec/internal/lifecycle	34.841s
+ok  	wantimpres26/internal/lifecycle	34.841s
     hitl_test.go:281: kill → OPA blocks over 10 kills: p50 177.764074ms, max 189.394291ms; with the gateway's 1 s poll, worst end to end 1.189394291s
 --- PASS: TestKillSwitchPropagation (3.99s)
-ok  	aisec/internal/agents	4.042s
+ok  	wantimpres26/internal/agents	4.042s
     mcpgw_test.go:1094: kill in PDP → live session cut in 987.69079ms
 --- PASS: TestKillSwitch (8.73s)
-ok  	aisec/internal/mcpgw	8.773s
+ok  	wantimpres26/internal/mcpgw	8.773s

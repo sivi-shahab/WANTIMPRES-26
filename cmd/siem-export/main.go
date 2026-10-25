@@ -18,11 +18,11 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 	"github.com/twmb/franz-go/pkg/sr"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
-	"aisec/internal/privacy"
-	"aisec/internal/server"
-	"aisec/internal/siem"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/privacy"
+	"wantimpres26/internal/server"
+	"wantimpres26/internal/siem"
 )
 
 // Env: KAFKA_* (events.KafkaOpts), SCHEMA_REGISTRY_URL, DATABASE_URL (audit log + cursor), SIEM_MIN_RISK (default 40),

@@ -1,21 +1,21 @@
-# Identitas workload (SPIFFE/mTLS) untuk namespace `aisec`
+# Identitas workload (SPIFFE/mTLS) untuk namespace `wantimpres26`
 
 Tiket 40, threat model G1, spec §10.1. Dipasang sekali per cluster oleh tim platform, sebelum `deploy/base`.
 
 ## Komponen
-- **cert-manager** dan **csi-driver-spiffe** (cert-manager.io). Setiap pod yang me-mount volume CSI `spiffe.csi.cert-manager.io` mendapat SVID X.509 berumur pendek di `/spiffe` (`tls.crt`, `tls.key`, `ca.crt`), dengan URI SAN `spiffe://aisec.bank/ns/<namespace>/sa/<service account>`. Kunci privat dibuat di node dan tidak pernah menjadi Secret Kubernetes. Sertifikat diperbarui di tempat sebelum kedaluwarsa.
-- **Trust domain:** `aisec.bank`. Harus sama dengan nilai `MTLS_ALLOW` di `deploy/base`.
-- **Issuer:** CA intermediate khusus `aisec`, ditandatangani CA internal bank. Kunci CA disimpan di HSM (Vault PKI dengan managed key, atau issuer cert-manager yang memanggil HSM). Jangan pakai issuer self-signed di produksi.
+- **cert-manager** dan **csi-driver-spiffe** (cert-manager.io). Setiap pod yang me-mount volume CSI `spiffe.csi.cert-manager.io` mendapat SVID X.509 berumur pendek di `/spiffe` (`tls.crt`, `tls.key`, `ca.crt`), dengan URI SAN `spiffe://wantimpres26.bank/ns/<namespace>/sa/<service account>`. Kunci privat dibuat di node dan tidak pernah menjadi Secret Kubernetes. Sertifikat diperbarui di tempat sebelum kedaluwarsa.
+- **Trust domain:** `wantimpres26.bank`. Harus sama dengan nilai `MTLS_ALLOW` di `deploy/base`.
+- **Issuer:** CA intermediate khusus `wantimpres26`, ditandatangani CA internal bank. Kunci CA disimpan di HSM (Vault PKI dengan managed key, atau issuer cert-manager yang memanggil HSM). Jangan pakai issuer self-signed di produksi.
 - **Approver:** approver bawaan csi-driver-spiffe saja (menolak CSR yang tidak cocok dengan service account pod). Matikan auto-approve cert-manager untuk issuer ini.
 
 Contoh Helm (nilai disesuaikan dengan issuer bank):
 
 ```sh
 helm upgrade --install cert-manager-csi-driver-spiffe jetstack/cert-manager-csi-driver-spiffe -n cert-manager \
-  --set app.trustDomain=aisec.bank \
-  --set app.issuer.name=aisec-workload-ca --set app.issuer.kind=ClusterIssuer \
+  --set app.trustDomain=wantimpres26.bank \
+  --set app.issuer.name=wantimpres26-workload-ca --set app.issuer.kind=ClusterIssuer \
   --set app.certificateRequestDuration=1h \
-  --set app.approver.signerName=clusterissuers.cert-manager.io/aisec-workload-ca
+  --set app.approver.signerName=clusterissuers.cert-manager.io/wantimpres26-workload-ca
 ```
 
 ## Siapa boleh memanggil siapa

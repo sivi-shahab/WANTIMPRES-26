@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 // Routes mounts the §8.5 incident API. Raw evidence has its own route (…/raw) because it needs a different,

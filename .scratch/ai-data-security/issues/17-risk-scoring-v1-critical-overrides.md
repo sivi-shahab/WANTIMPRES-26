@@ -17,13 +17,13 @@ Severity incident dan sebagian policy bergantung pada skor risiko.
 - Skor agregat per user/app/agent dengan half-life 14 hari.
 
 ## Acceptance criteria
-- [x] Test tabel untuk setiap faktor dan setiap override. *(`policy/aisec/risk/risk_test.rego`: setiap nilai level per faktor, setiap override + near miss-nya, set vs floor.)*
+- [x] Test tabel untuk setiap faktor dan setiap override. *(`policy/wantimpres26/risk/risk_test.rego`: setiap nilai level per faktor, setiap override + near miss-nya, set vs floor.)*
 - [x] Skor selalu dalam 0–100 (property test). *(`TestRiskScoreAlwaysInRange`: 500 input valid acak lewat query PDP; mutation check: level negatif tertangkap.)*
 - [x] Versi bobot tercatat di setiap event. *(Output PDP selalu memuat `risk_version`, juga untuk input tidak valid; event membawa output PDP.)*
 
 ## Keputusan
-- Skor dihitung di PDP (`policy/aisec/risk`), bukan oleh PEP: satu implementasi untuk semua PEP, ikut bundle bertanda tangan, ikut simulasi policy (ticket 12). `risk_score` dihapus dari input; output menambah `risk_score`, `risk_overrides`, `risk_version`. Rule policy bisa memakai field `risk_score`.
-- Bobot, level faktor, skor dan ambang override = data (`policy/aisec/risk/config/data.json`, `risk-1`). Kondisi override FR-RISK-2 = Rego statis (generik data-driven ~3× lebih lambat).
+- Skor dihitung di PDP (`policy/wantimpres26/risk`), bukan oleh PEP: satu implementasi untuk semua PEP, ikut bundle bertanda tangan, ikut simulasi policy (ticket 12). `risk_score` dihapus dari input; output menambah `risk_score`, `risk_overrides`, `risk_version`. Rule policy bisa memakai field `risk_score`.
+- Bobot, level faktor, skor dan ambang override = data (`policy/wantimpres26/risk/config/data.json`, `risk-1`). Kondisi override FR-RISK-2 = Rego statis (generik data-driven ~3× lebih lambat).
 - Field input baru (opsional): `content.jailbreak_score`, `exfil_score`, `volume_ratio` (vs baseline principal), `agent.action`, `agent.registered` (tidak dikirim = tidak terdaftar), `agent.session_injection_max`.
 - Interpretasi spec: `f_sens` = level sensitivity saja (volume sudah di `f_volume`); `f_volume` bertingkat 2/4/8/16× baseline (Rego tidak punya log); `f_dest` = max(sanction, personal account → 1); `f_ident` = max(device, account, principal.risk); `under_review` dihitung seperti `unsanctioned`. Nilai device/account adalah tebakan awal, dikalibrasi di ticket 25.
 - Input tidak valid → `risk_score` 0 (bug PEP, bukan risiko user; sudah ada `INPUT_SCHEMA_INVALID`).

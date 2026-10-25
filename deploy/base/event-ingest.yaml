@@ -13,7 +13,7 @@ spec:
     matchLabels: {app: event-ingest}
   template:
     metadata:
-      labels: {app: event-ingest, aisec.bank/egress: external}
+      labels: {app: event-ingest, wantimpres26.bank/egress: external}
     spec:
       automountServiceAccountToken: false
       serviceAccountName: event-ingest
@@ -24,7 +24,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: event-ingest
-          image: registry.local/aisec/event-ingest:dev
+          image: registry.local/wantimpres26/event-ingest:dev
           imagePullPolicy: Always
           envFrom: [{secretRef: {name: event-ingest}}]
           env:

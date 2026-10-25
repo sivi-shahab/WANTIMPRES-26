@@ -1,17 +1,17 @@
 # METADATA
 # description: |
 #   FR-RISK-1/2 event risk score, 0-100. Weights, factor levels, override scores and thresholds are data
-#   (data.aisec.risk.config); the fixed FR-RISK-2 override conditions are Rego. Both ship, versioned, in the signed
+#   (data.wantimpres26.risk.config); the fixed FR-RISK-2 override conditions are Rego. Both ship, versioned, in the signed
 #   bundle with the policy, so they are simulated with it and risk_version lands in every decision.
 #   score = min(100, round(100 x sum(w_i x f_i))); set_override fixes the score, floor_override raises it.
-package aisec.risk
+package wantimpres26.risk
 
 import rego.v1
 
-import data.aisec.agent
-import data.aisec.dest
+import data.wantimpres26.agent
+import data.wantimpres26.dest
 
-cfg := data.aisec.risk.config
+cfg := data.wantimpres26.risk.config
 
 levels := cfg.levels
 

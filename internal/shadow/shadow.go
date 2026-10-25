@@ -19,7 +19,7 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/catalog"
+	"wantimpres26/internal/catalog"
 )
 
 // Record is one request seen in a log.

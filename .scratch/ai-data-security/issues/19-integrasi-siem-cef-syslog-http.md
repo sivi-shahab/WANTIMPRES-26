@@ -23,7 +23,7 @@ SOC bank bekerja dari SIEM yang sudah ada.
 - Service baru `siem-export` dengan tiga sumber: event keputusan dari Kafka (hanya non-allow atau risk ≥ `SIEM_MIN_RISK`, default 40), **tail audit log** (cursor di Postgres, satu replica memegang cursor lewat `FOR UPDATE SKIP LOCKED`), dan webhook Alertmanager (bearer token). Audit log sudah memuat perubahan policy, unmask, perubahan role, break-glass, transisi incident; ticket ini menambah `incident.open` dan `incident.escalate`. Kill switch menyusul (ticket 30) lewat jalur audit yang sama.
 - Kegagalan signature bundle berasal dari metrik OPA, jadi dikirim lewat Alertmanager → `siem-export` (`POST /alertmanager`).
 - Sink: CEF over syslog RFC 5424, TLS, octet-counting RFC 6587/5425 (di syslog-ng: driver `syslog()`, bukan `network()`); HTTP Splunk HEC atau JSON array (Logstash/Elastic HTTP input, Sentinel DCR). 2xx terkirim, 4xx (kecuali 408/429) permanen.
-- Retry eksponensial (6 percobaan, mulai 1 s), lalu DLQ topic `aisec.siem.dlq.v1` (record yang sudah disanitasi + sink + alasan). Offset/cursor baru maju setelah terkirim atau masuk DLQ; jika DLQ gagal, tidak maju.
+- Retry eksponensial (6 percobaan, mulai 1 s), lalu DLQ topic `wantimpres26.siem.dlq.v1` (record yang sudah disanitasi + sink + alasan). Offset/cursor baru maju setelah terkirim atau masuk DLQ; jika DLQ gagal, tidak maju.
 - Severity CEF: event = risk/10; audit: break-glass dan denial 9, unmask/role/publish/incident 7; alert dari label severity. `externalId` stabil agar SIEM bisa membuang duplikat setelah retry. Hash entri audit ikut, agar salinan di SIEM bisa dicocokkan dengan rantai.
 - Metrik: `siem_records_sent_total`, `siem_send_retries_total`, `siem_records_dead_lettered_total`, `siem_audit_cursor`, `siem_audit_lag` + alert.
 

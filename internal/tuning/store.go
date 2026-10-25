@@ -22,11 +22,11 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
-	"aisec/internal/authz"
-	"aisec/internal/detect"
-	"aisec/internal/events"
-	"aisec/internal/tenantdb"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/detect"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/tenantdb"
 )
 
 //go:embed schema.sql

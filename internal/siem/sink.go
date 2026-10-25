@@ -81,8 +81,8 @@ type HTTP struct {
 	URL, Format string
 	Header      http.Header
 	Client      *http.Client
-	// Secret, if set, signs each request (the SOAR webhook): X-AISec-Timestamp (Unix seconds) and
-	// X-AISec-Signature = "sha256=" + hex HMAC-SHA256(Secret, timestamp + "." + body), so the receiver can check
+	// Secret, if set, signs each request (the SOAR webhook): X-Wantimpres26-Timestamp (Unix seconds) and
+	// X-Wantimpres26-Signature = "sha256=" + hex HMAC-SHA256(Secret, timestamp + "." + body), so the receiver can check
 	// origin and freshness.
 	Secret []byte
 }
@@ -105,8 +105,8 @@ func (h *HTTP) Send(ctx context.Context, recs []Record) error {
 		mac := hmac.New(sha256.New, h.Secret)
 		mac.Write([]byte(ts + "."))
 		mac.Write(body)
-		req.Header.Set("X-AISec-Timestamp", ts)
-		req.Header.Set("X-AISec-Signature", "sha256="+hex.EncodeToString(mac.Sum(nil)))
+		req.Header.Set("X-Wantimpres26-Timestamp", ts)
+		req.Header.Set("X-Wantimpres26-Signature", "sha256="+hex.EncodeToString(mac.Sum(nil)))
 	}
 	resp, err := h.Client.Do(req)
 	if err != nil {

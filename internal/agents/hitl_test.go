@@ -21,11 +21,11 @@ import (
 
 	"github.com/open-policy-agent/opa/v1/sdk"
 
-	"aisec/internal/authz"
-	"aisec/internal/authz/authztest"
-	"aisec/internal/lifecycle"
-	"aisec/internal/policysvc"
-	"aisec/policy"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/authz/authztest"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/policy"
 )
 
 var digestA = strings.Repeat("a", 64)
@@ -232,7 +232,7 @@ func TestKillSwitchPropagation(t *testing.T) {
 	defer hs.Close()
 	cfg, _ := json.Marshal(map[string]any{
 		"services": map[string]any{"policy": map[string]any{"url": hs.URL}},
-		"bundles": map[string]any{"aisec": map[string]any{"service": "policy", "resource": "/", "signing": map[string]any{"keyid": policysvc.KeyID},
+		"bundles": map[string]any{"wantimpres26": map[string]any{"service": "policy", "resource": "/", "signing": map[string]any{"keyid": policysvc.KeyID},
 			"polling": map[string]any{"long_polling_timeout_seconds": 30}}},
 		"keys": map[string]any{policysvc.KeyID: map[string]any{"algorithm": policysvc.Alg,
 			"key": string(pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: pubDer}))}},
@@ -246,7 +246,7 @@ func TestKillSwitchPropagation(t *testing.T) {
 		"destination": map[string]any{"app_id": "erp", "sanction": "sanctioned", "region": "ID"},
 		"content":     map[string]any{"sensitivity": "internal", "classes": []any{}}, "agent": map[string]any{"agent_id": "invoice-bot", "tool": "erp.read", "tool_risk": "low"}}
 	action := func() string {
-		res, err := opa.Decision(ctx, sdk.DecisionOptions{Path: "/aisec/decision/result", Input: in})
+		res, err := opa.Decision(ctx, sdk.DecisionOptions{Path: "/wantimpres26/decision/result", Input: in})
 		if err != nil {
 			return ""
 		}

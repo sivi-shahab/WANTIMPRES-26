@@ -37,7 +37,7 @@ Dua app, masing-masing 30 RPS: `nfr-closed` (`fail_closed`) dan `nfr-open` (`fai
 | Skenario | Diharapkan | Teramati | Status |
 |---|---|---|---|
 | Baseline | | 100% 200, p95 25,7 ms | |
-| OPA (PDP) mati | `fail_closed` menolak, `fail_open` meneruskan + `fail_open_total` | closed: 899/899 **503** `aisec_policy_unavailable`; open: 899/899 200, `aigw_fail_open_total` +1.798 (2 keputusan per request) | ✅ |
+| OPA (PDP) mati | `fail_closed` menolak, `fail_open` meneruskan + `fail_open_total` | closed: 899/899 **503** `wantimpres26_policy_unavailable`; open: 899/899 200, `aigw_fail_open_total` +1.798 (2 keputusan per request) | ✅ |
 | OPA di-restart saat Policy Service mati | pakai bundle cache terakhir | melayani lagi dalam **1 s** dari bundle tersimpan; app `fail_closed` 100% 200 (butuh keputusan PDP) | ✅ |
 | Bundle kedaluwarsa > 24 jam | masuk fail-mode policy | **tidak diimplementasikan** di PEP | ❌ → tiket 51 |
 | Detection timeout (150 ms) → L1 saja | | tidak bisa diuji: tidak ada PEP yang memanggil detection-svc. Mematikannya tidak berdampak apa pun (p95 24 ms, 100% 200) | ❌ → tiket 49 |

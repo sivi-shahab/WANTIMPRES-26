@@ -131,5 +131,5 @@ func addCanary(body map[string]any, canary string) {
 
 // canary is the app's secret marker: derived from the tenant pepper, stable per app.
 func (g *Gateway) canary(app string) string {
-	return "AISEC-" + strings.ToUpper(g.hmac("canary:" + app)[:12])
+	return "WTP26-" + strings.ToUpper(g.hmac("canary:" + app)[:12])
 }

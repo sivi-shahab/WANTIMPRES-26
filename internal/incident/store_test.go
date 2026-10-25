@@ -16,10 +16,10 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
-	"aisec/internal/authz"
-	"aisec/internal/authz/authztest"
-	"aisec/internal/events"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/authz/authztest"
+	"wantimpres26/internal/events"
 )
 
 const tenant = "00000000-0000-0000-0000-000000000001"

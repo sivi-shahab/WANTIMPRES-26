@@ -817,7 +817,7 @@ Kompatibel dengan API provider:
 - `/v1/messages` (Anthropic)
 - passthrough Gemini `:generateContent`
 
-Header tambahan: `X-AISec-Decision-Id`, `X-AISec-Action`. Block memakai HTTP 403 dengan body format error provider agar SDK klien tidak crash.
+Header tambahan: `X-Wantimpres26-Decision-Id`, `X-Wantimpres26-Action`. Block memakai HTTP 403 dengan body format error provider agar SDK klien tidak crash.
 
 ---
 
@@ -941,7 +941,7 @@ normalize (NFKC, zero-width strip, homoglyph map, decode layers ≤ 3)
 - Trunk-based, PR wajib review.
 - Pipeline: lint → unit → SAST (Semgrep/CodeQL) → SCA (dependency vuln + lisensi) → secret scan → build container (distroless) → SBOM (CycloneDX) → sign (cosign/Sigstore) + provenance SLSA L3 → IaC scan (Checkov/tfsec) → integration test → adversarial AI regression suite → deploy.
 - Admission controller hanya menerima image yang ditandatangani.
-- **Implementasi v1 (tiket 05):** GitLab self-managed; Go untuk semua service kecuali model-inference (Python). Semgrep (SAST), Trivy (SCA + lisensi, IaC, image scan), gitleaks, BuildKit rootless, cosign key-based tanpa Rekor publik (ADR-0001), Kyverno `ImageValidatingPolicy` di namespace `aisec`. Belum: provenance SLSA L3 dan verifikasi attestation SBOM di admission (butuh Rekor on-prem; lihat `deploy/cluster/require-signed-images.yaml`).
+- **Implementasi v1 (tiket 05):** GitLab self-managed; Go untuk semua service kecuali model-inference (Python). Semgrep (SAST), Trivy (SCA + lisensi, IaC, image scan), gitleaks, BuildKit rootless, cosign key-based tanpa Rekor publik (ADR-0001), Kyverno `ImageValidatingPolicy` di namespace `wantimpres26`. Belum: provenance SLSA L3 dan verifikasi attestation SBOM di admission (butuh Rekor on-prem; lihat `deploy/cluster/require-signed-images.yaml`).
 - Progressive rollout: canary 5% → 25% → 100% dengan auto-rollback berbasis SLO (error rate, p99 latency, perubahan distribusi aksi block > ambang).
 - Policy dan model punya pipeline rilis sendiri (simulasi/eval gate) yang terpisah dari rilis kode.
 

@@ -1,9 +1,9 @@
-package aisec.risk_test
+package wantimpres26.risk_test
 
 import rego.v1
 
-import data.aisec.decision
-import data.aisec.risk
+import data.wantimpres26.decision
+import data.wantimpres26.risk
 
 # Every factor 0: public content, sanctioned app, corporate managed user, no agent.
 zero := {
@@ -170,22 +170,22 @@ override_cases := [
 test_every_override if {
 	every c in override_cases {
 		fired := patch(c[1])
-		risk.applied == [c[0]] with input as fired with data.aisec.agents as registry
-		risk.score == c[3] with input as fired with data.aisec.agents as registry
-		missed := risk.applied with input as patch(c[2]) with data.aisec.agents as registry
+		risk.applied == [c[0]] with input as fired with data.wantimpres26.agents as registry
+		risk.score == c[3] with input as fired with data.wantimpres26.agents as registry
+		missed := risk.applied with input as patch(c[2]) with data.wantimpres26.agents as registry
 		not c[0] in missed
 	}
 	# the table covers every configured override
-	{c[0] | some c in override_cases} == object.keys(data.aisec.risk.config.overrides)
+	{c[0] | some c in override_cases} == object.keys(data.wantimpres26.risk.config.overrides)
 }
 
 test_override_scores_and_thresholds_are_data if {
-	cfg := json.patch(data.aisec.risk.config, [
+	cfg := json.patch(data.wantimpres26.risk.config, [
 		{"op": "replace", "path": "/overrides/pan-or-bulk-nik-to-personal-or-unsanctioned/nik_min", "value": 5},
 		{"op": "replace", "path": "/overrides/pan-or-bulk-nik-to-personal-or-unsanctioned/score", "value": 95},
 	])
 	inp := patch({"principal": personal, "content": {"sensitivity": "confidential", "classes": cls("PII_ID.NIK", 5)}})
-	risk.score == 95 with input as inp with data.aisec.risk.config as cfg
+	risk.score == 95 with input as inp with data.wantimpres26.risk.config as cfg
 }
 
 test_floor_keeps_higher_base if {
@@ -215,16 +215,16 @@ test_decision_carries_risk_and_version if {
 	r := decision.result with input as patch({"principal": personal, "content": {"sensitivity": "confidential", "classes": cls("PCI.PAN", 1)}})
 	r.risk_score == 90
 	r.risk_overrides == [pan_nik]
-	r.risk_version == data.aisec.risk.config.version
-	json.match_schema(r, data.aisec.schema.output)[0]
+	r.risk_version == data.wantimpres26.risk.config.version
+	json.match_schema(r, data.wantimpres26.schema.output)[0]
 	bad := decision.result with input as {}
-	bad.risk_version == data.aisec.risk.config.version
+	bad.risk_version == data.wantimpres26.risk.config.version
 }
 
 test_policy_rules_can_use_risk_score if {
 	rule := {"id": "hi", "when": [{"field": "risk_score", "op": "gte", "value": 90}], "action": "require_approval", "reason": "HIGH_RISK"}
 	r := decision.result with input as patch({"principal": personal, "content": {"sensitivity": "confidential", "classes": cls("PCI.PAN", 1)}})
-		with data.aisec.rules.items as [rule]
+		with data.wantimpres26.rules.items as [rule]
 	r.action == "require_approval"
 }
 
@@ -233,7 +233,7 @@ test_builtin_config_valid if {
 }
 
 test_invalid_config_reported if {
-	bad := object.union(data.aisec.risk.config, {
+	bad := object.union(data.wantimpres26.risk.config, {
 		"weights": {"sens": 0.5, "dest": 0.2, "attack": 0.15, "agency": 0.15, "volume": 0.1, "ident": 0.1},
 		"levels": {"sensitivity": {"public": 0, "internal": 1.3, "confidential": 0.6, "restricted": 1}},
 		"volume_steps": [{"ratio": 2, "f": -1}],
@@ -242,7 +242,7 @@ test_invalid_config_reported if {
 			"injection-then-high-tool": null,
 		},
 	})
-	errs := risk.config_errors with data.aisec.risk.config as bad
+	errs := risk.config_errors with data.wantimpres26.risk.config as bad
 	print(errs)
 	count(errs) == 5
 	some e in errs

@@ -18,8 +18,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
-	"aisec/internal/policysvc"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/policysvc"
 )
 
 //go:embed schema.sql
@@ -48,7 +48,7 @@ const (
 	ExpiryNotice    = 7 * 24 * time.Hour
 )
 
-// Store is the Postgres-backed lifecycle module (schema policy). fsys is the engine (aisec/policy) every release
+// Store is the Postgres-backed lifecycle module (schema policy). fsys is the engine (wantimpres26/policy) every release
 // is validated against before it can exist.
 type Store struct {
 	db     *pgxpool.Pool
@@ -85,7 +85,7 @@ func Open(ctx context.Context, db *pgxpool.Pool, tenant string, fsys fs.FS) (*St
 		return nil, fmt.Errorf("apply policy schema: %w", err)
 	}
 	s := &Store{db: db, tenant: tenant, fsys: fsys}
-	raw, err := fs.ReadFile(fsys, "aisec/rules/data.json")
+	raw, err := fs.ReadFile(fsys, "wantimpres26/rules/data.json")
 	if err != nil {
 		return nil, err
 	}
@@ -181,8 +181,8 @@ func composition(ctx context.Context, q pgx.Tx, swapPolicy string, swapRules []a
 
 func overrides(version string, rules, exceptions []any) policysvc.Overrides {
 	return policysvc.Overrides{
-		"aisec.rules":      map[string]any{"version": version, "items": rules},
-		"aisec.exceptions": map[string]any{"items": exceptions},
+		"wantimpres26.rules":      map[string]any{"version": version, "items": rules},
+		"wantimpres26.exceptions": map[string]any{"items": exceptions},
 	}
 }
 
@@ -210,7 +210,7 @@ func (s *Store) release(ctx context.Context, tx pgx.Tx, actor, reason string) (i
 		return 0, fmt.Errorf("%w: %v", ErrInvalid, err)
 	}
 	_, err = tx.Exec(ctx, "INSERT INTO policy.releases (number, rules, exceptions, data, reason, created_by) VALUES ($1, $2, $3, $4, $5, $6)",
-		n, ov["aisec.rules"], ov["aisec.exceptions"], extra, reason, actor)
+		n, ov["wantimpres26.rules"], ov["wantimpres26.exceptions"], extra, reason, actor)
 	if err != nil {
 		return 0, err
 	}
@@ -225,7 +225,7 @@ func (s *Store) CutRelease(ctx context.Context, tx pgx.Tx, actor, reason string)
 
 // Overrides is what a release puts into the bundle.
 func (r Release) Overrides() policysvc.Overrides {
-	ov := policysvc.Overrides{"aisec.rules": r.Rules, "aisec.exceptions": r.Exceptions}
+	ov := policysvc.Overrides{"wantimpres26.rules": r.Rules, "wantimpres26.exceptions": r.Exceptions}
 	for k, v := range r.Data {
 		ov[k] = v
 	}

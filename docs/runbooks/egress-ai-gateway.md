@@ -8,9 +8,9 @@ Sumber kebenaran adalah katalog app AI di control-plane, berisi feed bertanda ta
 
 ```sh
 # satu domain per baris; setiap domain mencakup subdomainnya
-curl -fsS -H "Authorization: Bearer $TOKEN" "https://aisec-control-plane/catalog/egress?format=txt" > ai-provider-domains.txt
+curl -fsS -H "Authorization: Bearer $TOKEN" "https://wantimpres26-control-plane/catalog/egress?format=txt" > ai-provider-domains.txt
 # versi JSON dengan app, vendor, dan hosting_region (untuk review)
-curl -fsS -H "Authorization: Bearer $TOKEN" "https://aisec-control-plane/catalog/egress"
+curl -fsS -H "Authorization: Bearer $TOKEN" "https://wantimpres26-control-plane/catalog/egress"
 ```
 
 - Butuh izin `config.read` (security admin).
@@ -46,7 +46,7 @@ TENANT_PEPPER=... shadow-baseline -format squid \
   -out report/ /var/log/squid/access.log*
 # kirim temuan ke control-plane: jadi temuan posture dan event SIEM per pasangan server/domain baru
 jq '{gateway_bypass}' report/shadow-baseline.json | curl -fsS -X POST -H "Authorization: Bearer $TOKEN" \
-  -H 'Content-Type: application/json' --data @- https://aisec-control-plane/catalog/gateway-bypass
+  -H 'Content-Type: application/json' --data @- https://wantimpres26-control-plane/catalog/gateway-bypass
 ```
 
 - Format `dns` (BIND query log) dan `jsonl` (dengan field `client_ip`, atau dipetakan lewat `-fields client=...`) juga bisa. Log tanpa alamat klien tidak bisa menunjukkan bypass.

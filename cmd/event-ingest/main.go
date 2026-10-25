@@ -10,11 +10,11 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 	"github.com/twmb/franz-go/pkg/sr"
 
-	"aisec/internal/events"
-	"aisec/internal/ingest"
-	"aisec/internal/privacy"
-	"aisec/internal/server"
-	"aisec/internal/siem"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/ingest"
+	"wantimpres26/internal/privacy"
+	"wantimpres26/internal/server"
+	"wantimpres26/internal/siem"
 )
 
 // Env: KAFKA_* (events.KafkaOpts), SCHEMA_REGISTRY_URL, OPENSEARCH_* (ingest.OpenSearchFromEnv).

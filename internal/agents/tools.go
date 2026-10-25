@@ -13,8 +13,8 @@ import (
 
 	"github.com/jackc/pgx/v5"
 
-	"aisec/internal/audit"
-	"aisec/internal/mcptools"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/mcptools"
 )
 
 // --- MCP tool definitions: pin, scan, re-approve on change (FR-AGT-3, ticket 29) ---------------------------
@@ -239,7 +239,7 @@ func b2i(b bool) int {
 	return 0
 }
 
-// toolsDoc is data.aisec.mcp_tools: per "server/tool", its status and pinned hash (aisec/agent).
+// toolsDoc is data.wantimpres26.mcp_tools: per "server/tool", its status and pinned hash (wantimpres26/agent).
 func toolsDoc(ctx context.Context, tx pgx.Tx) (map[string]any, error) {
 	ts, err := listTools(ctx, tx, "")
 	if err != nil {

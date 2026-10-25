@@ -25,20 +25,20 @@ import (
 	"github.com/open-policy-agent/opa/v1/rego"
 	"github.com/open-policy-agent/opa/v1/storage/inmem"
 
-	"aisec/internal/privacy"
+	"wantimpres26/internal/privacy"
 )
 
 const (
 	// KeyID is the default key slot (KeyIDs, signer.go); Alg must match the sidecar's `keys` entries
 	// (deploy/base/opa/opa.yaml).
-	KeyID = "aisec-policy-a"
+	KeyID = "wantimpres26-policy-a"
 	Alg   = "ES256"
 	// ContentType tells OPA the server supports long-polling.
 	ContentType = "application/vnd.openpolicyagent.bundles"
 	maxWait     = 5 * time.Minute
 )
 
-// Overrides replace data documents of fsys by dotted path, e.g. "aisec.rules" and "aisec.exceptions" from a
+// Overrides replace data documents of fsys by dotted path, e.g. "wantimpres26.rules" and "wantimpres26.exceptions" from a
 // policy release (ticket 12).
 type Overrides map[string]any
 
@@ -113,7 +113,7 @@ func Build(ctx context.Context, fsys fs.FS, signer Signer, overrides Overrides) 
 		return nil, "", err
 	}
 	b, err := optimize(ctx, &bundle.Bundle{Data: src.data, Modules: src.modules,
-		Manifest: bundle.Manifest{Roots: &[]string{"aisec", "system"}}})
+		Manifest: bundle.Manifest{Roots: &[]string{"wantimpres26", "system"}}})
 	if err != nil {
 		return nil, "", err
 	}
@@ -129,7 +129,7 @@ func Build(ctx context.Context, fsys fs.FS, signer Signer, overrides Overrides) 
 }
 
 // Entrypoint is the decision the gateways ask for on the hot path (mcpgw.OPA.Decide).
-const Entrypoint = "aisec/decision/checked"
+const Entrypoint = "wantimpres26/decision/checked"
 
 // optimize partially evaluates Entrypoint against the bundle's data, as opa build -O=1 (ticket 47): the rule set
 // is known when the bundle is built, so the loop over it is unrolled. About 17% of a decision on 1 vCPU. Every
@@ -154,12 +154,12 @@ func optimize(ctx context.Context, b *bundle.Bundle) (*bundle.Bundle, error) {
 // Validate fails on any decision rule_errors or risk config_errors: a typo must never become a rule that silently
 // never matches, nor weights that push a score out of 0-100.
 func Validate(ctx context.Context, src source) error {
-	rs, err := rego.New(src.regoOpts("data.aisec.decision.rule_errors | data.aisec.risk.config_errors")...).Eval(ctx)
+	rs, err := rego.New(src.regoOpts("data.wantimpres26.decision.rule_errors | data.wantimpres26.risk.config_errors")...).Eval(ctx)
 	if err != nil {
 		return fmt.Errorf("evaluate rule_errors: %w", err)
 	}
 	if len(rs) != 1 || len(rs[0].Expressions) != 1 {
-		return fmt.Errorf("rule_errors undefined: are aisec/decision.rego and aisec/risk/risk.rego in the bundle?")
+		return fmt.Errorf("rule_errors undefined: are wantimpres26/decision.rego and wantimpres26/risk/risk.rego in the bundle?")
 	}
 	if errs, _ := rs[0].Expressions[0].Value.([]any); len(errs) > 0 {
 		return fmt.Errorf("%w: %v", ErrInvalidRules, errs)
@@ -175,7 +175,7 @@ var ErrInvalidRules = errors.New("rule set invalid")
 type Evaluator struct{ pq rego.PreparedEvalQuery }
 
 func NewEvaluator(ctx context.Context, fsys fs.FS, overrides Overrides) (*Evaluator, error) {
-	pq, err := Query(ctx, fsys, overrides, "data.aisec.decision.result")
+	pq, err := Query(ctx, fsys, overrides, "data.wantimpres26.decision.result")
 	if err != nil {
 		return nil, err
 	}

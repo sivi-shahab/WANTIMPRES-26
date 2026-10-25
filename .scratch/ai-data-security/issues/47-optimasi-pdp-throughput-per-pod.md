@@ -24,7 +24,7 @@ Hasil tiket 21 (bundle bawaan, input khas gateway):
 - [ ] Satu pod 4 vCPU ≥ 300 RPS teks dengan overhead p95 ≤ 80 ms dan p99 ≤ 200 ms. *(**Belum.** Gateway 2 + OPA 2 vCPU, decision log aktif: dalam target sampai **125 RPS** (p95 61 ms, p99 180 ms); 150 RPS p95 90 ms, p99 332 ms; runtuh di 175 RPS. Tiket 21 mengukur 60 RPS pada 3 + 1 tanpa decision log. CPU pada 60 RPS: OPA 91% → 66%, gateway tetap ~50%; artinya ~1,9 vCPU per 100 RPS, sehingga 4 vCPU mentok di ~200 RPS secara teoretis.)*
 
 ## Keputusan
-- **Validasi skema di PEP.** `mcpgw.OPA.Decide` memvalidasi input dengan skema yang sama (`policy/aisec/schema`, di-embed, dikompilasi sekali).
+- **Validasi skema di PEP.** `mcpgw.OPA.Decide` memvalidasi input dengan skema yang sama (`policy/wantimpres26/schema`, di-embed, dikompilasi sekali).
   - Input yang valid ditanyakan ke entrypoint baru `decision.checked` tanpa `json.match_schema`.
   - Input lain tetap ke `decision.result`, yang memvalidasi di OPA dan menjawab block `INPUT_SCHEMA_INVALID`. Jadi PDP tetap fail closed, dan app `fail_open` tidak bisa lolos lewat error.
   - Pemanggil lain (simulasi, PEP lain nanti) tetap memakai `result`. OPA hanya mendengarkan `127.0.0.1`.

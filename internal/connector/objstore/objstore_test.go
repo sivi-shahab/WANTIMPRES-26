@@ -25,8 +25,8 @@ import (
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	"github.com/minio/minio-go/v7/pkg/notification"
 
-	"aisec/internal/connector"
-	"aisec/internal/connector/connectortest"
+	"wantimpres26/internal/connector"
+	"wantimpres26/internal/connector/connectortest"
 )
 
 const token = "event-token"

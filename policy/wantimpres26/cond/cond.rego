@@ -1,8 +1,8 @@
 # METADATA
 # description: |
-#   Condition operators for data-authored rules (data.aisec.rules). Pure: the caller resolves the field to
+#   Condition operators for data-authored rules (data.wantimpres26.rules). Pure: the caller resolves the field to
 #   a value x, so the operators know nothing about where values come from (input, or the computed risk_score).
-package aisec.cond
+package wantimpres26.cond
 
 import rego.v1
 

@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/inspect"
-	"aisec/internal/mcpgw"
-	"aisec/internal/tokvault"
+	"wantimpres26/internal/inspect"
+	"wantimpres26/internal/mcpgw"
+	"wantimpres26/internal/tokvault"
 )
 
 // issued is an FPE token the gateway put in a request (ticket 24).

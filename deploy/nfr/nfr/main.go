@@ -24,10 +24,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"aisec/internal/detect"
-	"aisec/internal/extract"
-	"aisec/internal/policysvc"
-	"aisec/policy"
+	"wantimpres26/internal/detect"
+	"wantimpres26/internal/extract"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/policy"
 )
 
 func main() {
@@ -88,7 +88,7 @@ func files(args []string) error {
 	return http.ListenAndServe(*addr, http.FileServer(http.Dir(*dir)))
 }
 
-// buildBundle signs the built-in policy (as on an empty database) with a fresh dev key into -out: aisec.tar.gz and
+// buildBundle signs the built-in policy (as on an empty database) with a fresh dev key into -out: wantimpres26.tar.gz and
 // the public key for the sidecar's slot a.
 func buildBundle(args []string) error {
 	fs := flag.NewFlagSet("bundle", flag.ExitOnError)
@@ -111,7 +111,7 @@ func buildBundle(args []string) error {
 	if err := os.MkdirAll(*out, 0o755); err != nil {
 		return err
 	}
-	if err := os.WriteFile(filepath.Join(*out, "aisec.tar.gz"), tarball, 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(*out, "wantimpres26.tar.gz"), tarball, 0o644); err != nil {
 		return err
 	}
 	fmt.Println("bundle revision", rev)
@@ -177,7 +177,7 @@ func load(args []string) error {
 		req, _ := http.NewRequest(http.MethodPost, *url, bytes.NewReader(body))
 		req.Header.Set("Authorization", "Bearer "+*key)
 		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("X-AISec-User", fmt.Sprintf("user-%d", i%500))
+		req.Header.Set("X-Wantimpres26-User", fmt.Sprintf("user-%d", i%500))
 		t0 := time.Now()
 		resp, err := client.Do(req)
 		code := "error"
@@ -281,7 +281,7 @@ func eventLatency(args []string) error {
 	for i := range *n {
 		req, _ := http.NewRequest(http.MethodPost, *url, bytes.NewReader(body))
 		req.Header.Set("Authorization", "Bearer "+*key)
-		req.Header.Set("X-AISec-User", fmt.Sprintf("ev-%d", i))
+		req.Header.Set("X-Wantimpres26-User", fmt.Sprintf("ev-%d", i))
 		t0 := time.Now()
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
@@ -289,13 +289,13 @@ func eventLatency(args []string) error {
 		}
 		_, _ = io.Copy(io.Discard, resp.Body)
 		_ = resp.Body.Close()
-		id := resp.Header.Get("X-AISec-Decision-Id")
+		id := resp.Header.Get("X-Wantimpres26-Decision-Id")
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
 			q, _ := json.Marshal(map[string]any{"query": map[string]any{"ids": map[string]any{"values": []string{id}}}})
 			for time.Since(t0) < 3*time.Minute {
-				r, err := http.Post(*osURL+"/aisec-events-*/_search?size=0", "application/json", bytes.NewReader(q))
+				r, err := http.Post(*osURL+"/wantimpres26-events-*/_search?size=0", "application/json", bytes.NewReader(q))
 				if err == nil {
 					var out struct {
 						Hits struct {

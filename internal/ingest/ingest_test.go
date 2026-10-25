@@ -20,7 +20,7 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 	"github.com/twmb/franz-go/pkg/sr"
 
-	"aisec/internal/events"
+	"wantimpres26/internal/events"
 )
 
 // Retention (spec §10.2): 90 days hot, deleted at 400 days, attached to every daily index.
@@ -73,7 +73,7 @@ func TestMetricsExposition(t *testing.T) {
 	for _, want := range []string{
 		"events_consumed_total 3",
 		`events_rejected_total{reason="raw_content"} 1`,
-		`kafka_consumer_lag{group="event-ingest",topic="aisec.decision_event.v1",partition="1"} 7`,
+		`kafka_consumer_lag{group="event-ingest",topic="wantimpres26.decision_event.v1",partition="1"} 7`,
 		`event_index_delay_seconds_bucket{le="2"} 0`,
 		`event_index_delay_seconds_bucket{le="5"} 1`,
 	} {
@@ -288,7 +288,7 @@ func TestPipelineIntegration(t *testing.T) {
 	}
 	// The retention policy is attached to the daily index.
 	_, body, _ = os.do(ctx, http.MethodGet, "/_plugins/_ism/explain/"+index, nil, "application/json")
-	if !strings.Contains(string(body), `"policy_id":"aisec-events"`) {
+	if !strings.Contains(string(body), `"policy_id":"wantimpres26-events"`) {
 		t.Errorf("ISM policy not attached to %s: %s", index, body)
 	}
 

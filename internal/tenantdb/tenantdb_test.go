@@ -12,15 +12,15 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
-	"aisec/internal/incident"
-	"aisec/internal/lifecycle"
-	"aisec/internal/riskcal"
-	"aisec/internal/similarity"
-	"aisec/internal/tenantdb"
-	"aisec/internal/tokvault"
-	"aisec/internal/tuning"
-	"aisec/policy"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/incident"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/riskcal"
+	"wantimpres26/internal/similarity"
+	"wantimpres26/internal/tenantdb"
+	"wantimpres26/internal/tokvault"
+	"wantimpres26/internal/tuning"
+	"wantimpres26/policy"
 )
 
 // notIsolated are tables with a tenant_id that deliberately stay outside row level security (ADR-0003).

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 func TestScanText(t *testing.T) {

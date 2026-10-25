@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 type User struct {

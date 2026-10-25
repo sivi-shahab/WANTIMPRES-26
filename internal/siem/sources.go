@@ -16,15 +16,15 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/twmb/franz-go/pkg/kgo"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
 )
 
 // Group is siem-export's consumer group on the decision event topic.
 const Group = "siem-export"
 
 // DLQTopic holds records no SIEM sink accepted, sanitized, for replay.
-const DLQTopic = "aisec.siem.dlq.v1"
+const DLQTopic = "wantimpres26.siem.dlq.v1"
 
 // Exportable keeps the SIEM to what a SOC acts on: every non-allow decision and anything risky enough to matter.
 func Exportable(e events.Event, minRisk int) bool {

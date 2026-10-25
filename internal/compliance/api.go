@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 // Routes mounts the compliance API: readers (compliance.read: CISO, DPO, auditor) see the library, statuses,

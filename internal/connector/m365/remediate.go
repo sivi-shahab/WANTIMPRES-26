@@ -9,12 +9,12 @@ import (
 	"slices"
 	"strings"
 
-	"aisec/internal/connector"
+	"wantimpres26/internal/connector"
 )
 
 // QuarantineFolder is created at the root of a library or OneDrive; restrict its permissions to the security
 // team when deploying (Graph cannot set a folder to "no inheritance").
-const QuarantineFolder = "AISec Quarantine"
+const QuarantineFolder = "WANTIMPRES-26 Quarantine"
 
 type perm struct {
 	ID    string   `json:"id"`
@@ -178,7 +178,7 @@ func (g *Graph) Remediate(ctx context.Context, it connector.Item, a connector.Ac
 		}
 		steps = append(steps, step{fmt.Sprintf("assign sensitivity label %s (was %s)", a.Label, was), func(ctx context.Context) error {
 			return g.write(ctx, http.MethodPost, g.item(it)+"/assignSensitivityLabel",
-				map[string]any{"sensitivityLabelId": a.Label, "assignmentMethod": "standard", "justificationText": "AISec remediation"})
+				map[string]any{"sensitivityLabelId": a.Label, "assignmentMethod": "standard", "justificationText": "WANTIMPRES-26 remediation"})
 		}})
 	case connector.Quarantine:
 		var cur struct {
@@ -291,7 +291,7 @@ func (g *Graph) Undo(ctx context.Context, it connector.Item, raw json.RawMessage
 	if u.Label != "" {
 		steps = append(steps, step{"restore sensitivity label " + u.Label, func(ctx context.Context) error {
 			return g.write(ctx, http.MethodPost, g.item(it)+"/assignSensitivityLabel",
-				map[string]any{"sensitivityLabelId": u.Label, "assignmentMethod": "standard", "justificationText": "AISec remediation undone"})
+				map[string]any{"sensitivityLabelId": u.Label, "assignmentMethod": "standard", "justificationText": "WANTIMPRES-26 remediation undone"})
 		}})
 	}
 	ch, err := run(ctx, steps, undoData{}, dryRun)

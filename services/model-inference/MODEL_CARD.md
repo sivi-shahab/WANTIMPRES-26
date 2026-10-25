@@ -53,9 +53,9 @@ Limitations
 
 ```sh
 sh services/model-inference/train/data.sh                       # Go: training data + holdout NER gold
-docker build -t aisec-train -f services/model-inference/train/Dockerfile services/model-inference
+docker build -t wantimpres26-train -f services/model-inference/train/Dockerfile services/model-inference
 python3 services/model-inference/train/fetch_public.py                 # l2-1 only: public sets, pinned and hashed
-docker run --rm -v $PWD:/repo -w /repo/services/model-inference/train aisec-train \
+docker run --rm -v $PWD:/repo -w /repo/services/model-inference/train wantimpres26-train \
   python train.py --tasks ner,injection --epochs 1 --version l2-1 --out /repo/services/model-inference/models/l2
 # (pii-ner-1: --tasks ner --epochs 2). A refused int8 build is retried without retraining: train.py --requantize
 docker run -d -p 8080:8080 -e MODEL_DIR=/m -v $PWD/services/model-inference/models/l2:/m:ro model-inference

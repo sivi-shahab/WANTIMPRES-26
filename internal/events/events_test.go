@@ -9,7 +9,7 @@ import (
 
 	"github.com/santhosh-tekuri/jsonschema/v6"
 
-	"aisec/policy"
+	"wantimpres26/policy"
 )
 
 func valid() Event {
@@ -92,7 +92,7 @@ func TestMarshalMatchesSchema(t *testing.T) {
 
 // Replayed inputs must pass the PDP's own input schema, or simulation would only ever see INPUT_SCHEMA_INVALID.
 func TestPDPInputMatchesPDPSchema(t *testing.T) {
-	raw, _ := policy.Files.ReadFile("aisec/schema/data.json")
+	raw, _ := policy.Files.ReadFile("wantimpres26/schema/data.json")
 	var doc struct {
 		Input json.RawMessage `json:"input"`
 	}

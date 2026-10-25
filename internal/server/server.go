@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"aisec/internal/privacy"
+	"wantimpres26/internal/privacy"
 )
 
 // Run serves mux (plus GET /healthz) on $PORT (default 8080) until SIGTERM/SIGINT, then drains.

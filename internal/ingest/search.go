@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"aisec/internal/events"
+	"wantimpres26/internal/events"
 )
 
 // Events reads decision events with ts in [from, to) from the daily indices, oldest first, at most limit.

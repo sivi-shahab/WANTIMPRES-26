@@ -1,7 +1,7 @@
 {
   "input": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "aisec/pdp/input/v1",
+    "$id": "wantimpres26/pdp/input/v1",
     "title": "Canonical PDP input v1 (spec FR-POL-2). Never carries raw content.",
     "type": "object",
     "required": ["channel", "direction", "principal", "destination", "content"],
@@ -31,7 +31,7 @@
           "sanction": {"enum": ["sanctioned", "tolerated", "unsanctioned", "blocked", "under_review"], "description": "Apps missing from the catalog MUST be sent as unsanctioned."},
           "region": {"type": "string", "pattern": "^([A-Z]{2}|unknown)$", "description": "ISO 3166-1 alpha-2 of where content is processed; 'unknown' is treated as offshore (ADR-0001)."},
           "trains_on_data": {"type": "boolean"},
-          "ojk_approval_ref": {"type": "string", "minLength": 1, "description": "OJK approval for offshore processing (POJK 11/2022); PEPs usually leave it to the catalog (aisec.dest)."}
+          "ojk_approval_ref": {"type": "string", "minLength": 1, "description": "OJK approval for offshore processing (POJK 11/2022); PEPs usually leave it to the catalog (wantimpres26.dest)."}
         }
       },
       "content": {
@@ -76,7 +76,7 @@
           "rate_exceeded": {"type": "boolean", "description": "This call is over the tool's per-agent rate (FR-AGT-4)."},
           "chain_depth": {"type": "integer", "minimum": 0, "description": "Agent-to-agent delegation hops behind this call: nesting of the token's act claim (RFC 8693)."},
           "behavior_anomalies": {"type": "array", "items": {"enum": ["new_tool", "rare_sequence", "volume_spike"]}, "description": "How this call leaves the agent's tool-call baseline (ticket 39). Omitted = nothing unusual or no baseline yet."},
-          "mcp_server": {"type": "string", "minLength": 1, "description": "MCP server (gateway name) the tool belongs to; its definitions are in data.aisec.mcp_tools."},
+          "mcp_server": {"type": "string", "minLength": 1, "description": "MCP server (gateway name) the tool belongs to; its definitions are in data.wantimpres26.mcp_tools."},
           "tool_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "Pin of the tool definition the gateway last saw in tools/list (mcptools.Hash)."},
           "approval_granted": {"type": "boolean", "description": "A human approved exactly this call (FR-AGT-6); the gateway claimed the single-use approval."},
           "writes_memory": {"type": "boolean", "description": "The tool writes the agent's long-term memory or a vector store (FR-AGT-9); the registry's tool entry decides."}
@@ -86,7 +86,7 @@
   },
   "output": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "aisec/pdp/output/v1",
+    "$id": "wantimpres26/pdp/output/v1",
     "title": "PDP decision v1 (spec FR-POL-3)",
     "type": "object",
     "required": ["action", "obligations", "reason_codes", "matched_rules", "monitor_rules", "exempted_rules", "destination", "policy_id", "policy_version", "risk_score", "risk_overrides", "risk_version"],
@@ -114,7 +114,7 @@
       "policy_version": {"type": "string"},
       "risk_score": {"type": "integer", "minimum": 0, "maximum": 100, "description": "FR-RISK-1/2, computed by the PDP; never supplied by the PEP."},
       "risk_overrides": {"type": "array", "items": {"type": "string"}, "description": "FR-RISK-2 overrides that applied."},
-      "risk_version": {"type": "string", "description": "data.aisec.risk.config.version: weights and overrides used for this score."}
+      "risk_version": {"type": "string", "description": "data.wantimpres26.risk.config.version: weights and overrides used for this score."}
     }
   }
 }

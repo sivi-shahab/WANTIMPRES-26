@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 // Routes mounts GET /posture (dashboard.read: CISO, SOC, DPO, auditor, …; read-only by construction).

@@ -18,7 +18,7 @@ import (
 
 // IndexPrefix + day (UTC) names the daily index; retention is per index (ism_policy.json).
 // ponytail: one index pattern for every tenant (tenant_id is a field). Per-tenant indices only if a tier needs it.
-const IndexPrefix = "aisec-events-"
+const IndexPrefix = "wantimpres26-events-"
 
 //go:embed index_template.json
 var indexTemplate []byte
@@ -91,10 +91,10 @@ func (o *OpenSearch) do(ctx context.Context, method, path string, body []byte, c
 
 // Setup installs the index template and the retention policy. Idempotent; an existing policy is updated in place.
 func (o *OpenSearch) Setup(ctx context.Context) error {
-	if code, b, err := o.do(ctx, http.MethodPut, "/_index_template/aisec-events", indexTemplate, "application/json"); err != nil || code != 200 {
+	if code, b, err := o.do(ctx, http.MethodPut, "/_index_template/wantimpres26-events", indexTemplate, "application/json"); err != nil || code != 200 {
 		return fmt.Errorf("index template: %d %s %v", code, b, err)
 	}
-	const path = "/_plugins/_ism/policies/aisec-events"
+	const path = "/_plugins/_ism/policies/wantimpres26-events"
 	code, b, err := o.do(ctx, http.MethodPut, path, ismPolicy, "application/json")
 	if err == nil && code == http.StatusConflict {
 		var cur struct {

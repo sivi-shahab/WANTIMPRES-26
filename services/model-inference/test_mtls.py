@@ -12,7 +12,7 @@ import mtls
 
 # Test-only CA, never trusted by a deployment (allowlisted in .gitleaks.toml).
 PKI = Path(__file__).resolve().parent / "testdata" / "pki"
-DETECTION = "spiffe://aisec.bank/ns/aisec/sa/detection-svc"
+DETECTION = "spiffe://wantimpres26.bank/ns/wantimpres26/sa/detection-svc"
 
 
 class Model(BaseHTTPRequestHandler):
@@ -66,7 +66,7 @@ class MTLSTest(unittest.TestCase):
         with client_ctx("detection-svc").wrap_socket(s) as tls:
             self.assertEqual(
                 mtls.spiffe_id(tls.getpeercert()),
-                "spiffe://aisec.bank/ns/aisec/sa/model-inference",
+                "spiffe://wantimpres26.bank/ns/wantimpres26/sa/model-inference",
             )
         for identity in ["siem-export", None, "foreign-detection-svc"]:
             with (

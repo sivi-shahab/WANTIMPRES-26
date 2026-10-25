@@ -11,8 +11,8 @@ import (
 
 	"github.com/jackc/pgx/v5"
 
-	"aisec/internal/audit"
-	"aisec/internal/authz"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/authz"
 )
 
 // Unmask abuse controls (ticket 45, threat model G6): ABAC on the incident's business unit, region and content

@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"aisec/internal/connector"
+	"wantimpres26/internal/connector"
 )
 
 // Harness drives one connector over one empty container.

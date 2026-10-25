@@ -20,13 +20,13 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/server"
+	"wantimpres26/internal/server"
 )
 
 // TrustDomain is the SPIFFE trust domain of the tests and the deployment.
-const TrustDomain = "spiffe://aisec.bank/ns/aisec/sa/"
+const TrustDomain = "spiffe://wantimpres26.bank/ns/wantimpres26/sa/"
 
-// ID is the SPIFFE ID of a service account in namespace aisec.
+// ID is the SPIFFE ID of a service account in namespace wantimpres26.
 func ID(sa string) string { return TrustDomain + sa }
 
 type CA struct {
@@ -40,7 +40,7 @@ var serial atomic.Int64
 func NewCA(t *testing.T) *CA {
 	t.Helper()
 	k, _ := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-	tmpl := &x509.Certificate{SerialNumber: big.NewInt(serial.Add(1)), Subject: pkix.Name{CommonName: "aisec test CA"}, NotBefore: time.Now().Add(-time.Hour),
+	tmpl := &x509.Certificate{SerialNumber: big.NewInt(serial.Add(1)), Subject: pkix.Name{CommonName: "wantimpres26 test CA"}, NotBefore: time.Now().Add(-time.Hour),
 		NotAfter: time.Now().Add(time.Hour), IsCA: true, BasicConstraintsValid: true, KeyUsage: x509.KeyUsageCertSign}
 	der, err := x509.CreateCertificate(rand.Reader, tmpl, tmpl, &k.PublicKey, k)
 	if err != nil {

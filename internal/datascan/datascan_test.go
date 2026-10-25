@@ -15,15 +15,15 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/agents"
-	"aisec/internal/audit"
-	"aisec/internal/catalog"
-	"aisec/internal/connector"
-	"aisec/internal/connector/m365"
-	"aisec/internal/connector/m365/m365test"
-	"aisec/internal/identity"
-	"aisec/internal/lifecycle"
-	"aisec/policy"
+	"wantimpres26/internal/agents"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/catalog"
+	"wantimpres26/internal/connector"
+	"wantimpres26/internal/connector/m365"
+	"wantimpres26/internal/connector/m365/m365test"
+	"wantimpres26/internal/identity"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/policy"
 )
 
 const nik = "3201011505900001"

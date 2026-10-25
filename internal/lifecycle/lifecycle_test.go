@@ -23,10 +23,10 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/open-policy-agent/opa/v1/sdk"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
-	"aisec/internal/policysvc"
-	"aisec/policy"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/policy"
 )
 
 const tenant = "00000000-0000-0000-0000-000000000001"
@@ -345,7 +345,7 @@ func TestPropagation(t *testing.T) {
 	}
 	cfg, _ := json.Marshal(map[string]any{
 		"services": map[string]any{"policy": map[string]any{"url": servers[1].URL}},
-		"bundles": map[string]any{"aisec": map[string]any{"service": "policy", "resource": "/", "signing": map[string]any{"keyid": policysvc.KeyID},
+		"bundles": map[string]any{"wantimpres26": map[string]any{"service": "policy", "resource": "/", "signing": map[string]any{"keyid": policysvc.KeyID},
 			"polling": map[string]any{"long_polling_timeout_seconds": 30}}},
 		"keys": map[string]any{policysvc.KeyID: map[string]any{"algorithm": policysvc.Alg, "key": pub}},
 	})
@@ -359,7 +359,7 @@ func TestPropagation(t *testing.T) {
 		"destination": map[string]any{"app_id": "deepseek", "sanction": "sanctioned", "region": "ID"},
 		"content":     map[string]any{"sensitivity": "internal", "classes": []any{}}}
 	action := func() string {
-		res, err := opa.Decision(ctx, sdk.DecisionOptions{Path: "/aisec/decision/result", Input: in})
+		res, err := opa.Decision(ctx, sdk.DecisionOptions{Path: "/wantimpres26/decision/result", Input: in})
 		if err != nil {
 			return ""
 		}

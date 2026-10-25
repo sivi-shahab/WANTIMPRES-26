@@ -27,7 +27,7 @@ Menutup oversharing yang ditemukan.
   - **Google Drive**: revoke, remove_grants, quarantine. Undo memulihkan persis (permission dibuat ulang dengan URL file yang sama). Label Drive belum didukung.
   - **S3/MinIO**: quarantine ke bucket karantina (`<bucket>/<key>`) dengan undo. Akses publik di object storage diatur per bucket, jadi revoke per objek tidak didukung.
   - **Azure Blob dan Compliance API**: tidak didukung (`ErrNotSupported`).
-- **Quarantine** = pindah ke folder/bucket "AISec Quarantine" dan mencabut semua sharing eksplisit kecuali owner. Permission yang di-inherit tidak dihapus di level item; rencana gagal dengan pesan untuk meremediasi folder induknya.
+- **Quarantine** = pindah ke folder/bucket "WANTIMPRES-26 Quarantine" dan mencabut semua sharing eksplisit kecuali owner. Permission yang di-inherit tidak dihapus di level item; rencana gagal dengan pesan untuk meremediasi folder induknya.
 - **Kredensial tulis terpisah** dari kredensial scan yang read-only: app registration M365 kedua, scope `drive` untuk Drive, dan kunci S3 terpisah. Tanpa kredensial tulis, sumber tidak bisa diremediasi.
 - Setelah eksekusi, aset disegarkan (`Scanner.Refresh`): grant, label, flag, dan exposure dibaca ulang tanpa mengubah hash path atau content tag.
 - **API** (control-plane):

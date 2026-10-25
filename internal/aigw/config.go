@@ -37,7 +37,7 @@ type App struct {
 	// get the tokens. TokenTTLMinutes is how long a token can be turned back (default 60).
 	Detokenize      bool `json:"detokenize"`
 	TokenTTLMinutes int  `json:"token_ttl_minutes"`
-	// Limits (FR-PSEC-9); 0 = unlimited. Users are the X-AISec-User the app forwards.
+	// Limits (FR-PSEC-9); 0 = unlimited. Users are the X-Wantimpres26-User the app forwards.
 	RPM              int64 `json:"rpm"`
 	UserRPM          int64 `json:"user_rpm"`
 	TokensPerDay     int64 `json:"tokens_per_day"`
@@ -52,7 +52,7 @@ type Provider struct {
 	KeyFile  string `json:"key_file"` // provider key, written by the vault agent; re-read when it changes
 	Auth     string `json:"auth"`     // bearer | x-api-key | x-goog-api-key | api-key; default per kind
 	// Destination for the PDP. AppID is the catalog id; for an app in the catalog the PDP takes sanction and region
-	// from the catalog (aisec/dest), these values count only for apps it does not know (e.g. a self-hosted model).
+	// from the catalog (wantimpres26/dest), these values count only for apps it does not know (e.g. a self-hosted model).
 	AppID    string `json:"app_id"`
 	Sanction string `json:"sanction"`
 	Region   string `json:"region"`

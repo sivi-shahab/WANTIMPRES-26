@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/catalog"
+	"wantimpres26/internal/catalog"
 )
 
 func TestParsers(t *testing.T) {

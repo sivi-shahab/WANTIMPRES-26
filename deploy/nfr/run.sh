@@ -27,7 +27,7 @@ up)
   # The decision topic is created by the platform team in production (3 partitions, as internal/ingest's test);
   # without it every decision event is dropped (decision_events_dropped_total).
   until docker exec t21-kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists \
-    --topic aisec.decision_event.v1 --partitions 3 --replication-factor 1 >/dev/null 2>&1; do sleep 2; done
+    --topic wantimpres26.decision_event.v1 --partitions 3 --replication-factor 1 >/dev/null 2>&1; do sleep 2; done
   until curl -fsS localhost:18080/healthz >/dev/null 2>&1; do sleep 2; done
   ;;
 down) docker compose down -v ;;

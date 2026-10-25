@@ -23,9 +23,9 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
-	"aisec/internal/seal"
-	"aisec/internal/tenantdb"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/seal"
+	"wantimpres26/internal/tenantdb"
 )
 
 //go:embed schema.sql

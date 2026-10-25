@@ -4,9 +4,9 @@ services:
   policy:
     url: http://t21-bundles:8000
 bundles:
-  aisec:
+  wantimpres26:
     service: policy
-    resource: aisec.tar.gz
+    resource: wantimpres26.tar.gz
     persist: true
     signing:
       exclude_files: []
@@ -14,7 +14,7 @@ bundles:
       min_delay_seconds: 10
       max_delay_seconds: 20
 keys:
-  aisec-policy-a:
+  wantimpres26-policy-a:
     algorithm: ES256
 persistence_directory: /var/opa
 # As deploy/base/opa/opa.yaml: every decision is masked and logged, part of the cost per decision (ticket 47).

@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"aisec/internal/authz"
-	"aisec/internal/connector"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/connector"
 )
 
 // Routes mounts the remediation API (control-plane).

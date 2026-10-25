@@ -10,10 +10,10 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/agents"
-	"aisec/internal/audit"
-	"aisec/internal/incident"
-	"aisec/internal/posture"
+	"wantimpres26/internal/agents"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/incident"
+	"wantimpres26/internal/posture"
 )
 
 // Control is a platform control (control_id) that frameworks' requirements map to.
@@ -50,7 +50,7 @@ var controlByID = func() map[string]Control {
 // Sources are where evidence comes from. Each is a func so tests can stand in for any of them.
 type Sources struct {
 	DB *pgxpool.Pool // data.*, agents.* tables
-	// Rules: the policy release every PDP runs now (data.aisec.rules).
+	// Rules: the policy release every PDP runs now (data.wantimpres26.rules).
 	Rules      func(ctx context.Context) (release string, items []map[string]any, err error)
 	Posture    func(ctx context.Context, now time.Time) (posture.Report, error)
 	Agents     func(ctx context.Context) (agents.Summary, error)

@@ -26,8 +26,8 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
 )
 
 var t0 = time.Date(2026, 10, 3, 9, 0, 0, 0, time.UTC)
@@ -43,13 +43,13 @@ func event() events.Event {
 func TestCEFEscaping(t *testing.T) {
 	r := Record{Source: "audit", Time: t0, SignatureID: "audit.x|y", Name: `a\b|c`, Severity: 7,
 		Fields: []Field{{K: "msg", V: "k=v\nnext"}, {K: "suser", V: `back\slash`}}}
-	want := `CEF:0|AISec|AI-SPM|1.0|audit.x\|y|a\\b\|c|7|rt=` + strconv.FormatInt(t0.UnixMilli(), 10) + ` msg=k\=v\nnext suser=back\\slash`
+	want := `CEF:0|WANTIMPRES-26|AI-SPM|1.0|audit.x\|y|a\\b\|c|7|rt=` + strconv.FormatInt(t0.UnixMilli(), 10) + ` msg=k\=v\nnext suser=back\\slash`
 	if got := r.CEF(); got != want {
 		t.Errorf("CEF\n got %s\nwant %s", got, want)
 	}
 	frame := string(r.Syslog("cp-0"))
 	n, rest, _ := strings.Cut(frame, " ")
-	if l, _ := strconv.Atoi(n); l != len(rest) || !strings.HasPrefix(rest, "<107>1 2026-10-03T09:00:00Z cp-0 aisec - audit - CEF:0|") {
+	if l, _ := strconv.Atoi(n); l != len(rest) || !strings.HasPrefix(rest, "<107>1 2026-10-03T09:00:00Z cp-0 wantimpres26 - audit - CEF:0|") {
 		t.Errorf("syslog frame: %q", frame) // 13*8 + 3 (error) = 107
 	}
 }
@@ -191,7 +191,7 @@ func TestHTTPSink(t *testing.T) {
 		Sourcetype string         `json:"sourcetype"`
 		Event      map[string]any `json:"event"`
 	}
-	if len(lines) != 2 || json.Unmarshal([]byte(lines[0]), &hec) != nil || hec.Sourcetype != "aisec:decision" ||
+	if len(lines) != 2 || json.Unmarshal([]byte(lines[0]), &hec) != nil || hec.Sourcetype != "wantimpres26:decision" ||
 		hec.Event["riskScore"] != "92" || hec.Event["destinationApp"] != "chatgpt" {
 		t.Errorf("HEC body: %s", bodies[0])
 	}
@@ -219,10 +219,10 @@ func TestSOARWebhook(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		b, _ := io.ReadAll(r.Body)
 		mac := hmac.New(sha256.New, secret)
-		mac.Write([]byte(r.Header.Get("X-AISec-Timestamp") + "."))
+		mac.Write([]byte(r.Header.Get("X-Wantimpres26-Timestamp") + "."))
 		mac.Write(b)
-		ts, _ := strconv.ParseInt(r.Header.Get("X-AISec-Timestamp"), 10, 64)
-		if !hmac.Equal([]byte(r.Header.Get("X-AISec-Signature")), []byte("sha256="+hex.EncodeToString(mac.Sum(nil)))) || time.Since(time.Unix(ts, 0)) > time.Minute {
+		ts, _ := strconv.ParseInt(r.Header.Get("X-Wantimpres26-Timestamp"), 10, 64)
+		if !hmac.Equal([]byte(r.Header.Get("X-Wantimpres26-Signature")), []byte("sha256="+hex.EncodeToString(mac.Sum(nil)))) || time.Since(time.Unix(ts, 0)) > time.Minute {
 			w.WriteHeader(401)
 			return
 		}
@@ -334,7 +334,7 @@ func TestSyslogTLS(t *testing.T) {
 	if err := s.Send(ctx, []Record{first}); err != nil {
 		t.Fatal(err)
 	}
-	if m := <-msgs; !strings.Contains(m, "CEF:0|AISec|AI-SPM|1.0|decision.block|drop-after|9|") {
+	if m := <-msgs; !strings.Contains(m, "CEF:0|WANTIMPRES-26|AI-SPM|1.0|decision.block|drop-after|9|") {
 		t.Errorf("received %q", m)
 	}
 	time.Sleep(100 * time.Millisecond)

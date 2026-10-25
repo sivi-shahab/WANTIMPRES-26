@@ -16,9 +16,9 @@ import (
 
 	"github.com/google/uuid"
 
-	"aisec/internal/detect"
-	"aisec/internal/inspect"
-	"aisec/internal/mcpgw"
+	"wantimpres26/internal/detect"
+	"wantimpres26/internal/inspect"
+	"wantimpres26/internal/mcpgw"
 )
 
 // Streaming inspection (ticket 14, FR-DLP-2). The model's text arrives as small deltas in provider SSE events. The
@@ -374,7 +374,7 @@ func (s *streamer) block(reasons []string) {
 		s.worst.Action = "block"
 		s.worst.ReasonCodes = reasons
 	}
-	notice := fmt.Sprintf("\n\n[AISec: response stopped by policy %v. Decision ID: %s]", reasons, s.id)
+	notice := fmt.Sprintf("\n\n[WANTIMPRES-26: response stopped by policy %v. Decision ID: %s]", reasons, s.id)
 	j := func(v any) string { b, _ := json.Marshal(v); return string(b) }
 	switch s.c.p.Kind {
 	case KindAnthropic:
@@ -400,7 +400,7 @@ func (s *streamer) block(reasons []string) {
 		s.write(sseEvent{"", j(map[string]any{"candidates": []any{map[string]any{"content": map[string]any{"role": "model", "parts": []any{map[string]any{"text": notice}}},
 			"finishReason": "SAFETY", "index": 0}}})})
 	default:
-		chunk := map[string]any{"id": "aisec-" + s.id, "object": "chat.completion.chunk", "created": s.c.g.Now().Unix(), "model": ""}
+		chunk := map[string]any{"id": "wantimpres26-" + s.id, "object": "chat.completion.chunk", "created": s.c.g.Now().Unix(), "model": ""}
 		for _, k := range []string{"id", "object", "created", "model", "system_fingerprint"} {
 			if v, ok := s.first[k]; ok {
 				chunk[k] = v

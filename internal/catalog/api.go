@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"time"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 // Routes mounts the app inventory (§8.4). Reading is posture information (dashboard.read: CISO, SOC, auditor…);

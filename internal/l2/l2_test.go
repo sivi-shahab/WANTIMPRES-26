@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 // The model is an addition: shadow reports without changing the result, enforce merges, and a slow or failing

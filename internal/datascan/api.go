@@ -9,7 +9,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 // Asset is a data_asset with its findings. No content, no path: external_id is what remediation needs.

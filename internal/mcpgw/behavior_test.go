@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/incident"
+	"wantimpres26/internal/incident"
 )
 
 // workflow is an agent's normal tool-call Markov chain: tool → [(next, p)], "" ends the session.

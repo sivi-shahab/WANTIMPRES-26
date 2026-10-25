@@ -26,11 +26,11 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/open-policy-agent/opa/v1/sdk"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
-	"aisec/internal/lifecycle"
-	"aisec/internal/policysvc"
-	"aisec/policy"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/policy"
 )
 
 func TestConfidenceFormula(t *testing.T) {
@@ -207,7 +207,7 @@ func TestCatalogStore(t *testing.T) {
 		t.Fatal(err)
 	}
 	rel, _ := ls.Latest(ctx)
-	cat := rel.Data["aisec.catalog"].(map[string]any)
+	cat := rel.Data["wantimpres26.catalog"].(map[string]any)
 	seed, _ := ParseFeed(seedFeed)
 	if cat["version"] != float64(seed.Version) || cat["apps"].(map[string]any)["deepseek"].(map[string]any)["region"] != "CN" {
 		t.Fatalf("seed release catalog: %v", cat)
@@ -229,7 +229,7 @@ func TestCatalogStore(t *testing.T) {
 		t.Fatalf("update: %+v %v", v, err)
 	}
 	rel, _ = ls.Latest(ctx)
-	if rel.Data["aisec.catalog"].(map[string]any)["apps"].(map[string]any)["deepseek"].(map[string]any)["sanction"] != "blocked" {
+	if rel.Data["wantimpres26.catalog"].(map[string]any)["apps"].(map[string]any)["deepseek"].(map[string]any)["sanction"] != "blocked" {
 		t.Error("release does not carry the new status")
 	}
 	log := auditActions(t, db)
@@ -333,7 +333,7 @@ func TestStatusChangeReachesOPA(t *testing.T) {
 	defer hs.Close()
 	cfg, _ := json.Marshal(map[string]any{
 		"services": map[string]any{"policy": map[string]any{"url": hs.URL}},
-		"bundles": map[string]any{"aisec": map[string]any{"service": "policy", "resource": "/", "signing": map[string]any{"keyid": policysvc.KeyID},
+		"bundles": map[string]any{"wantimpres26": map[string]any{"service": "policy", "resource": "/", "signing": map[string]any{"keyid": policysvc.KeyID},
 			"polling": map[string]any{"long_polling_timeout_seconds": 30}}},
 		"keys": map[string]any{policysvc.KeyID: map[string]any{"algorithm": policysvc.Alg, "key": string(pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: pubDer}))}},
 	})
@@ -347,7 +347,7 @@ func TestStatusChangeReachesOPA(t *testing.T) {
 		"destination": map[string]any{"app_id": "microsoft-copilot", "sanction": "sanctioned", "region": "ID"},
 		"content":     map[string]any{"sensitivity": "internal", "classes": []any{}}}
 	action := func() string {
-		res, err := opa.Decision(ctx, sdk.DecisionOptions{Path: "/aisec/decision/result", Input: in})
+		res, err := opa.Decision(ctx, sdk.DecisionOptions{Path: "/wantimpres26/decision/result", Input: in})
 		if err != nil {
 			return ""
 		}

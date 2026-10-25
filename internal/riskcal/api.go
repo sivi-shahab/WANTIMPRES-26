@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"aisec/internal/authz"
+	"wantimpres26/internal/authz"
 )
 
 // Routes mounts the risk weight API. Proposing, editing and simulating need policy.write; approving and rejecting

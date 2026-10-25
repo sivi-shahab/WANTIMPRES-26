@@ -11,7 +11,7 @@ spec:
     matchLabels: {app: control-plane}
   template:
     metadata:
-      labels: {app: control-plane, aisec.bank/egress: external}
+      labels: {app: control-plane, wantimpres26.bank/egress: external}
     spec:
       automountServiceAccountToken: false
       serviceAccountName: control-plane
@@ -22,7 +22,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: control-plane
-          image: registry.local/aisec/control-plane:dev
+          image: registry.local/wantimpres26/control-plane:dev
           imagePullPolicy: Always
           # http: admin API (behind the ingress, OIDC) and probes; mtls: the signed bundle, for OPA sidecars only (ticket 40).
           ports: [{containerPort: 8080, name: http}, {containerPort: 8443, name: mtls}]
@@ -41,11 +41,11 @@ spec:
             - {name: OPENSEARCH_CA_FILE, value: /bus/opensearch-ca.crt}
             # Bundle key (ticket 40): signs through Vault transit; the private key never enters the pod.
             # Rotation: docs/runbooks/rotasi-kunci-bundle.md.
-            - {name: BUNDLE_SIGNING_KEY_ID, value: aisec-policy-a}
-            - {name: BUNDLE_SIGNING_PUBKEY_FILE, value: /keys/aisec-policy-a.pub}
+            - {name: BUNDLE_SIGNING_KEY_ID, value: wantimpres26-policy-a}
+            - {name: BUNDLE_SIGNING_PUBKEY_FILE, value: /keys/wantimpres26-policy-a.pub}
             - {name: BUNDLE_TRANSIT_TOKEN_FILE, value: /vault/secrets/bundle-signer-token}
             - {name: MTLS_DIR, value: /spiffe}
-            - {name: MTLS_ALLOW, value: "spiffe://aisec.bank/ns/aisec/sa/ai-gateway,spiffe://aisec.bank/ns/aisec/sa/mcp-gateway"}
+            - {name: MTLS_ALLOW, value: "spiffe://wantimpres26.bank/ns/wantimpres26/sa/ai-gateway,spiffe://wantimpres26.bank/ns/wantimpres26/sa/mcp-gateway"}
           volumeMounts:
             - {name: bundle-pubkey, mountPath: /keys, readOnly: true}
             # Vault token allowed only transit/sign on the bundle key (short TTL, renewed by the Vault agent).
@@ -64,7 +64,7 @@ spec:
             capabilities: {drop: [ALL]}
       volumes:
         - {name: bus, secret: {secretName: control-plane-bus}}
-        # aisec-policy-a.pub, aisec-policy-b.pub: public halves of the two bundle key slots.
+        # wantimpres26-policy-a.pub, wantimpres26-policy-b.pub: public halves of the two bundle key slots.
         - {name: bundle-pubkey, configMap: {name: policy-bundle-pubkey}}
         - {name: bundle-signer-token, secret: {secretName: bundle-signer-token}}
         # 32 random bytes wrapping per-incident evidence keys (KMS/HSM in production).
@@ -91,7 +91,7 @@ spec:
     matchLabels: {app: ai-gateway}
   template:
     metadata:
-      labels: {app: ai-gateway, aisec.bank/egress: external}
+      labels: {app: ai-gateway, wantimpres26.bank/egress: external}
     spec:
       automountServiceAccountToken: false
       serviceAccountName: ai-gateway
@@ -102,7 +102,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: ai-gateway
-          image: registry.local/aisec/ai-gateway:dev
+          image: registry.local/wantimpres26/ai-gateway:dev
           imagePullPolicy: Always
           # KAFKA_BROKERS (TLS listener), SCHEMA_REGISTRY_URL, TENANT_ID, TENANT_PEPPER, REDIS_URL, VAULT_TOKEN.
           envFrom: [{secretRef: {name: ai-gateway}}]
@@ -135,7 +135,7 @@ spec:
             capabilities: {drop: [ALL]}
         # PDP sidecar (FR-POL-1): verifies the Policy Service bundle signature before activating it.
         - name: opa
-          image: registry.local/aisec/opa:dev
+          image: registry.local/wantimpres26/opa:dev
           imagePullPolicy: Always
           # Ticket 47: fewer GC cycles keep the p99 of a decision under 5 ms on 1 vCPU; the soft memory limit makes
           # the GC work harder again before the 256Mi container limit.
@@ -149,8 +149,8 @@ spec:
             - --diagnostic-addr=:8282
             - --config-file=/config/opa.yaml
             # Both key slots (policysvc.KeyIDs): the bundle's kid picks one, so the key rotates without a restart here.
-            - --set-file=keys.aisec-policy-a.key=/keys/aisec-policy-a.pub
-            - --set-file=keys.aisec-policy-b.key=/keys/aisec-policy-b.pub
+            - --set-file=keys.wantimpres26-policy-a.key=/keys/wantimpres26-policy-a.pub
+            - --set-file=keys.wantimpres26-policy-b.key=/keys/wantimpres26-policy-b.pub
             - --optimize-store-for-read-speed
           ports: [{containerPort: 8282, name: opa-diag}]
           # Not ready until a verified bundle is active: no PEP traffic on an empty policy.
@@ -175,7 +175,7 @@ spec:
         - {name: provider-keys, secret: {secretName: ai-gateway-provider-keys}}
         - {name: bus, secret: {secretName: ai-gateway-bus}}
         - {name: opa-config, configMap: {name: opa-config}}
-        # aisec-policy-a.pub, aisec-policy-b.pub: the bundle key slots (docs/runbooks/rotasi-kunci-bundle.md).
+        # wantimpres26-policy-a.pub, wantimpres26-policy-b.pub: the bundle key slots (docs/runbooks/rotasi-kunci-bundle.md).
         - {name: bundle-pubkey, configMap: {name: policy-bundle-pubkey}}
         - {name: opa-cache, emptyDir: {}}
         - {name: spiffe, csi: {driver: spiffe.csi.cert-manager.io, readOnly: true}}
@@ -199,7 +199,7 @@ spec:
     matchLabels: {app: detection-svc}
   template:
     metadata:
-      labels: {app: detection-svc, aisec.bank/egress: external}
+      labels: {app: detection-svc, wantimpres26.bank/egress: external}
     spec:
       automountServiceAccountToken: false
       serviceAccountName: detection-svc
@@ -210,7 +210,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: detection-svc
-          image: registry.local/aisec/detection-svc:dev
+          image: registry.local/wantimpres26/detection-svc:dev
           imagePullPolicy: Always
           # http: probes only; mtls: POST /scan/text for the PEP workloads in MTLS_ALLOW (ticket 40, threat model G1).
           ports: [{containerPort: 8080, name: http}, {containerPort: 8443, name: mtls}]
@@ -220,7 +220,7 @@ spec:
           # L2 models (tickets 09-10): shadow first (spec §9.4); enforce after the release gate. model-inference is mTLS-only (ticket 40).
           env:
             - {name: MTLS_DIR, value: /spiffe}
-            - {name: MTLS_ALLOW, value: "spiffe://aisec.bank/ns/aisec/sa/ai-gateway,spiffe://aisec.bank/ns/aisec/sa/mcp-gateway"}
+            - {name: MTLS_ALLOW, value: "spiffe://wantimpres26.bank/ns/wantimpres26/sa/ai-gateway,spiffe://wantimpres26.bank/ns/wantimpres26/sa/mcp-gateway"}
             - {name: MODEL_INFERENCE_URL, value: https://model-inference:8443}
             - {name: L2_MODE, value: shadow}
           volumeMounts: [{name: spiffe, mountPath: /spiffe, readOnly: true}]
@@ -266,7 +266,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: model-inference
-          image: registry.local/aisec/model-inference:dev
+          image: registry.local/wantimpres26/model-inference:dev
           imagePullPolicy: Always
           # http: probes only; mtls: the models, for detection-svc only (ticket 40, services/model-inference/mtls.py).
           # The model comes from the model store (PVC model-store, written by the release job that checks the sha256 in
@@ -274,7 +274,7 @@ spec:
           ports: [{containerPort: 8080, name: http}, {containerPort: 8443, name: mtls}]
           env:
             - {name: MTLS_DIR, value: /spiffe}
-            - {name: MTLS_ALLOW, value: "spiffe://aisec.bank/ns/aisec/sa/detection-svc"}
+            - {name: MTLS_ALLOW, value: "spiffe://wantimpres26.bank/ns/wantimpres26/sa/detection-svc"}
             - {name: MODEL_DIR, value: /models/l2}
             - {name: ORT_THREADS, value: "2"}
           readinessProbe: {httpGet: {path: /readyz, port: http}}
@@ -315,7 +315,7 @@ spec:
     matchLabels: {app: token-vault}
   template:
     metadata:
-      labels: {app: token-vault, aisec.bank/egress: external}
+      labels: {app: token-vault, wantimpres26.bank/egress: external}
     spec:
       automountServiceAccountToken: false
       serviceAccountName: token-vault
@@ -326,7 +326,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: token-vault
-          image: registry.local/aisec/token-vault:dev
+          image: registry.local/wantimpres26/token-vault:dev
           imagePullPolicy: Always
           # DATABASE_URL, TENANT_ID, VAULT_CLIENT_TOKEN_SHA256.
           envFrom: [{secretRef: {name: token-vault}}]

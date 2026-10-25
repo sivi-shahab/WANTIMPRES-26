@@ -16,7 +16,7 @@ spec:
     matchLabels: {app: mcp-gateway}
   template:
     metadata:
-      labels: {app: mcp-gateway, aisec.bank/egress: external}
+      labels: {app: mcp-gateway, wantimpres26.bank/egress: external}
     spec:
       automountServiceAccountToken: false
       serviceAccountName: mcp-gateway
@@ -27,7 +27,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: mcp-gateway
-          image: registry.local/aisec/mcp-gateway:dev
+          image: registry.local/wantimpres26/mcp-gateway:dev
           imagePullPolicy: Always
           envFrom: [{secretRef: {name: mcp-gateway}}]
           env:
@@ -51,7 +51,7 @@ spec:
             capabilities: {drop: [ALL]}
         # PDP sidecar (FR-POL-1): verifies the Policy Service bundle signature before activating it.
         - name: opa
-          image: registry.local/aisec/opa:dev
+          image: registry.local/wantimpres26/opa:dev
           imagePullPolicy: Always
           # Ticket 47: fewer GC cycles keep the p99 of a decision under 5 ms on 1 vCPU; the soft memory limit makes
           # the GC work harder again before the 256Mi container limit.
@@ -65,8 +65,8 @@ spec:
             - --diagnostic-addr=:8282
             - --config-file=/config/opa.yaml
             # Both key slots (policysvc.KeyIDs): the bundle's kid picks one, so the key rotates without a restart here.
-            - --set-file=keys.aisec-policy-a.key=/keys/aisec-policy-a.pub
-            - --set-file=keys.aisec-policy-b.key=/keys/aisec-policy-b.pub
+            - --set-file=keys.wantimpres26-policy-a.key=/keys/wantimpres26-policy-a.pub
+            - --set-file=keys.wantimpres26-policy-b.key=/keys/wantimpres26-policy-b.pub
             - --optimize-store-for-read-speed
           ports: [{containerPort: 8282, name: opa-diag}]
           # Not ready until a verified bundle is active: no PEP traffic on an empty policy.

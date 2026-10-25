@@ -20,7 +20,7 @@ spec:
     matchLabels: {app: connector-worker}
   template:
     metadata:
-      labels: {app: connector-worker, aisec.bank/egress: external}
+      labels: {app: connector-worker, wantimpres26.bank/egress: external}
     spec:
       runtimeClassName: gvisor
       automountServiceAccountToken: false
@@ -32,7 +32,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: connector-worker
-          image: registry.local/aisec/connector-worker:dev
+          image: registry.local/wantimpres26/connector-worker:dev
           imagePullPolicy: Always
           envFrom: [{secretRef: {name: connector-worker}}]
           env:
@@ -83,7 +83,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
       containers:
         - name: tika
-          image: registry.local/aisec/tika:dev  # upstream Tika re-signed by CI (build/tika.Dockerfile)
+          image: registry.local/wantimpres26/tika:dev  # upstream Tika re-signed by CI (build/tika.Dockerfile)
           imagePullPolicy: Always
           ports: [{containerPort: 9998, name: http}]
           readinessProbe: {httpGet: {path: /tika, port: http}}

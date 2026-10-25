@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"aisec/internal/authz"
-	"aisec/internal/authz/authztest"
+	"wantimpres26/internal/authz"
+	"wantimpres26/internal/authz/authztest"
 )
 
 var now = time.Date(2026, 10, 3, 10, 0, 0, 0, time.UTC)

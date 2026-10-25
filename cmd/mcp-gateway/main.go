@@ -10,10 +10,10 @@ import (
 	"strings"
 	"time"
 
-	"aisec/internal/events"
-	"aisec/internal/mcpgw"
-	"aisec/internal/privacy"
-	"aisec/internal/server"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/mcpgw"
+	"wantimpres26/internal/privacy"
+	"wantimpres26/internal/server"
 )
 
 // Env: MCP_BASE_URL (public origin agents call), OIDC_ISSUER (Keycloak realm), MCP_SERVERS_FILE (JSON list of

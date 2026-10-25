@@ -26,7 +26,7 @@ import (
 	"github.com/open-policy-agent/opa/v1/rego"
 	"github.com/open-policy-agent/opa/v1/tester"
 
-	"aisec/policy"
+	"wantimpres26/policy"
 )
 
 // Runs every policy/**/*_test.rego (precedence, templates, residency matrix, log masking) under go test.
@@ -109,15 +109,15 @@ func TestBuildRefusesInvalidRules(t *testing.T) {
 		}
 		return nil
 	})
-	fsys["aisec/rules/data.json"] = &fstest.MapFile{Data: []byte(
+	fsys["wantimpres26/rules/data.json"] = &fstest.MapFile{Data: []byte(
 		`{"version": "bad", "items": [{"id": "x", "when": [{"field": "channel", "op": "regex", "value": "."}], "action": "block", "reason": "X"}]}`)}
 	if _, _, err := Build(context.Background(), fsys, priv, nil); err == nil || !strings.Contains(err.Error(), "unknown op regex") {
 		t.Fatalf("err = %v, want rule_errors refusal", err)
 	}
 
-	fsys["aisec/rules/data.json"] = &fstest.MapFile{Data: []byte(`{"version": "ok", "items": []}`)}
-	cfg, _ := fs.ReadFile(policy.Files, "aisec/risk/config/data.json")
-	fsys["aisec/risk/config/data.json"] = &fstest.MapFile{Data: bytes.Replace(cfg, []byte(`"sens": 0.30`), []byte(`"sens": 0.90`), 1)}
+	fsys["wantimpres26/rules/data.json"] = &fstest.MapFile{Data: []byte(`{"version": "ok", "items": []}`)}
+	cfg, _ := fs.ReadFile(policy.Files, "wantimpres26/risk/config/data.json")
+	fsys["wantimpres26/risk/config/data.json"] = &fstest.MapFile{Data: bytes.Replace(cfg, []byte(`"sens": 0.30`), []byte(`"sens": 0.90`), 1)}
 	if _, _, err := Build(context.Background(), fsys, priv, nil); err == nil || !strings.Contains(err.Error(), "weights sum to") {
 		t.Fatalf("err = %v, want risk config refusal", err)
 	}
@@ -228,7 +228,7 @@ func TestRiskScoreAlwaysInRange(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	opts := []func(*rego.Rego){rego.Query("data.aisec.decision.result"), rego.Store(store)}
+	opts := []func(*rego.Rego){rego.Query("data.wantimpres26.decision.result"), rego.Store(store)}
 	for _, m := range modules {
 		opts = append(opts, rego.ParsedModule(m))
 	}
@@ -270,7 +270,7 @@ func TestOverridesAndEvaluator(t *testing.T) {
 	rules := map[string]any{"version": "release-7", "items": []any{map[string]any{
 		"id": "block-chatgpt", "when": []any{map[string]any{"field": "destination.app_id", "op": "eq", "value": "chatgpt"}},
 		"action": "block", "reason": "NO_CHATGPT"}}}
-	ov := Overrides{"aisec.rules": rules, "aisec.exceptions": map[string]any{"items": []any{}}}
+	ov := Overrides{"wantimpres26.rules": rules, "wantimpres26.exceptions": map[string]any{"items": []any{}}}
 	tarball, rev, err := Build(ctx, policy.Files, priv, ov)
 	if err != nil {
 		t.Fatal(err)
@@ -284,7 +284,7 @@ func TestOverridesAndEvaluator(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got := b.Data["aisec"].(map[string]any)["rules"].(map[string]any)["version"]; got != "release-7" {
+	if got := b.Data["wantimpres26"].(map[string]any)["rules"].(map[string]any)["version"]; got != "release-7" {
 		t.Errorf("bundle rules version %v", got)
 	}
 
@@ -299,7 +299,7 @@ func TestOverridesAndEvaluator(t *testing.T) {
 	if err != nil || d.Action != "block" || !slices.Equal(d.MatchedRules, []string{"block-chatgpt"}) {
 		t.Errorf("eval: %+v %v", d, err)
 	}
-	bad := Overrides{"aisec.rules": map[string]any{"version": "x", "items": []any{map[string]any{"id": "a", "when": []any{}, "action": "block", "reason": "R"}}}}
+	bad := Overrides{"wantimpres26.rules": map[string]any{"version": "x", "items": []any{map[string]any{"id": "a", "when": []any{}, "action": "block", "reason": "R"}}}}
 	if _, err := NewEvaluator(ctx, policy.Files, bad); !errors.Is(err, ErrInvalidRules) {
 		t.Errorf("invalid rules: %v", err)
 	}

@@ -1,7 +1,7 @@
 -- Risk weight calibration (ticket 25, spec FR-RISK-3). Idempotent: applied by riskcal.Open.
 CREATE SCHEMA IF NOT EXISTS riskcal;
 
--- A version of data.aisec.risk.config. At most one is active; none active = the built-in config in the bundle.
+-- A version of data.wantimpres26.risk.config. At most one is active; none active = the built-in config in the bundle.
 CREATE TABLE IF NOT EXISTS riskcal.versions (
   tenant_id    uuid        NOT NULL,
   version      int         NOT NULL,

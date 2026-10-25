@@ -18,7 +18,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"aisec/internal/detect"
+	"wantimpres26/internal/detect"
 )
 
 const (

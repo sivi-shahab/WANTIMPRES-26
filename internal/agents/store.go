@@ -1,6 +1,6 @@
 // Package agents is the agent registry (spec §4.8 FR-AGT-1/2): who owns each AI agent, what it is for, which
 // workload identity it runs as, which tools it may call. The registry is the PDP's source of truth for whether an
-// agent is registered (aisec/agent), agents without an active owner are quarantined automatically, and agents
+// agent is registered (wantimpres26/agent), agents without an active owner are quarantined automatically, and agents
 // seen in traffic but not registered wait in a review queue.
 package agents
 
@@ -17,12 +17,12 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"aisec/internal/audit"
-	"aisec/internal/events"
-	"aisec/internal/identity"
-	"aisec/internal/lifecycle"
-	"aisec/internal/policysvc"
-	"aisec/internal/toolscope"
+	"wantimpres26/internal/audit"
+	"wantimpres26/internal/events"
+	"wantimpres26/internal/identity"
+	"wantimpres26/internal/lifecycle"
+	"wantimpres26/internal/policysvc"
+	"wantimpres26/internal/toolscope"
 )
 
 //go:embed schema.sql
@@ -202,8 +202,8 @@ func (s *Store) Get(ctx context.Context, id string) (Agent, error) {
 	return as[0], nil
 }
 
-// releaseDoc is data.aisec.agents: what the PDP needs per agent (aisec/agent), and what the MCP gateway needs to
-// map a workload identity to its agent and enforce tool scopes (aisec/mcp).
+// releaseDoc is data.wantimpres26.agents: what the PDP needs per agent (wantimpres26/agent), and what the MCP gateway needs to
+// map a workload identity to its agent and enforce tool scopes (wantimpres26/mcp).
 func (s *Store) releaseDoc(ctx context.Context, tx pgx.Tx) (policysvc.Overrides, error) {
 	as, err := list(ctx, tx, "")
 	if err != nil {
@@ -221,7 +221,7 @@ func (s *Store) releaseDoc(ctx context.Context, tx pgx.Tx) (policysvc.Overrides,
 	if err != nil {
 		return nil, err
 	}
-	return policysvc.Overrides{"aisec.agents": map[string]any{"version": len(as), "items": items}, "aisec.mcp_tools": tools, "aisec.kills": kills}, nil
+	return policysvc.Overrides{"wantimpres26.agents": map[string]any{"version": len(as), "items": items}, "wantimpres26.mcp_tools": tools, "wantimpres26.kills": kills}, nil
 }
 
 // settle decides the status an entry may have: without an active owner it is quarantined, whatever was asked.
