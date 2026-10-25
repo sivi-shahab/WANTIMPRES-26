@@ -46,6 +46,7 @@ class MTLSTest(unittest.TestCase):
         self.addCleanup(self.srv.shutdown)
 
     def call(self, identity):
+        # nosemgrep: httpsconnection-detected -- test client for the mTLS server
         c = http.client.HTTPSConnection(
             "127.0.0.1",
             self.srv.server_address[1],

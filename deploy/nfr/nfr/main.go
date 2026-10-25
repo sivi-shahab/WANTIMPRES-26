@@ -63,12 +63,14 @@ func mock(args []string) error {
 		_ = json.NewDecoder(r.Body).Decode(&req)
 		if !req.Stream {
 			w.Header().Set("Content-Type", "application/json")
+			// nosemgrep: no-fprintf-to-responsewriter -- mock provider JSON, not HTML
 			_, _ = fmt.Fprintf(w, `{"id":"chatcmpl-1","object":"chat.completion","model":"gpt-4o-mini","choices":[{"index":0,"message":{"role":"assistant","content":%q},"finish_reason":"stop"}],"usage":{"prompt_tokens":100,"completion_tokens":20,"total_tokens":120}}`, answer)
 			return
 		}
 		w.Header().Set("Content-Type", "text/event-stream")
 		fl, _ := w.(http.Flusher)
 		for i := range *chunks {
+			// nosemgrep: no-fprintf-to-responsewriter -- mock provider SSE, not HTML
 			_, _ = fmt.Fprintf(w, "data: {\"id\":\"c\",\"object\":\"chat.completion.chunk\",\"choices\":[{\"index\":0,\"delta\":{\"content\":%q}}]}\n\n", fmt.Sprintf("bagian %d dari jawaban. ", i))
 			if fl != nil {
 				fl.Flush()
@@ -77,6 +79,7 @@ func mock(args []string) error {
 		}
 		_, _ = io.WriteString(w, "data: [DONE]\n\n")
 	})
+	// nosemgrep: use-tls -- plain-HTTP mock provider for the NFR benchmark
 	return http.ListenAndServe(*addr, nil)
 }
 
@@ -85,6 +88,7 @@ func files(args []string) error {
 	addr := fs.String("addr", ":8000", "listen address")
 	dir := fs.String("dir", ".", "directory")
 	_ = fs.Parse(args)
+	// nosemgrep: use-tls -- plain-HTTP file server for the NFR benchmark
 	return http.ListenAndServe(*addr, http.FileServer(http.Dir(*dir)))
 }
 

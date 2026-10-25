@@ -131,6 +131,7 @@ func Routes(rt *authz.Router, s *Store, now func() time.Time) {
 		}
 		w.Header().Set("Content-Type", "application/octet-stream")
 		w.Header().Set("Cache-Control", "no-store")
+		// nosemgrep: no-direct-write-to-responsewriter -- application/octet-stream download
 		_, _ = w.Write(raw)
 	})
 
@@ -187,6 +188,7 @@ func Routes(rt *authz.Router, s *Store, now func() time.Time) {
 		rep, err := s.DraftBreachReport(r.Context(), r.PathValue("id"), c.Username, now())
 		if err == nil && r.URL.Query().Get("format") == "md" {
 			w.Header().Set("Content-Type", "text/markdown; charset=utf-8")
+			// nosemgrep: no-direct-write-to-responsewriter -- text/markdown download
 			_, _ = w.Write([]byte(rep.Markdown()))
 			return
 		}

@@ -46,6 +46,7 @@ func Routes(rt *authz.Router, s *Store, src Sources, reg RegisterSources, now fu
 		}
 		w.Header().Set("Content-Type", "text/csv")
 		w.Header().Set("Content-Disposition", `attachment; filename="`+name+`"`)
+		// nosemgrep: no-direct-write-to-responsewriter -- text/csv download
 		_, _ = w.Write(b)
 	}
 

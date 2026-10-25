@@ -286,6 +286,7 @@ func (g *Gateway) serve(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(resp.StatusCode)
+		// nosemgrep: no-direct-write-to-responsewriter -- inspected JSON-RPC, application/json
 		_, _ = w.Write(out)
 	case "text/event-stream":
 		w.Header().Set("Content-Type", "text/event-stream")
@@ -327,6 +328,7 @@ func (c *call) stream(ctx context.Context, w http.ResponseWriter, body io.Reader
 		if len(data) > 0 {
 			lines = append(other, "data: "+string(c.inspectPayload(ctx, []byte(strings.Join(data, "\n")), pend)))
 		}
+		// nosemgrep: no-io-writestring-to-responsewriter -- inspected JSON-RPC over SSE
 		_, _ = io.WriteString(w, strings.Join(lines, "\n")+"\n\n")
 		if fl != nil {
 			fl.Flush()

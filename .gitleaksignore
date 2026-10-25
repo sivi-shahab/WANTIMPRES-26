@@ -1,0 +1,24 @@
+# Reviewed gitleaks false positives (commit:file:rule:line). A new secret in the same file still fails the scan.
+
+# Detector test inputs: they must look like secrets.
+730aa5681a583ca8528464b71ab5353833eef59d:internal/detect/detect_test.go:jwt:47
+730aa5681a583ca8528464b71ab5353833eef59d:internal/detect/detect_test.go:generic-api-key:54
+3595d59c66a75017a208e461f855deb4ee482dc7:internal/l2/l2_test.go:private-key:62
+
+# Gateway test app keys (gw-key-*-0123456789).
+b382e879f74b1d60597cb5afba1632c62c288786:internal/aigw/aigw_test.go:generic-api-key:117
+b382e879f74b1d60597cb5afba1632c62c288786:internal/aigw/aigw_test.go:generic-api-key:118
+023d9d1565b17c58ac3f9695b6953a6109b52cba:internal/aigw/aigw_test.go:generic-api-key:125
+
+# Azurite's published development account key.
+66e6d482cb59a9757808d8a01c2641876a5798ca:internal/connector/objstore/objstore_test.go:generic-api-key:218
+
+# NFR benchmark mock app key (nfr-app-key) and the sha256 of it.
+e1b3f3b964dad3c7b84a4bf8bea55f456fe83581:deploy/nfr/run.sh:curl-auth-header:24
+b9514e1a758bfe4a67d74e2406f94c84a2a86dc7:deploy/nfr/chaos.sh:curl-auth-header:43
+b9514e1a758bfe4a67d74e2406f94c84a2a86dc7:deploy/nfr/config/aigw.json:generic-api-key:3
+b9514e1a758bfe4a67d74e2406f94c84a2a86dc7:deploy/nfr/config/aigw.json:generic-api-key:5
+
+# sha256 checksums of the model files.
+3595d59c66a75017a208e461f855deb4ee482dc7:services/model-inference/MODELS.json:generic-api-key:10
+40d8ab85416333136924f92b55af9c5d2f9bb964:services/model-inference/MODELS.json:generic-api-key:11

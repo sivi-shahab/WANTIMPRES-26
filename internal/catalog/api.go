@@ -114,6 +114,7 @@ func Routes(rt *authz.Router, s *Store, feedPubPEM []byte, now func() time.Time)
 		if err == nil && r.URL.Query().Get("format") == "txt" {
 			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 			for _, e := range entries {
+				// nosemgrep: no-fprintf-to-responsewriter -- text/plain domain list
 				_, _ = fmt.Fprintln(w, e.Domain)
 			}
 			return

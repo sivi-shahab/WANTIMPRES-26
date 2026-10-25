@@ -217,15 +217,16 @@ func main() {
 			http.Error(w, "metrics unavailable", http.StatusServiceUnavailable)
 			return
 		}
+		// Prometheus text format, not HTML: the semgrep XSS rule on the writes below does not apply.
 		w.Header().Set("Content-Type", "text/plain; version=0.0.4")
-		_, _ = fmt.Fprintf(w, "# TYPE incident_ack_overdue gauge\nincident_ack_overdue %d\n", n)
-		_, _ = fmt.Fprintf(w, "# TYPE breakglass_requests_total counter\nbreakglass_requests_total %d\n", breakGlassRequests.Load())
-		_, _ = fmt.Fprintf(w, "# TYPE policy_release_current gauge\npolicy_release_current %d\n", releaser.Current())
+		_, _ = fmt.Fprintf(w, "# TYPE incident_ack_overdue gauge\nincident_ack_overdue %d\n", n)                                     // nosemgrep: no-fprintf-to-responsewriter
+		_, _ = fmt.Fprintf(w, "# TYPE breakglass_requests_total counter\nbreakglass_requests_total %d\n", breakGlassRequests.Load()) // nosemgrep: no-fprintf-to-responsewriter
+		_, _ = fmt.Fprintf(w, "# TYPE policy_release_current gauge\npolicy_release_current %d\n", releaser.Current())                // nosemgrep: no-fprintf-to-responsewriter
 		// FR-INC-6: alert on breach_timer_remaining_hours < 24 (the sweep also escalates and notifies the SIEM/SOAR).
 		if running, least, err := incidents.BreachTimers(r.Context(), time.Now()); err == nil {
-			_, _ = fmt.Fprintf(w, "# TYPE breach_timers_running gauge\nbreach_timers_running %d\n", running)
+			_, _ = fmt.Fprintf(w, "# TYPE breach_timers_running gauge\nbreach_timers_running %d\n", running) // nosemgrep: no-fprintf-to-responsewriter
 			if least != nil {
-				_, _ = fmt.Fprintf(w, "# TYPE breach_timer_remaining_hours gauge\nbreach_timer_remaining_hours %g\n", *least)
+				_, _ = fmt.Fprintf(w, "# TYPE breach_timer_remaining_hours gauge\nbreach_timer_remaining_hours %g\n", *least) // nosemgrep: no-fprintf-to-responsewriter
 			}
 		}
 		// Ticket 45: unmask volume per analyst (alerts UnmaskVolumeHigh, UnmaskSamePrincipalRepeated).
@@ -233,7 +234,7 @@ func main() {
 			incident.WriteUnmaskMetrics(w, vols)
 		}
 		if n, err := policies.ExpiringSoon(r.Context(), time.Now()); err == nil {
-			_, _ = fmt.Fprintf(w, "# TYPE policy_exceptions_expiring gauge\npolicy_exceptions_expiring %d\n", n)
+			_, _ = fmt.Fprintf(w, "# TYPE policy_exceptions_expiring gauge\npolicy_exceptions_expiring %d\n", n) // nosemgrep: no-fprintf-to-responsewriter
 		}
 	})
 	// One consumer group feeds every control-plane module that learns from decision events.

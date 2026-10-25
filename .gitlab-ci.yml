@@ -4,8 +4,8 @@
 
 variables:
   MIRROR: ""  # e.g. "registry.bank.local/mirror/" — set at group level so every image below is pulled internally
-  GO_IMAGE: ${MIRROR}golang:1.25
-  LINT_GO_IMAGE: ${MIRROR}golangci/golangci-lint:v2.5.0
+  GO_IMAGE: ${MIRROR}golang:1.26
+  LINT_GO_IMAGE: ${MIRROR}golangci/golangci-lint:v2.14.0
   RUFF_IMAGE: ${MIRROR}ghcr.io/astral-sh/ruff:0.14.0-alpine
   PYTHON_IMAGE: ${MIRROR}python:3.11-slim  # matches distroless python3-debian12
   SEMGREP_IMAGE: ${MIRROR}semgrep/semgrep:1.140.0
@@ -115,7 +115,8 @@ sast:
   stage: scan
   image: $SEMGREP_IMAGE
   script:
-    - semgrep scan --config p/default --metrics=off --error
+    # testdata/pki: the test-only mTLS fixture PKI, same exception as .gitleaks.toml.
+    - semgrep scan --config p/default --metrics=off --error --exclude services/model-inference/testdata/pki
 
 sca:
   stage: scan
@@ -135,7 +136,7 @@ iac:
   stage: scan
   image: $TRIVY_IMAGE
   script:
-    - trivy config --severity HIGH,CRITICAL --exit-code 1 .
+    - trivy config --ignorefile .trivyignore.yaml --severity HIGH,CRITICAL --exit-code 1 .
 
 build:
   stage: build

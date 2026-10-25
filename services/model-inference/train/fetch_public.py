@@ -54,6 +54,7 @@ def get(url):
     for attempt in range(10):
         try:
             time.sleep(0.5)  # the datasets-server rate-limits anonymous clients
+            # nosemgrep: dynamic-urllib-use-detected -- fixed HuggingFace URLs, offline training
             return json.load(urllib.request.urlopen(url, timeout=60))
         except Exception:
             if attempt == 9:

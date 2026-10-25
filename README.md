@@ -68,7 +68,7 @@ docs/           ADRs, threat model, DPIA, labeling guideline, runbooks, NFR repo
 
 ## Getting started
 
-Requires Go 1.25, Docker, and Python 3 for `services/model-inference`.
+Requires Go 1.26, Docker, and Python 3 for `services/model-inference`.
 
 ```sh
 go build ./...

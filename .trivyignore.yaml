@@ -1,0 +1,5 @@
+# Reviewed Trivy exceptions, each scoped to its path.
+misconfigurations:
+  - id: AVD-DS-0002
+    paths: ["services/model-inference/train/Dockerfile"]
+    statement: Local-only training tool image, never deployed; it writes the trained model into the bind-mounted repo.

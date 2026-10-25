@@ -114,6 +114,7 @@ func ClientTLS(dir string, peers []string) (*tls.Config, error) {
 	if _, _, err := s.load(); err != nil {
 		return nil, fmt.Errorf("workload certificate in %s: %w", dir, err)
 	}
+	// nosemgrep: bypass-tls-verification -- the chain is verified in VerifyConnection against the rotating CA pool
 	return &tls.Config{
 		MinVersion: tls.VersionTLS13,
 		GetClientCertificate: func(*tls.CertificateRequestInfo) (*tls.Certificate, error) {

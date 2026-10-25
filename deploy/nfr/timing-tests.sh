@@ -10,7 +10,7 @@ trap 'docker rm -f t21-tt-pg >/dev/null; docker network rm t21-tt >/dev/null' EX
 until docker exec t21-tt-pg pg_isready -U postgres >/dev/null 2>&1; do sleep 1; done
 sleep 3
 docker run --rm --network t21-tt -v "$root":/src -v riskcal-gomod:/go/pkg/mod -v riskcal-gocache:/root/.cache/go-build -w /src \
-  -e AUDIT_TEST_DATABASE_URL=postgres://postgres:test@t21-tt-pg:5432/postgres golang:1.25 sh -c '
+  -e AUDIT_TEST_DATABASE_URL=postgres://postgres:test@t21-tt-pg:5432/postgres golang:1.26 sh -c '
   go test -count=1 -v -run "TestPropagation" ./internal/lifecycle
   go test -count=1 -v -run "TestKillSwitchPropagation" ./internal/agents
   go test -count=1 -v -run "TestKillSwitch\$" ./internal/mcpgw' 2>&1 |

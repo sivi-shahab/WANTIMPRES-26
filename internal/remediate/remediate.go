@@ -370,6 +370,7 @@ func (e *Executor) execute(ctx context.Context, tx pgx.Tx, r Remediation) (func(
 		}
 		return nil, e.record(ctx, tx, "data.remediation.stale", r, map[string]any{"approved_plan": r.Plan, "current_plan": again.Steps})
 	}
+	// nosemgrep: invalid-usage-of-modified-variable -- ch.Undo on error is the undo data for the steps that ran
 	ch, err := e.apply(ctx, tx, r, t, false)
 	if err != nil {
 		// Partly done: the error names the step where it stopped; keep the undo data for what did happen.

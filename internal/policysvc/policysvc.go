@@ -292,5 +292,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotModified)
 		return
 	}
+	// nosemgrep: no-direct-write-to-responsewriter -- signed OPA bundle (tar.gz)
 	_, _ = w.Write(body)
 }

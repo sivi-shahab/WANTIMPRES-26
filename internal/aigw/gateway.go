@@ -201,6 +201,7 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	c.headers()
 	w.WriteHeader(resp.StatusCode)
+	// nosemgrep: no-direct-write-to-responsewriter -- provider API response relayed under its own Content-Type
 	_, _ = w.Write(out)
 }
 
@@ -569,6 +570,7 @@ func (g *Gateway) serveMetrics(w http.ResponseWriter, _ *http.Request) {
 	}
 	slices.SortFunc(keys, func(a, b [2]string) int { return strings.Compare(a[0]+a[1], b[0]+b[1]) })
 	for _, k := range keys {
+		// nosemgrep: no-fprintf-to-responsewriter -- Prometheus text format, not HTML
 		_, _ = fmt.Fprintf(w, "aigw_%s{app=%q} %d\n", k[0], k[1], g.metrics[k])
 	}
 	if g.Metrics != nil {

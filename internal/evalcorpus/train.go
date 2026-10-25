@@ -2,7 +2,7 @@ package evalcorpus
 
 import (
 	"fmt"
-	"math/rand/v2"
+	"math/rand/v2" // nosemgrep: math-random-used -- seeded PCG for a reproducible run, not crypto
 	"strings"
 )
 

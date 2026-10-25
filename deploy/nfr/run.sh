@@ -1,10 +1,10 @@
 #!/bin/sh
 # Ticket 21 NFR harness driver. From the repo root: deploy/nfr/run.sh up|down|nfr <args>
-# Needs docker (compose v2); Go runs in the golang:1.25 image, nothing is installed on the host.
+# Needs docker (compose v2); Go runs in the golang:1.26 image, nothing is installed on the host.
 set -eu
 cd "$(dirname "$0")"
 root=$(cd ../.. && pwd)
-gorun() { docker run --rm -v "$root":/src -w /src -e CGO_ENABLED=0 golang:1.25 "$@"; }
+gorun() { docker run --rm -v "$root":/src -w /src -e CGO_ENABLED=0 golang:1.26 "$@"; }
 case "${1:-}" in
 up)
   gorun go build -o deploy/nfr/.bin/nfr ./deploy/nfr/nfr

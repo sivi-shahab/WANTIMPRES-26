@@ -250,6 +250,7 @@ func (g *Graph) serve(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusAccepted)
 		case len(parts) == 5 && parts[4] == "content":
 			g.Fetches["content:"+parts[3]]++
+			// nosemgrep: no-direct-write-to-responsewriter -- fake Graph API for tests
 			_, _ = w.Write(it.Content)
 		case len(parts) == 5 && parts[4] == "permissions" && r.Method == http.MethodGet:
 			g.Fetches["perms:"+parts[3]]++

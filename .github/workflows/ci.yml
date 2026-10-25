@@ -25,7 +25,7 @@ jobs:
         with: {go-version-file: go.mod}
       - run: test -z "$(gofmt -l .)" || (gofmt -l . && exit 1)
       - uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a  # v9.3.0
-        with: {version: v2.5.0}
+        with: {version: v2.14.0}
 
   lint-python:
     runs-on: ubuntu-latest
@@ -89,7 +89,7 @@ jobs:
             -e AUDIT_TEST_DATABASE_URL=postgres://postgres:test@postgres:5432/postgres \
             -e AUDIT_TEST_S3_ENDPOINT=minio:9000 -e AUDIT_TEST_S3_ACCESS_KEY=minio -e AUDIT_TEST_S3_SECRET_KEY=minio-test-only \
             -e OBJSTORE_TEST_AZURITE=http://azurite:10000/devstoreaccount1 \
-            golang:1.25 sh -c 'go vet ./... && go test -race ./...'
+            golang:1.26 sh -c 'go vet ./... && go test -race ./...'
       - name: Backend logs on failure
         if: failure()
         run: for c in postgres minio kafka karapace opensearch azurite; do echo "== $c"; docker logs --tail 50 "$c" 2>&1; done
@@ -107,7 +107,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
-      - run: docker run --rm -v "$PWD:/src" -w /src semgrep/semgrep:1.140.0 semgrep scan --config p/default --metrics=off --error
+      # testdata/pki: the test-only mTLS fixture PKI, same exception as .gitleaks.toml.
+      - run: docker run --rm -v "$PWD:/src" -w /src semgrep/semgrep:1.140.0 semgrep scan --config p/default --metrics=off --error --exclude services/model-inference/testdata/pki
 
   sca-iac:
     runs-on: ubuntu-latest
@@ -116,7 +117,7 @@ jobs:
       - run: |
           trivy() { docker run --rm -v "$PWD:/src" -w /src aquasec/trivy:0.67.2 "$@"; }
           trivy fs --scanners vuln,license --severity HIGH,CRITICAL --exit-code 1 .
-          trivy config --severity HIGH,CRITICAL --exit-code 1 .
+          trivy config --ignorefile .trivyignore.yaml --severity HIGH,CRITICAL --exit-code 1 .
 
   secrets:
     runs-on: ubuntu-latest
