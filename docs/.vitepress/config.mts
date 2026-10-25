@@ -41,6 +41,7 @@ const records = (label: string): DefaultTheme.SidebarItem => ({
 const id: DefaultTheme.Config = {
   nav: [
     { text: 'Beranda', link: '/' },
+    { text: 'Panduan', link: '/guide/how-to-use' },
     { text: 'Visi & Misi', link: '/about/vision-mission' },
     { text: 'Spesifikasi', link: '/spec' },
     { text: 'Tiket', link: '/tickets/' },
@@ -53,6 +54,13 @@ const id: DefaultTheme.Config = {
         { text: 'Selamat Datang', link: '/' },
         { text: 'Visi & Misi', link: '/about/vision-mission' },
         { text: 'Filosofi Nama & Logo', link: '/about/philosophy' },
+      ],
+    },
+    {
+      text: 'Panduan',
+      items: [
+        { text: 'Mengapa WANTIMPRES-26', link: '/guide/why' },
+        { text: 'Cara Menggunakan', link: '/guide/how-to-use' },
       ],
     },
     { text: 'Spesifikasi', items: [{ text: 'Spesifikasi Lengkap', link: '/spec' }, records('Catatan Engineering')] },
@@ -71,6 +79,7 @@ const id: DefaultTheme.Config = {
 const en: DefaultTheme.Config = {
   nav: [
     { text: 'Home', link: '/en/' },
+    { text: 'Guide', link: '/en/guide/how-to-use' },
     { text: 'Vision & Mission', link: '/en/about/vision-mission' },
     { text: 'Specification', link: '/en/spec' },
     { text: 'Tickets', link: '/en/tickets/' },
@@ -83,6 +92,13 @@ const en: DefaultTheme.Config = {
         { text: 'Welcome', link: '/en/' },
         { text: 'Vision & Mission', link: '/en/about/vision-mission' },
         { text: 'Name & Logo Philosophy', link: '/en/about/philosophy' },
+      ],
+    },
+    {
+      text: 'Guide',
+      items: [
+        { text: 'Why WANTIMPRES-26', link: '/en/guide/why' },
+        { text: 'How to Use', link: '/en/guide/how-to-use' },
       ],
     },
     { text: 'Specification', items: [{ text: 'Full Specification', link: '/en/spec' }, records('Engineering Records (ID)')] },

@@ -23,6 +23,14 @@ Dengan satu titik keputusan kebijakan, satu lapisan deteksi, dan banyak titik ja
 Pilih jalur bacaan. Dokumentasi terbagi menjadi profil perusahaan, spesifikasi teknis, dan tiket implementasi.
 
 <div class="card-grid">
+  <a class="card" href="./guide/why">
+    <h3>Mengapa WANTIMPRES-26</h3>
+    <p>Masalah yang dijawab, pembeda dari DLP dan gateway LLM biasa, bukti terukur, dan batasan saat ini.</p>
+  </a>
+  <a class="card" href="./guide/how-to-use">
+    <h3>Cara Menggunakan</h3>
+    <p>Coba di lokal, hubungkan aplikasi dan agent, kelola kebijakan, dan jalankan operasional SOC.</p>
+  </a>
   <a class="card" href="./about/vision-mission">
     <h3>Visi & Misi</h3>
     <p>Arah yang dituju WANTIMPRES-26 dan komitmen yang menuntun setiap keputusan desainnya.</p>
@@ -72,6 +80,7 @@ Keputusan kebijakan sengaja dipisahkan dari penegakannya. Semua titik jaga berta
 
 ## Langkah Berikutnya
 
+- [Cara Menggunakan](./guide/how-to-use): hubungkan aplikasi pertama Anda ke gateway.
 - [Visi & Misi](./about/vision-mission): mulai dari tujuan platform.
 - [Spesifikasi Lengkap](./spec): baca arsitektur dan requirement secara utuh.
 - [Ringkasan Tiket](./tickets/): lihat apa yang sedang dan akan dikerjakan.

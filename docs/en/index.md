@@ -23,6 +23,14 @@ With one policy decision point, one detection layer, and many enforcement points
 Choose a reading path. The documentation covers the company profile, the technical specification, and the implementation tickets.
 
 <div class="card-grid">
+  <a class="card" href="./guide/why">
+    <h3>Why WANTIMPRES-26</h3>
+    <p>The problems it solves, how it differs from DLP and LLM gateways, measured evidence, and current limits.</p>
+  </a>
+  <a class="card" href="./guide/how-to-use">
+    <h3>How to Use</h3>
+    <p>Try it locally, connect apps and agents, manage policies, and run SOC operations.</p>
+  </a>
   <a class="card" href="./about/vision-mission">
     <h3>Vision & Mission</h3>
     <p>Where WANTIMPRES-26 is heading and the commitments behind every design decision.</p>
@@ -72,6 +80,7 @@ Policy decisions are deliberately separated from enforcement. Every enforcement 
 
 ## Next steps
 
+- [How to Use](./guide/how-to-use): connect your first app to the gateway.
 - [Vision & Mission](./about/vision-mission): start with what the platform is for.
 - [Full Specification](./spec): read the architecture and requirements end to end.
 - [Ticket Overview](./tickets/): see what is in progress and what comes next.
