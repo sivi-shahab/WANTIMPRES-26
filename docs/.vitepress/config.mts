@@ -1,14 +1,18 @@
 import { defineConfig, type DefaultTheme } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
-import { loadTickets, MILESTONES } from './tickets'
+import { loadTickets, MILESTONES, translationStale } from './tickets'
 
-const tickets = loadTickets()
+const tickets = { id: loadTickets('id'), en: loadTickets('en') }
+
+// Terjemahan yang tertinggal tetap dirender (tiket diberi banner), tapi diumumkan saat build.
+const stale = ['spec.md', ...tickets.id.map((t) => `issues/${t.id}.md`)].filter(translationStale)
+if (stale.length) console.warn(`[i18n] ${stale.length} English translation(s) missing or out of date:\n  ${stale.join('\n  ')}`)
 
 function ticketSidebar(prefix: string, lang: 'id' | 'en'): DefaultTheme.SidebarItem[] {
   return Object.entries(MILESTONES).map(([m, label]) => ({
     text: label[lang],
     collapsed: true,
-    items: tickets
+    items: tickets[lang]
       .filter((t) => t.group === m)
       .map((t) => ({ text: `${t.num} · ${t.title}`, link: `${prefix}tickets/${t.id}` })),
   }))
