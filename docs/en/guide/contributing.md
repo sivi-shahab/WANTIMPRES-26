@@ -5,7 +5,7 @@ outline: [2, 3]
 
 # Contributing
 
-Thanks for wanting to help with WANTIMPRES-26. This page explains how work happens in the repository [github.com/sivi-shahab/WANTIMPRES-26](https://github.com/sivi-shahab/WANTIMPRES-26), from a ticket to your change being merged.
+Thanks for wanting to help with WANTIMPRES-26. All contributors are expected to follow the [Code of Conduct](./code-of-conduct). This page explains how work happens in the repository [github.com/sivi-shahab/WANTIMPRES-26](https://github.com/sivi-shahab/WANTIMPRES-26), from a ticket to your change being merged.
 
 ## The short version
 

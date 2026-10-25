@@ -5,7 +5,7 @@ outline: [2, 3]
 
 # Kontribusi
 
-Terima kasih ingin membantu WANTIMPRES-26. Halaman ini menjelaskan cara kerja di repository [github.com/sivi-shahab/WANTIMPRES-26](https://github.com/sivi-shahab/WANTIMPRES-26): dari tiket sampai perubahan Anda ter-merge.
+Terima kasih ingin membantu WANTIMPRES-26. Semua kontributor diharapkan mengikuti [Kode Etik](./code-of-conduct). Halaman ini menjelaskan cara kerja di repository [github.com/sivi-shahab/WANTIMPRES-26](https://github.com/sivi-shahab/WANTIMPRES-26): dari tiket sampai perubahan Anda ter-merge.
 
 ## Alur singkat
 

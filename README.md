@@ -181,6 +181,9 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
 - Security policy — report vulnerabilities privately via GitHub; scope, controls, supply chain, known limitations:
   [`SECURITY.md`](SECURITY.md) · [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/security) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/security)
+- Code of conduct — Contributor Covenant 2.1 (enforcement contact not set yet): [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) ·
+  [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/code-of-conduct) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/code-of-conduct)
 - Changelog — every change, newest first, generated from git history on each site build with links to commits and
   tickets: [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/changelog) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/changelog)
