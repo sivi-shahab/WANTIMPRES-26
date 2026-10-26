@@ -7,10 +7,10 @@ outline: [2, 3]
 
 Release notes merangkum perubahan yang penting bagi pengguna dan operator: fitur baru, perubahan yang perlu diperhatikan saat upgrade, perbaikan, dan batasan. Daftar lengkap per commit ada di [Changelog](../changelog).
 
-## Pratinjau Oktober 2026
+## v0.1.0 (pratinjau) · 26 Oktober 2026
 
-::: info Belum ada rilis bertag
-Ini rilis pratinjau dari branch `main` per 26 Oktober 2026, mencakup semua pekerjaan sejak awal proyek. Nomor versi resmi dimulai saat tag rilis pertama dibuat. Sebagian besar tiket berstatus `needs-gitlab-run` (terimplementasi dan teruji lokal, menunggu pipeline rilis GitLab) atau `needs-signoff`. Lihat [Roadmap](./roadmap).
+::: info Rilis pratinjau pertama
+Rilis pertama yang diberi tag ([`v0.1.0`](https://github.com/sivi-shahab/WANTIMPRES-26/releases/tag/v0.1.0)), mencakup semua pekerjaan sejak awal proyek. Statusnya pratinjau: belum untuk produksi. Sebagian besar tiket berstatus `needs-gitlab-run` (terimplementasi dan teruji lokal, menunggu pipeline rilis GitLab) atau `needs-signoff`. Lihat [Roadmap](./roadmap).
 :::
 
 ### Sorotan

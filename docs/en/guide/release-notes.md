@@ -7,10 +7,10 @@ outline: [2, 3]
 
 Release notes summarise the changes that matter to users and operators: new features, changes to watch for when upgrading, fixes, and limitations. The full per-commit list is in the [Changelog](../changelog).
 
-## October 2026 preview
+## v0.1.0 (preview) · 26 October 2026
 
-::: info No tagged release yet
-This is a preview release from the `main` branch as of 26 October 2026, covering all work since the project started. Official version numbers begin when the first release tag is created. Most tickets are `needs-gitlab-run` (implemented and tested locally, awaiting the GitLab release pipeline) or `needs-signoff`. See the [Roadmap](./roadmap).
+::: info First preview release
+The first tagged release ([`v0.1.0`](https://github.com/sivi-shahab/WANTIMPRES-26/releases/tag/v0.1.0)), covering all work since the project started. It is a preview: not yet for production. Most tickets are `needs-gitlab-run` (implemented and tested locally, awaiting the GitLab release pipeline) or `needs-signoff`. See the [Roadmap](./roadmap).
 :::
 
 ### Highlights

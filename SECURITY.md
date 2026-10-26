@@ -14,7 +14,8 @@ real customer or personal data.
 
 ## Supported versions
 
-There are no tagged releases yet. Security fixes are applied to `main` only.
+The current release is `v0.1.0`, a preview. Security fixes go to `main` and ship in the next release; there are no
+backports to older releases yet.
 
 ## More
 

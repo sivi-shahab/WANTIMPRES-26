@@ -42,11 +42,12 @@ Agar laporan cepat ditangani, sertakan:
 
 ## Versi yang didukung
 
-WANTIMPRES-26 belum memiliki rilis bertag. Perbaikan keamanan hanya diterapkan ke branch `main`.
+Rilis saat ini adalah `v0.1.0`, sebuah pratinjau. Perbaikan keamanan diterapkan ke branch `main` dan masuk ke rilis berikutnya; belum ada backport ke rilis lama.
 
 | Versi | Didukung |
 |---|---|
 | `main` (terbaru) | Ya |
+| Rilis terbaru (`v0.1.0`) | Ya, lewat rilis berikutnya |
 | Commit lama atau fork | Tidak |
 
 ## Cakupan

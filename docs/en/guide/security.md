@@ -42,11 +42,12 @@ To help us act quickly, include:
 
 ## Supported versions
 
-WANTIMPRES-26 has no tagged releases yet. Security fixes are applied to the `main` branch only.
+The current release is `v0.1.0`, a preview. Security fixes go to the `main` branch and ship in the next release; there are no backports to older releases yet.
 
 | Version | Supported |
 |---|---|
 | `main` (latest) | Yes |
+| Latest release (`v0.1.0`) | Yes, through the next release |
 | Older commits or forks | No |
 
 ## Scope
