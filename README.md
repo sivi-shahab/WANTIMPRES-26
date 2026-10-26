@@ -187,6 +187,9 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
 - License — Apache-2.0, summary, and third-party component licenses:
   [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/license) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/license)
+- Release notes — user-facing summary (highlights, changes to watch for when upgrading, fixes, security, known
+  limitations): [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/release-notes) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/release-notes)
 - Changelog — every change, newest first, generated from git history on each site build with links to commits and
   tickets: [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/changelog) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/changelog)
