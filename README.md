@@ -3,6 +3,10 @@
 **W**orkforce **A**I **N**etwork **T**hreat **I**nspection, **M**onitoring, **P**olicy, **R**isk & **E**nforcement
 **S**ystem, 2026 edition. Identifier in code, policy and deploy: `wantimpres26`.
 
+**Latest release:** [v0.1.0 (preview)](https://github.com/sivi-shahab/WANTIMPRES-26/releases/tag/v0.1.0), 26 October
+2026: the first tagged release, not yet for production. See the
+[release notes](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/release-notes).
+
 A platform that controls sensitive data moving to, from, and through AI: public GenAI apps, internal LLM apps, and
 AI agents. Every channel (prompts, file uploads, responses, agent tool calls, data at rest that AI can reach) is
 discovered, classified, risk-scored, and put under one policy.
@@ -187,7 +191,7 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
 - License — Apache-2.0, summary, and third-party component licenses:
   [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/license) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/license)
-- Release notes — user-facing summary (highlights, changes to watch for when upgrading, fixes, security, known
+- Release notes — latest release [v0.1.0 (preview)](https://github.com/sivi-shahab/WANTIMPRES-26/releases/tag/v0.1.0); user-facing summary (highlights, changes to watch for when upgrading, fixes, security, known
   limitations): [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/release-notes) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/release-notes)
 - Changelog — every change, newest first, generated from git history on each site build with links to commits and
