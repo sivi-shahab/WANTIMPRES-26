@@ -184,6 +184,9 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
 - Code of conduct — Contributor Covenant 2.1 (enforcement contact not set yet): [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) ·
   [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/code-of-conduct) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/code-of-conduct)
+- License — Apache-2.0, summary, and third-party component licenses:
+  [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/license) ·
+  [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/guide/license)
 - Changelog — every change, newest first, generated from git history on each site build with links to commits and
   tickets: [English](https://sivi-shahab.github.io/WANTIMPRES-26/en/changelog) ·
   [Indonesia](https://sivi-shahab.github.io/WANTIMPRES-26/changelog)
@@ -194,6 +197,11 @@ GitHub Actions (`.github/workflows/ci.yml`) mirrors lint, test (same integration
 - [Labeling guideline](docs/labeling-guideline.md) — eval corpus annotation
 - Compliance framework mappings (UU PDP, POJK 11/2022, OJK AI guide, ISO 42001, NIST AI RMF, OWASP) live in
   `internal/compliance/library/`.
+
+## License
+
+[Apache License 2.0](LICENSE). Copyright 2026 The WANTIMPRES-26 Authors; see [`NOTICE`](NOTICE). Third-party component
+licenses are listed on the [License page](https://sivi-shahab.github.io/WANTIMPRES-26/en/guide/license).
 
 ## Work tracking
 

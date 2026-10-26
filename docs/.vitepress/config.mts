@@ -68,6 +68,7 @@ const id: DefaultTheme.Config = {
         { text: 'Kontribusi', link: '/guide/contributing' },
         { text: 'Keamanan', link: '/guide/security' },
         { text: 'Kode Etik', link: '/guide/code-of-conduct' },
+        { text: 'Lisensi', link: '/guide/license' },
         { text: 'Changelog', link: '/changelog' },
       ],
     },
@@ -81,7 +82,7 @@ const id: DefaultTheme.Config = {
   sidebarMenuLabel: 'Menu',
   returnToTopLabel: 'Kembali ke atas',
   langMenuLabel: 'Ganti bahasa',
-  footer: { message: 'Dokumen internal · draft', copyright: '© 2026 WANTIMPRES-26' },
+  footer: { message: 'Dirilis di bawah Apache License 2.0', copyright: '© 2026 The WANTIMPRES-26 Authors' },
 }
 
 const en: DefaultTheme.Config = {
@@ -114,6 +115,7 @@ const en: DefaultTheme.Config = {
         { text: 'Contributing', link: '/en/guide/contributing' },
         { text: 'Security', link: '/en/guide/security' },
         { text: 'Code of Conduct', link: '/en/guide/code-of-conduct' },
+        { text: 'License', link: '/en/guide/license' },
         { text: 'Changelog', link: '/en/changelog' },
       ],
     },
@@ -122,7 +124,7 @@ const en: DefaultTheme.Config = {
   ],
   outline: { level: [2, 3] },
   lastUpdated: { text: 'Last updated' },
-  footer: { message: 'Internal document · draft', copyright: '© 2026 WANTIMPRES-26' },
+  footer: { message: 'Released under the Apache License 2.0', copyright: '© 2026 The WANTIMPRES-26 Authors' },
 }
 
 export default withMermaid(
