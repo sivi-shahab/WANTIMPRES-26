@@ -1,63 +1,59 @@
 ---
+layout: home
 title: Welcome
+
+hero:
+  name: WANTIMPRES-26
+  text: Guardian of company data & AI
+  tagline: An Enterprise AI Data Security & AI Security Posture Management platform. Every AI interaction is inspected and weighed before sensitive data is allowed through.
+  image:
+    src: /logo.svg
+    alt: "WANTIMPRES-26 logo: a security guard inside a shield"
+  actions:
+    - theme: brand
+      text: Installation
+      link: /en/guide/install
+    - theme: alt
+      text: Why WANTIMPRES-26?
+      link: /en/guide/why
+    - theme: alt
+      text: How to Use
+      link: /en/guide/how-to-use
+
+features:
+  - icon: 🔭
+    title: AI visibility
+    details: An AI app catalog, shadow AI discovery, and an agent inventory.
+    link: /en/guide/how-to-use#shadow-ai-and-data-at-rest
+    linkText: Shadow AI
+  - icon: 🪪
+    title: Sensitive data
+    details: Indonesian national IDs (NIK), tax IDs (NPWP), bank accounts, card numbers, credentials, and source code are recognised before they leave.
+    link: /en/guide/how-to-use#connect-an-app-to-the-ai-gateway
+    linkText: AI gateway
+  - icon: 🛡️
+    title: Attacks on LLMs
+    details: Direct and indirect prompt injection, jailbreaks, system prompt leakage, and excessive agency.
+    link: /threat-model
+    linkText: Threat model (ID)
+  - icon: 🤖
+    title: Autonomous agents
+    details: Identity, least privilege, short-lived credentials, human approval, and a kill switch.
+    link: /en/guide/how-to-use#connect-an-agent-through-the-mcp-gateway
+    linkText: MCP gateway
+  - icon: ⚖️
+    title: One policy decision point
+    details: Policy decisions are separated from enforcement. Every enforcement point asks the same decision point, so one policy applies across every channel.
+    link: /en/guide/how-to-use#manage-policies
+    linkText: Manage policies
+  - icon: 📜
+    title: Compliance evidence
+    details: A hash-chained audit log, control mapping, and a 72-hour data breach notification workflow.
+    link: /en/guide/how-to-use#soc-and-compliance-operations
+    linkText: SOC & compliance
 ---
 
-# Welcome to WANTIMPRES-26
-
-![WANTIMPRES-26 logo: a security guard inside a shield](/logo.svg){.home-logo}
-
-**WANTIMPRES-26** is an *Enterprise AI Data Security & AI Security Posture Management* platform. It works like a security guard at the gate of the company's data: every AI interaction is inspected and weighed before sensitive data is allowed through. That covers prompts, file uploads, model responses, agent tool calls, and stored data that AI can reach.
-
-The design comes from research into current industry standards and practice. Its main references are:
-
-- OWASP Top 10 for LLM Applications 2025 and OWASP Top 10 for Agentic Applications 2026
-- NIST AI RMF 1.0 and its Generative AI Profile (NIST AI 600-1)
-- The Model Context Protocol (MCP) authorization specification, version 2026-07-28
-- Indonesia's Personal Data Protection Law (UU 27/2022), OJK Regulation POJK 11/POJK.03/2022, and OJK's 2025 AI governance guide for Indonesian banking
-- Product patterns from Forcepoint AI Security, Microsoft Purview DSPM, and Netskope One AI Security
-
-With one policy decision point, one detection layer, and many enforcement points, WANTIMPRES-26 helps the organisation adopt AI quickly without losing control of customer data, credentials, and intellectual property.
-
-## Get started
-
-Choose a reading path. The documentation covers the company profile, the technical specification, and the implementation tickets.
-
-<div class="card-grid">
-  <a class="card" href="./guide/why">
-    <h3>Why WANTIMPRES-26</h3>
-    <p>The problems it solves, how it differs from DLP and LLM gateways, measured evidence, and current limits.</p>
-  </a>
-  <a class="card" href="./guide/install">
-    <h3>Installation</h3>
-    <p>Build from source, run the local stack, and deploy to Kubernetes in your own data center.</p>
-  </a>
-  <a class="card" href="./guide/how-to-use">
-    <h3>How to Use</h3>
-    <p>Try it locally, connect apps and agents, manage policies, and run SOC operations.</p>
-  </a>
-  <a class="card" href="./guide/faq">
-    <h3>FAQ</h3>
-    <p>Short answers on privacy, data location, integration, policies, compliance, and project status.</p>
-  </a>
-  <a class="card" href="./about/vision-mission">
-    <h3>Vision & Mission</h3>
-    <p>Where WANTIMPRES-26 is heading and the commitments behind every design decision.</p>
-  </a>
-  <a class="card" href="./about/philosophy">
-    <h3>Name & Logo Philosophy</h3>
-    <p>What the WANTIMPRES-26 acronym stands for and what the security guard in the logo means.</p>
-  </a>
-  <a class="card" href="./spec">
-    <h3>Specification</h3>
-    <p>PRD, SRS, architecture, data model, APIs, ML pipeline, security, and compliance in one document.</p>
-  </a>
-  <a class="card" href="./tickets/">
-    <h3>Tickets & Roadmap</h3>
-    <p>Implementation tickets by milestone, M0 to M4, with status and dependencies.</p>
-  </a>
-</div>
-
-## The core mechanism
+## How it works
 
 WANTIMPRES-26 does not rely on a single filter. Every enforcement point runs a closed loop: capture the interaction, recognise its content, weigh its risk, carry out the decision, then record everything so the next decision is better.
 
@@ -76,22 +72,29 @@ flowchart TB
   I -.->|tune policy & models| D
 ```
 
-Policy decisions are deliberately separated from enforcement. Every enforcement point asks the same decision point, so one policy applies across every channel.
+Inspected interactions cover prompts, file uploads, model responses, agent tool calls, and stored data that AI can reach. Full details are in the [Specification](./spec) and the [Interactive Architecture](https://sivi-shahab.github.io/WANTIMPRES-26/architecture/).
 
-## What it protects
+## Design basis
 
-- **AI visibility:** an AI app catalog, *shadow AI* discovery, and an agent inventory.
-- **Sensitive data:** Indonesian national IDs (NIK), tax IDs (NPWP), bank accounts, card numbers, credentials, and source code are recognised before they leave.
-- **Attacks on LLMs:** direct and indirect prompt injection, jailbreaks, system prompt leakage, and *excessive agency*.
-- **Autonomous agents:** identity, least privilege, short-lived credentials, human approval, and a kill switch.
-- **Compliance evidence:** a hash-chained audit log, control mapping, and a 72-hour data breach notification workflow.
+The design comes from research into current industry standards and practice. Its main references are:
 
-## Next steps
+- OWASP Top 10 for LLM Applications 2025 and OWASP Top 10 for Agentic Applications 2026
+- NIST AI RMF 1.0 and its Generative AI Profile (NIST AI 600-1)
+- The Model Context Protocol (MCP) authorization specification, version 2026-07-28
+- Indonesia's Personal Data Protection Law (UU 27/2022), OJK Regulation POJK 11/POJK.03/2022, and OJK's 2025 AI governance guide for Indonesian banking
+- Product patterns from Forcepoint AI Security, Microsoft Purview DSPM, and Netskope One AI Security
 
-- [Installation](./guide/install): build from source or deploy to Kubernetes.
-- [How to Use](./guide/how-to-use): connect your first app to the gateway.
-- [FAQ](./guide/faq): short answers to common questions.
-- [Vision & Mission](./about/vision-mission): start with what the platform is for.
-- [Full Specification](./spec): read the architecture and requirements end to end.
-- [Ticket Overview](./tickets/): see what is in progress and what comes next.
-- [Interactive Architecture](https://sivi-shahab.github.io/WANTIMPRES-26/architecture/): explore the searchable, traceable platform diagram.
+With one policy decision point, one detection layer, and many enforcement points, WANTIMPRES-26 helps the organisation adopt AI quickly without losing control of customer data, credentials, and intellectual property.
+
+## Choose your path
+
+| I want to… | Start with |
+| --- | --- |
+| Understand the problems it solves and how it differs from DLP & LLM gateways | [Why WANTIMPRES-26](./guide/why) |
+| Build from source, run the local stack, or deploy to Kubernetes | [Installation](./guide/install) |
+| Connect apps and agents, manage policies, run SOC operations | [How to Use](./guide/how-to-use) |
+| Get short answers on privacy, data location, integration, and compliance | [FAQ](./guide/faq) |
+| Understand where the platform is heading and what its name and logo mean | [Vision & Mission](./about/vision-mission) · [Name & Logo Philosophy](./about/philosophy) |
+| Read the PRD, SRS, architecture, APIs, and compliance end to end | [Full Specification](./spec) |
+| See what is in progress and what comes next (M0–M4) | [Ticket Overview](./tickets/) |
+| Explore the searchable, traceable platform diagram | [Interactive Architecture](https://sivi-shahab.github.io/WANTIMPRES-26/architecture/) |

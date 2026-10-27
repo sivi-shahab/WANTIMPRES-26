@@ -19,39 +19,6 @@
   margin: 8px 0 24px;
 }
 
-/* kartu ala situs referensi */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin: 20px 0 8px;
-}
-.vp-doc .card {
-  display: block;
-  padding: 20px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  text-decoration: none;
-  transition: border-color 0.2s, transform 0.2s;
-}
-.vp-doc .card:hover {
-  border-color: var(--vp-c-brand-1);
-  transform: translateY(-2px);
-}
-.vp-doc .card h3 {
-  margin: 0 0 8px;
-  font-size: 17px;
-  color: var(--vp-c-brand-1);
-}
-.vp-doc .card p {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--vp-c-text-2);
-}
-
 /* papan tiket */
 .ticket-board .badge {
   display: inline-block;
